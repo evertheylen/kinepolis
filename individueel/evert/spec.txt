@@ -1,0 +1,112 @@
+
+// '[]' betekent simpelweg een zekere lijst van dat type, kan elke structuur zijn (tenzij anders aangegeven)
+
+
+Cinema
+	string naam
+	[]Zaal zalen
+	[]Tijdslot Tijdslots
+	[]Vertoning Vertoningen
+	[]Reservatie Reservaties
+	[]Gebruiker Gebruikers
+	[]Ticket Tickets
+	------------
+	+createCinema(): Cinema
+	
+	+addZaal(in zaal:Zaal): bool // success
+	
+	+addTijdslot(in tijdslot:Tijdslot): bool
+	
+	+addReservatie(in reservatie:Reservatie): bool
+	
+	+addGebruiker(in gebruiker:Gebruiker): bool
+	
+	+addTicket(in ticket:Ticket): bool
+	
+	// idem voor remove...
+
+
+
+Zaal
+	int ID
+	int plaatsen
+	------------
+	+getID(): int
+	
+	+getPlaatsen(): int
+
+
+
+
+Tijdslot
+	+toString(): string
+
+
+
+
+Vertoning
+	int ID
+	int zaalnummer
+	Tijdslot tijdslot
+	Datum datum
+	int vrijeplaatsen
+	[]Ticket Tickets // als Stack
+	[]Reservatie Reservaties // als Queue
+	------------
+	+getID(): int
+	
+	+getZaalNummer(): int
+	
+	+getTijdslot(): Tijdslot
+	
+	+getDatum(): Datum
+	
+	+getVrijePlaatsen(): int
+	
+	+setZaalNummer(in zaalnr:int): bool // succes
+	
+	+setTijdslot(in tijdslot:Tijdslot): bool
+	
+	+setDatum(in datum:Datum): bool
+	
+	+setVrijePlaatsen(in vrijeplaatsen:int): bool
+	
+	+addTicket(): bool
+	
+	+popTicket(): Ticket
+		
+	+addReservatie(in reservatie:Reservatie): bool
+	
+	+dequeueReservatie(): Reservatie
+	
+	+emptyTickets(): bool
+	
+	+emptyReservaties(): bool
+
+
+
+
+Gebruiker
+	int ID
+	string Voornaam
+	string Achternaam
+	string emailadres
+	------------
+	// Getters voor alles
+	// Setters voor alles buiten ID
+
+
+
+Ticket
+	int ID
+	int ReservatieID
+	-----------
+	+getID(): int
+	
+	+getReservatieID(): int
+	
+	+setReservatieID(in ID: int): bool // success
+
+
+// Bovenop al deze specificaties zijn er ook nog de specificaties van de gegevensstructeren die
+// afhankelijk van de implementatie gebruikt kunnen worden, deze staan allemaal in de cursus.
