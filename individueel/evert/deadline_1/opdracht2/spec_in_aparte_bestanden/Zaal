@@ -1,0 +1,3 @@
++getID(): int
+	
++getPlaatsen(): int

@@ -1,5 +1,5 @@
 
-// '[]' betekent simpelweg een zekere lijst van dat type, kan elke structuur zijn (tenzij anders aangegeven)
+// '[]x' betekent simpelweg een zekere lijst/tabel/gegevensstructuur van type x, kan elke structuur zijn (tenzij anders aangegeven)
 
 
 Cinema
@@ -126,3 +126,4 @@ Ticket
 
 // Bovenop al deze specificaties zijn er ook nog de specificaties van de gegevensstructeren die
 // afhankelijk van de implementatie gebruikt kunnen worden, deze staan allemaal in de cursus.
+// Bijvoorbeeld: Stack, Queue, Tabel, AVL-Boom, ...

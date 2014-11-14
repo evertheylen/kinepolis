@@ -1,0 +1,9 @@
+// int ID
+// int userID
+// DateTime TimeStamp
+// int vertoningsID
+// int plaatsen
+// []Ticket Tickets
+
+// Getters voor alles
+// Setters voor alles buiten ID

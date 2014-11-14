@@ -1,0 +1,5 @@
++getID(): int
+
++getReservatieID(): int
+
++setReservatieID(in ID: int): bool // success
