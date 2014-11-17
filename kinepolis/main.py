@@ -13,3 +13,5 @@ cin = Cinema("Kine", 5, None, None, None, None, tickets)
 print(cin)
 print(type(cin))
 print(type(cin.tickets))
+
+print(struct.__dict__['BinTree'])

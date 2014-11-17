@@ -29,9 +29,6 @@ while line != '':
     
     framePrint(frame)
     
-    for i in range(15):
-        print('\r\b\b\b\b\b\b\b\b\b\b\b\b\b\b',end='')
-    
     time.sleep(0.01*pause)
 
 print('THE END')
