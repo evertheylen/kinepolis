@@ -1,7 +1,10 @@
+// Implementatie door Evert Heylen
+// Testen: al de rest (wegens belangrijkheid)
+
 Specification contract ADT Table (TableItemType is het type van elementen die in de tabel worden opgeslagen, KeyType is het type van de zoeksleutels, Implementation is de implementatie die voor de tabel werd gebruikt.):
 	
 	createTable()
-	// creëert een lege tabel
+	// creÃ«ert een lege tabel
 	precondities: geen
 	postcondities: een nieuwe tabel is gemaakt
 	
