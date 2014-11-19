@@ -6,88 +6,88 @@ import Heap
 import TwoThreetree.txt
 
 class MovieHall:
-    #De klasse Moviehall, bevat een nummer en het aantal plaatsen, de zoeksleutel is de nummer.
+    // De klasse Moviehall, bevat een nummer en het aantal plaatsen, de zoeksleutel is de nummer.
     def __init__(self, number, seats):
-        #Initialiseert de klasse Moviehall. Geen output
+        // Initialiseert de klasse Moviehall. Geen output
         pre: geen
         post: nieuwe Moviehall
         
 class Show:
-    #De klasse Show, bevat een id, een zaalnummer, een slot, een datum, een filmid en het aantal vrije plaatsen. Zoeksleutel: id. 
+    // De klasse Show, bevat een id, een zaalnummer, een slot, een datum, een filmid en het aantal vrije plaatsen. Zoeksleutel: id. 
     def __init__(self, id, moviehall, slot, date, filmid, free_spot):
-        #Initialiseert de klasse Show. Geen output
+        // Initialiseert de klasse Show. Geen output
         Table.table.insert(self,Linkbased)
-            #Insert de show in een linkbased tabel.
+            // Insert de show in een linkbased tabel.
         pre: geen
         post: nieuwe Show
     
     def pop(self, Stack.stack):
-        #Elke show heeft zijn eigen stack (bij Reservation worden daar elementen aan toegevoegd). Wanneer een gebruiker de zaal binnen komt, popt er een ticket van de stack.
+        // Elke show heeft zijn eigen stack (bij Reservation worden daar elementen aan toegevoegd). Wanneer een gebruiker de zaal binnen komt, popt er een ticket van de stack.
         return Success(True or False)
         pre: er moet een stack zijn met minstens 1 element
         post: de stack heeft een element minder.
         
     def startmovie(self, Stack.stack):
-        #Wanneer de stack van 1 naar 0 elementen gaat, wordt deze functie opgeroepen en start de bijhorende film.
+        // Wanneer de stack van 1 naar 0 elementen gaat, wordt deze functie opgeroepen en start de bijhorende film.
         return Success(True or False)
         pre: De stack gaat van 1 naar 0 items, Slot moet een van de goede waarden hebben, waarop een film mag starten.
         post: de film begint.
                
 class Film:
-    #De klasse film bevat een id, een titel en een rating(float). Zoeksleutel: id.
+    // De klasse film bevat een id, een titel en een rating(float). Zoeksleutel: id.
     def __init__(self, id, title, rating, start):
-        #Initialiseert de klasse Film. Geen output
+        // Initialiseert de klasse Film. Geen output
         Table.table.insert(self, BST.Binarysearchtree)
-            #Insert de nieuwe film in een tabel geïmplementeerd door een BST.
+            // Insert de nieuwe film in een tabel geïmplementeerd door een BST.
         pre: geen
         post: nieuwe Film
     def startmovie(self):
-        #Wanneer de functie startmovie van show True returned, wordt de film gestart.
+        // Wanneer de functie startmovie van show True returned, wordt de film gestart.
         pre: de functie van show returned True
         post: de film start.
         
 class Reservation:
-    #De klasse reservation bevat een id, een userid, een timestamp, een showid, aantal plaatsen die gereserveerd worden. Zoeksleutel: id.
+    // De klasse reservation bevat een id, een userid, een timestamp, een showid, aantal plaatsen die gereserveerd worden. Zoeksleutel: id.
     def __init__(self, id, userid, timestamp, showid, reserved_spots):
-        #Initialiseert de klasse Reservation. Geen output
+        // Initialiseert de klasse Reservation. Geen output
         pre: geen
         post: nieuwe Reservation
         
     def enqueue(self, Queue.queue):
-        #Wordt opgeroepen tijdens __init__() en zorgt ervoor dat de reservatie aan de queue wordt gekoppeld.
+        // Wordt opgeroepen tijdens __init__() en zorgt ervoor dat de reservatie aan de queue wordt gekoppeld.
         return success (True or False)
         pre: de queue moet bestaan.
         post: De queue heeft een nieuw, laatste item, namelijk deze reservatie.
         
     def dequeue(self, Queue.queue):
-        #Wanneer een reservatie is afgehandeld mag ze gedequeued worden.
+        // Wanneer een reservatie is afgehandeld mag ze gedequeued worden.
         return success (True or False)
         pre: Er moet een element in de queue zitten en de reservatie moet afgehandeld zijn.
         post: Het item in de front van de queue is verwijderd uit de queue.
 
     def push(self, showid, Stack.stack, reserved_spots):
-        #Wanneer een reservatie is afgehandeld, wordt er op de stack van die show zoveel plaatsen bij gepushed.
+        // Wanneer een reservatie is afgehandeld, wordt er op de stack van die show zoveel plaatsen bij gepushed.
         return success (True or False)
         pre: er moet een stack zijn
         post: de stack heeft het aantal reservaties als extra items gekregen indien hij niet te vol zat.
 
 class User:
-    #De klasse User bevat een id, een voornaam, een achternaam en een e-mailadres. Zoeksleutel: id.
+    // De klasse User bevat een id, een voornaam, een achternaam en een e-mailadres. Zoeksleutel: id.
     def __init__(self, id, firstname, lastname, email):
-        #Initialiseert de klasse User. Geen output
+        // Initialiseert de klasse User. Geen output
         pre: geen
         post: nieuwe User
         
 class Slot:
-    #De klasse Slot toont de waarden waarop een film kan getoond worden.
+    // De klasse Slot toont de waarden waarop een film kan getoond worden.
     def __init__(self, timelist):
-        #Initialiseert de Slot met timelist. Geen output. timelist is de lijst met mogelijke vertoningen: 14.30, 17.00, 20.00, 22.30.
+        // Initialiseert de Slot met timelist. Geen output. timelist is de lijst met mogelijke vertoningen: 14.30, 17.00, 20.00, 22.30.
         pre: geen
         post: nieuwe Slot
     
 class Ticket:
-    #De klasse Ticket bevat een gebruikerid.
+    // De klasse Ticket bevat een gebruikerid.
     def __init__(self, userid):
-        #Initialiseert het Ticket. Geen output.
+        // Initialiseert het Ticket. Geen output.
         pre: geen
         post: nieuw ticket

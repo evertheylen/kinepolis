@@ -1,36 +1,36 @@
 Specification contract ADT Two Three Tree (TreeItemType is het type van elementen die in de zoekboom worden opgeslagen, KeyType is het type van de zoeksleutels):
 	
 	createTwoThreetree()
-	#creëert een lege 2-3 boom
+	// creëert een lege 2-3 boom
 	precondities: geen
 	postcondities: een nieuwe 2-3 boom is gemaakt
 	
 	destroyTwoThreetree()
-	#verwijdert een 2-3 boom
+	// verwijdert een 2-3 boom
 	precondities: geen
 	postcondities: de 2-3 boom is verwijderd.
 
 	isEmpty(): boolean
-	#bepaalt of de 2-3 boom leeg is
+	// bepaalt of de 2-3 boom leeg is
 	precondities: geen
 	postcondities: returned true als de 2-3 boom leeg is en false als deze elementen bevat.
 
 	insert(in newItem: TreeItemType, out success: boolean)
-	#voegt een item toe aan de 2-3 boom, success duidt aan of het gelukt is.
+	// voegt een item toe aan de 2-3 boom, success duidt aan of het gelukt is.
 	precondities: alle items van de 2-3 boom moeten een verschillende zoeksleutelwaarde hebben.
 	postcondities: indien success true is, is het gelukt en is het item toegevoegd op de juiste locatie in de 2-3 boom.
 
 	delete(in searchKey: KeyType, out success: boolean)
-	#de 2-3 boom wordt doorzocht naar het element met zoeksleutel searchKey, indien dit wordt gevonden, wordt het element verwijderd.
+	// de 2-3 boom wordt doorzocht naar het element met zoeksleutel searchKey, indien dit wordt gevonden, wordt het element verwijderd.
 	precondities: geen
 	postcondities: indien er een element met deze zoeksleutel wordt gevonden --> success = true, het element wordt verwijderd.
 
 	retrieve(in searchKey: KeyType, out TreeItem: TreeItemType, out succes: boolean)
-	#de 2-3 boom wordt doorzocht naar het element met zoeksleutel searchKey, indien dit wordt gevonden, wordt het element toegekend aan BSTItem, de 2-3 boom blijft onveranderd.
+	// de 2-3 boom wordt doorzocht naar het element met zoeksleutel searchKey, indien dit wordt gevonden, wordt het element toegekend aan BSTItem, de 2-3 boom blijft onveranderd.
 	precondities: geen
 	postcondities: indien het element is gevonden, success is true en TreeItem bevat dit element.
 
 	inordertraversal(in visit: FunctionType)
-	#De 2-3 boom wordt doorlopen en bij elk element wordt de functie visit uitgevoerd.
+	// De 2-3 boom wordt doorlopen en bij elk element wordt de functie visit uitgevoerd.
 	precondities: geen
 	postcondities: geen
