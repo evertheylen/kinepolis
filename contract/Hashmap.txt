@@ -1,41 +1,46 @@
 Specification contract ADT Hashmap (HashItemType is het type van elementen die in de hashmap worden opgeslagen, KeyType is het type van de zoeksleutels, addressType is een manier om open addressing te doen):
 
-	createHashmap()
-	// creëert een lege hashmap
-	precondities: geen
-	postcondities: een nieuwe hashmap is gemaakt
-	
-	destroyHashmap()
-	// verwijdert een hashmap
-	precondities: geen
-	postcondities: de hashmap is verwijderd.
++createhashMap()
+//Maakt een hashmap aan.
+Precondities:Geen
+Postcondities:Een nieuwe hashmap is aangemaakt.
 
-	isEmpty(): boolean
-	// bepaalt of de hashmap leeg is
-	precondities: geen
-	postcondities: returned true als de hashmap leeg is en false als deze elementen bevat.
++destroyhashMap()
+//Verwijdert een bestaande hashmap .
+Precondities:Geen
+Postcondities:De hashmap is verwijderd.
 
-	insert(in newItem: HashItemType, out success: boolean)
-	// voegt een item toe aan de hashmap, success duidt aan of het gelukt is.
-	precondities: alle items van de hashmap moeten een verschillende zoeksleutelwaarde hebben.
-	postcondities: indien success true is, is het gelukt en is het item toegevoegd op de juiste locatie in de hashmap.
++hashMapIsEmpty: boolean {query}
+//Gaat na of de hashmap leeg is.
+Precondities:Geen
+Postcondities: Geeft True weer als de hashmap leeg is en False als hij niet leeg is.
 
-	delete(in searchKey: KeyType, out success: boolean)
-	// de hashmap wordt doorzocht naar het element met zoeksleutel searchKey, indien dit wordt gevonden, wordt het element verwijderd.
-	precondities: geen
-	postcondities: indien er een element met deze zoeksleutel wordt gevonden --> success = true, het element wordt verwijderd.
++hashMapInsert(in newItem: TableItemType, out success: boolean)
+// Voegt newItem toe aan een hashmap met items met verschillende search key
+// waarden, verschillend van de search key van newItem. Success geeft weer
+// of het toevoegen gelukt is.
+Precondities: Geef een waarde in die je wilt toevoegen aan de hashmap.
+Postcondities: Success geeft weer of het toevoegen gelukt is.
 
-	retrieve(in searchKey: KeyType, out TreeItem: TreeItemType, out succes: boolean)
-	// de hashmap wordt doorzocht naar het element met zoeksleutel searchKey, indien dit wordt gevonden, wordt het element toegekend aan HashItem, de hashmap blijft onveranderd.
-	precondities: geen
-	postcondities: indien het element is gevonden, success is true en HashItem bevat dit element.
++hashMapDelete(in searchKey: KeyType, out success: boolean)
+// Verwijdert een item met een SearchKey
+// die overeenkomt met de ingegeven SearchKey. Success geeft weer
+// of het verwijderen gelukt is.
+Precondities: Geef een Searchkey in die je wilt verwijderen uit de hashmap.
+Postcondities: Success geeft weer of het verwijderen gelukt is.
 
-	inordertraversal(in visit: FunctionType)
-	// De hashmap wordt doorlopen en bij elk element wordt de functie visit uitgevoerd.
-	precondities: geen
-	postcondities: geen
-	
-	changeopenaddressing(in addressway: addressType)
-	// De manier van openaddressing van de Hashmap verandert.
-	precondities: originele manier van openaddressing
-	postcondities: andere manier van openaddressing.
++hashMapRetrieve(in searchKey: KeyType, out tableItem: TableItemType,
+out success: boolean)
+//Gaat een waarde opzoeken aan de hand van de ingegeven zoeksleutel.
+Precondities:Geef een zoeksleutel in die je wilt terugvinden.
+Postcondities:Success geeft weer of het opzoeken gelukt is.
+
++inorderTraversal(in visit: FunctionType)
+//Doorloopt de hashmap.
+Precondities:Geen
+Postcondities: Geeft de items van de hashmap weer.
+
++changeopenaddressing(in addressway: addressType)
+//De manier van openaddressing van de Hashmap verandert.
+//Precondities: originele manier van openaddressing
+//Postcondities: andere manier van openaddressing.
