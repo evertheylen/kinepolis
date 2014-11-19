@@ -1,3 +1,5 @@
+//  Implementatie door Pieter.
+
 Specification contract ADT 2-3-4-Tree (TreeItemType is het type van elementen die in de 2-3-4-boom worden opgeslagen, KeyType is het type van de zoeksleutels):
 
 +create2-3-4-Tree()
