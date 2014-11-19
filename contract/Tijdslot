@@ -1,4 +1,7 @@
 // Implementatie door Anthony.
 // Testen door iedereen.
 
-+toString(): string
++createSlot(out success: boolean)
+//Maakt een tijdslot aan.
+Precondities: Geen.
+Postcondities: Success geeft weer of het gelukt is.
