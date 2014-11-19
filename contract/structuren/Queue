@@ -1,4 +1,5 @@
 Specification contract ADT Queue (Rij van elementen van het type QueueItemType):
+//Implementatie door Evert en Pieter.
 
 +createQueue()
 // creëert een lege queue.
