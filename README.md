@@ -2,6 +2,7 @@
 
 - Evert Heylen
 - Stijn Janssens
+- Anthony Hermans
 
 ##### Planning
 
@@ -39,4 +40,3 @@ Examen.
 #### examen
 - opdracht 10
  - versie 2
-
