@@ -1,0 +1,7 @@
+// int ID
+// string Voornaam
+// string Achternaam
+// string emailadres
+// ------------
+// Getters voor alles
+// Setters voor alles buiten ID
