@@ -1,4 +1,11 @@
-+kanStarten(): bool
+
+// int zaalnummer
+// Tijdslot tijdslot
+// Datum datum
+// int vrijeplaatsen
+//[]Ticket Tickets // als Stack
+//[]Reservatie Reservaties // als Queue
+//+kanStarten(): bool
 	
 +getID(): int
 
@@ -22,10 +29,6 @@
 
 +popTicket(): Ticket
 	
-+addReservatie(in reservatie:Reservatie): bool
++isEmptyTickets(): bool
 
-+dequeueReservatie(): Reservatie
-
-+emptyTickets(): bool
-
-+emptyReservaties(): bool
++isEmptyReservaties(): bool
