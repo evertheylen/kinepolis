@@ -5,32 +5,32 @@ Specification contract ADT Two Three Four tree (TreeItemType is het type van ele
 precondities: geen
 postcondities: een nieuwe 2-3-4 boom is gemaakt
 
-+destroyTwoThreeFourtree()
++destroy2-3-4-tree()
 // verwijdert een 2-3-4 boom
 precondities: geen
 postcondities: de 2-3-4 boom is verwijderd.
 
-isEmpty(): boolean
++isEmpty(): boolean
 // bepaalt of de 2-3-4 boom leeg is
 precondities: geen
 postcondities: returned true als de 2-3-4 boom leeg is en false als deze elementen bevat.
 
-insert(in newItem: TreeItemType, out success: boolean)
++insert(in newItem: TreeItemType, out success: boolean)
 // voegt een item toe aan de 2-3-4 boom, success duidt aan of het gelukt is.
 precondities: alle items van de 2-3-4 boom moeten een verschillende zoeksleutelwaarde hebben.
 postcondities: indien success true is, is het gelukt en is het item toegevoegd op de juiste locatie in de 2-3-4 boom.
 
-delete(in searchKey: KeyType, out success: boolean)
++delete(in searchKey: KeyType, out success: boolean)
 // de 2-3-4 boom wordt doorzocht naar het element met zoeksleutel searchKey, indien dit wordt gevonden, wordt het element verwijderd.
 precondities: geen
 postcondities: indien er een element met deze zoeksleutel wordt gevonden --> success = true, het element wordt verwijderd.
 
-retrieve(in searchKey: KeyType, out TreeItem: TreeItemType, out succes: boolean)
++retrieve(in searchKey: KeyType, out TreeItem: TreeItemType, out succes: boolean)
 // de 2-3-4 boom wordt doorzocht naar het element met zoeksleutel searchKey, indien dit wordt gevonden, wordt het element toegekend aan TreeItem, de 2-3-4 boom blijft onveranderd.
 precondities: geen
 postcondities: indien het element is gevonden, success is true en TreeItem bevat dit element.
 
-inordertraversal(in visit: FunctionType)
++inorderTraversal(in visit: FunctionType)
 // De 2-3-4 boom wordt doorlopen en bij elk element wordt de functie visit uitgevoerd.
 precondities: geen
 postcondities: geen
