@@ -1,3 +1,6 @@
+// Implementatie door Evert.
+
+
 Specification contract ADT Hashmap (HashItemType is het type van elementen die in de hashmap worden opgeslagen, KeyType is het type van de zoeksleutels, addressType is een manier om open addressing te doen):
 
 +createHashMap()
