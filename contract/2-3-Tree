@@ -1,11 +1,11 @@
 Specification contract ADT Two Three Tree (TreeItemType is het type van elementen die in de zoekboom worden opgeslagen, KeyType is het type van de zoeksleutels):
 
-+create 2-3-Tree()
++create2-3-Tree()
 // creëert een lege 2-3 boom
 precondities: geen
 postcondities: een nieuwe 2-3 boom is gemaakt
 
-+destroy 2-3-tree()
++destroy2-3-tree()
 // verwijdert een 2-3 boom
 precondities: geen
 postcondities: de 2-3 boom is verwijderd.
