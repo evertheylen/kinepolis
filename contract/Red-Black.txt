@@ -1,0 +1,36 @@
+Specification contract ADT Red-Blacktree (TreeItemType is het type van elementen die in de kboom worden opgeslagen, KeyType is het type van de zoeksleutels):
+	
+	createRed-Blacktree()
+	#creëert een lege rood-zwart boom
+	precondities: geen
+	postcondities: een nieuwe rood-zwart boom is gemaakt
+	
+	destroyRed-Blacktree()
+	#verwijdert een rood-zwart boom
+	precondities: geen
+	postcondities: de rood-zwart boom is verwijderd.
+
+	isEmpty(): boolean
+	#bepaalt of de rood-zwart boom leeg is
+	precondities: geen
+	postcondities: returned true als de rood-zwart boom leeg is en false als deze elementen bevat.
+
+	insert(in newItem: TreeItemType, out success: boolean)
+	#voegt een item toe aan de rood-zwart boom, success duidt aan of het gelukt is.
+	precondities: alle items van de rood-zwart boom moeten een verschillende zoeksleutelwaarde hebben.
+	postcondities: indien success true is, is het gelukt en is het item toegevoegd op de juiste locatie in de rood-zwart boom.
+
+	delete(in searchKey: KeyType, out success: boolean)
+	#de rood-zwart boom wordt doorzocht naar het element met zoeksleutel searchKey, indien dit wordt gevonden, wordt het element verwijderd.
+	precondities: geen
+	postcondities: indien er een element met deze zoeksleutel wordt gevonden --> success = true, het element wordt verwijderd.
+
+	retrieve(in searchKey: KeyType, out TreeItem: TreeItemType, out succes: boolean)
+	#de rood-zwart boom wordt doorzocht naar het element met zoeksleutel searchKey, indien dit wordt gevonden, wordt het element toegekend aan TreeItem, de rood-zwart boom blijft onveranderd.
+	precondities: geen
+	postcondities: indien het element is gevonden, success is true en TreeItem bevat dit element.
+
+	inordertraversal(in visit: FunctionType)
+	#De rood-zwart boom wordt doorlopen en bij elk element wordt de functie visit uitgevoerd.
+	precondities: geen
+	postcondities: geen

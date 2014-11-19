@@ -1,0 +1,41 @@
+Specification contract ADT Hashmap (HashItemType is het type van elementen die in de hashmap worden opgeslagen, KeyType is het type van de zoeksleutels, addressType is een manier om open addressing te doen):
+
+	createHashmap()
+	#creëert een lege hashmap
+	precondities: geen
+	postcondities: een nieuwe hashmap is gemaakt
+	
+	destroyHashmap()
+	#verwijdert een hashmap
+	precondities: geen
+	postcondities: de hashmap is verwijderd.
+
+	isEmpty(): boolean
+	#bepaalt of de hashmap leeg is
+	precondities: geen
+	postcondities: returned true als de hashmap leeg is en false als deze elementen bevat.
+
+	insert(in newItem: HashItemType, out success: boolean)
+	#voegt een item toe aan de hashmap, success duidt aan of het gelukt is.
+	precondities: alle items van de hashmap moeten een verschillende zoeksleutelwaarde hebben.
+	postcondities: indien success true is, is het gelukt en is het item toegevoegd op de juiste locatie in de hashmap.
+
+	delete(in searchKey: KeyType, out success: boolean)
+	#de hashmap wordt doorzocht naar het element met zoeksleutel searchKey, indien dit wordt gevonden, wordt het element verwijderd.
+	precondities: geen
+	postcondities: indien er een element met deze zoeksleutel wordt gevonden --> success = true, het element wordt verwijderd.
+
+	retrieve(in searchKey: KeyType, out TreeItem: TreeItemType, out succes: boolean)
+	#de hashmap wordt doorzocht naar het element met zoeksleutel searchKey, indien dit wordt gevonden, wordt het element toegekend aan HashItem, de hashmap blijft onveranderd.
+	precondities: geen
+	postcondities: indien het element is gevonden, success is true en HashItem bevat dit element.
+
+	inordertraversal(in visit: FunctionType)
+	#De hashmap wordt doorlopen en bij elk element wordt de functie visit uitgevoerd.
+	precondities: geen
+	postcondities: geen
+	
+	changeopenaddressing(in addressway: addressType)
+	#De manier van openaddressing van de Hashmap verandert.
+	precondities: originele manier van openaddressing
+	postcondities: andere manier van openaddressing.
