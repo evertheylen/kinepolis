@@ -1,3 +1,6 @@
+// Implementatie door Stijn
+// Testen door iedereen.
+
 //ID int
 //ReservatieID int
 +getID(): int
