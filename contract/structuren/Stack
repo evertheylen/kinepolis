@@ -1,4 +1,5 @@
 Specification contract ADT Stack (Stack van elementen van het type StackItemType):
+//Implementaties door Stijn en Anthony.
 
 +createStack()
 // creëert een lege Stack
