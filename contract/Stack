@@ -1,36 +1,36 @@
 Specification contract ADT Stack (Stack van elementen van het type StackItemType):
-	
-	createStack()
-	// creëert een lege Stack
-	precondities: geen
-	postcondities: een nieuwe stack is gemaakt.
-	
-	destroyStack()
-	// wist een stack
-	precondities: geen
-	postcondities: de stack is verwijderd.
 
-	isEmpty(): boolean
-	// gaat na of de stack leeg is.
-	precondities: geen
-	postcondities: returned true indien de stack leeg is en false indien dit niet het geval is.
-	
-	push(in newItem: StackItemType, out success: boolean)
-	// Plaats het element newItem vanboven op de stack.
-	precondities: geen
-	postcondities: het element is aan de top toegevoegd. Success duidt aan of het gelukt is.
-	
-	pop(out success: boolean)
-	// Verwijdert het bovenste element van de stack.
-	precondities: geen
-	postcondities: de stack is met een element verkleint. Het bovenste element is verwijderd, success duidt aan of het gelukt is.
-	
-	pop(out stackTop: StackItemType, out success: boolean)
-	// verwijdert het bovenste element van de stack en kent dit toe aan stackTop.
-	precondities: geen
-	postcondities: de stack is met een element verkleint. Het bovenste element is verwijderd, success duidt aan of het gelukt is. StackTop bevat het element dat op deze plaats zat.
++createStack()
+// creëert een lege Stack
+precondities: geen
+postcondities: een nieuwe stack is gemaakt.
 
-	getTop(out stackTop: StackItemType, out succes: boolean)
-	// zoekt het bovenste element van de stack en stopt dit in stackTop, laat de stack ongemoeid.
-	precondities: geen
-	postcondities: de stack is hetzelfde gebleven, maar het element aan de top zit nu ook in stackTop, success duidt aan of het gelukt is.
++destroyStack()
+// wist een stack
+precondities: geen
+postcondities: de stack is verwijderd.
+
++isEmpty(): boolean
+// gaat na of de stack leeg is.
+precondities: geen
+postcondities: returned true indien de stack leeg is en false indien dit niet het geval is.
+
++push(in newItem: StackItemType, out success: boolean)
+// Plaats het element newItem vanboven op de stack.
+precondities: geen
+postcondities: het element is aan de top toegevoegd. Success duidt aan of het gelukt is.
+
++pop(out success: boolean)
+// Verwijdert het bovenste element van de stack.
+precondities: geen
+postcondities: de stack is met een element verkleint. Het bovenste element is verwijderd, success duidt aan of het gelukt is.
+
++pop(out stackTop: StackItemType, out success: boolean)
+// verwijdert het bovenste element van de stack en kent dit toe aan stackTop.
+precondities: geen
+postcondities: de stack is met een element verkleint. Het bovenste element is verwijderd, success duidt aan of het gelukt is. StackTop bevat het element dat op deze plaats zat.
+
++getTop(out stackTop: StackItemType, out succes: boolean)
+// zoekt het bovenste element van de stack en stopt dit in stackTop, laat de stack ongemoeid.
+precondities: geen
+postcondities: de stack is hetzelfde gebleven, maar het element aan de top zit nu ook in stackTop, success duidt aan of het gelukt is.
