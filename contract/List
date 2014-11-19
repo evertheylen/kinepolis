@@ -1,34 +1,34 @@
 Specification contract ADT List (Lijst van elementen van het type ListItemType):
 
-	createList()						// creëert een lege lijst
-	precondities: geen
-	postcondities: nieuwe lijst
++createList()						// creëert een lege lijst
+precondities: geen
+postcondities: nieuwe lijst
 
-	destroyList()						// wist een lijst
-	precondities: een lijst is aanwezig
-	postcondities: de lijst is verwijderd
++destroyList()						// wist een lijst
+precondities: een lijst is aanwezig
+postcondities: de lijst is verwijderd
 
-	isEmpty(): boolean 					// geeft aan of de lijst leeg is
-	precondities: geen
-	postcondities: geeft true als de lijst leeg is en false als de lijst niet leeg is.
++isEmpty(): boolean 					// geeft aan of de lijst leeg is
+precondities: geen
+postcondities: geeft true als de lijst leeg is en false als de lijst niet leeg is.
 
-	getLength(): integer 					// returned het aantal elementen in de lijst.
-	precondities: geen
-	postcondities: geeft het aantal elementen in de lijst.
++getLength(): integer 					// returned het aantal elementen in de lijst.
+precondities: geen
+postcondities: geeft het aantal elementen in de lijst.
 
-	insert(in index: integer, in newItem: ListItemType, out success: boolean):
-	// voegt een nieuw item toe aan lijst op positie index als 1<=index<=getLength+1. De items op positie >= index worden 1 naar rechts geshift 
-	precondities: index moet tussen 1 en getLength() + 1 liggen, er moet een lijst zijn.
-	postcondities: de lijst is vergroot met 1 en het element is toegevoegd.
++insert(in index: integer, in newItem: ListItemType, out success: boolean):
+// voegt een nieuw item toe aan lijst op positie index als 1<=index<=getLength+1. De items op positie >= index worden 1 naar rechts geshift 
+precondities: index moet tussen 1 en getLength() + 1 liggen, er moet een lijst zijn.
+postcondities: de lijst is vergroot met 1 en het element is toegevoegd.
 
-	delete(in index: integer, out success: boolean):
-	// verwijdert het element op positie index, indien 1<= index <= getLength().
-	// Elementen met index >= 1 worden 1 naar links geshift. success laat zien of het gelukt is.
-	precondities: index moet tussen 1  en getLength() liggen.
-	postcondities: de lijst is met 1 verkleint en het item is verwijderd.
++delete(in index: integer, out success: boolean):
+// verwijdert het element op positie index, indien 1<= index <= getLength().
+// Elementen met index >= 1 worden 1 naar links geshift. success laat zien of het gelukt is.
+precondities: index moet tussen 1  en getLength() liggen.
+postcondities: de lijst is met 1 verkleint en het item is verwijderd.
 
-	retrieve(in index: integer, out dataItem:ListItemType, out success: boolean): haalt een element op positie index op indien 1 <= index <= getLength() 
-	// en stopt het in dataItem, success laat zien of het gelukt is.
-	precondities: index moet tussen 1 en getLength() liggen.
-	postcondities: output naar dataItem met daarin het gezochte element.
++retrieve(in index: integer, out dataItem:ListItemType, out success: boolean): haalt een element op positie index op indien 1 <= index <= getLength() 
+// en stopt het in dataItem, success laat zien of het gelukt is.
+precondities: index moet tussen 1 en getLength() liggen.
+postcondities: output naar dataItem met daarin het gezochte element.
 
