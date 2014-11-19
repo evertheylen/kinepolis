@@ -1,9 +1,28 @@
+// type Reservatie
+
 // int ID
 // int userID
 // DateTime TimeStamp
 // int vertoningsID
 // int plaatsen
-// []Ticket Tickets
 
-// Getters voor alles
-// Setters voor alles buiten ID
++getID(): int
+
++getUserID(): int
+
++getTimeStamp(): DateTime
+// DateTime is een datum en een tijd
+
++getVertoningsID(): int
+
++getPlaatsen(): int
+
+
++setUserID(in userID:int)
+
++setTimeStamp(in timestamp:DateTime
+// DateTime is een datum en een tijd
+
++setVertoningsID(in vertoningdID:int)
+
++setPlaatsen(in plaatsen:int)

@@ -1,7 +1,20 @@
+// type Gebruiker
+
 // int ID
 // string Voornaam
 // string Achternaam
-// string emailadres
-// ------------
-// Getters voor alles
-// Setters voor alles buiten ID
+// string Emailadres
+
++getID(): int
+
++getVoornaam(): string
+
++getAchternaam(): string
+
++getEmailadres(): string
+
++setVoornaam(in voornaam:string)
+
++setAchternaam(in achternaam:string)
+
++setEmailadres(in email:string)
