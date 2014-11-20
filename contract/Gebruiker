@@ -1,0 +1,21 @@
+// type Gebruiker
+// door Pieter
+
+// int ID
+// string Voornaam
+// string Achternaam
+// string Emailadres
+
++getID(): int
+
++getVoornaam(): string
+
++getAchternaam(): string
+
++getEmailadres(): string
+
++setVoornaam(in voornaam:string)
+
++setAchternaam(in achternaam:string)
+
++setEmailadres(in email:string)

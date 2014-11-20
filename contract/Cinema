@@ -1,0 +1,62 @@
+// Implementatie door Stijn
+// Testen door iedereen.
+
+// Cinema type, bevat al de rest
+
+// string naam
+// []Zaal zalen
+// []Tijdslot Tijdslots
+// []Vertoning Vertoningen
+// []Reservatie Reservaties
+// []Gebruiker Gebruikers
+// []Ticket Tickets
+
+
++createCinema(): Cinema
+pre-condities: geen
+post-condities: een nieuwe Cinema is gemaakt
+
++addZaal(in zaal:Zaal): bool
+pre-condities: zaal is een geldige zaal
+post-condities: geeft weer of het gelukt is
+
++addTijdslot(in tijdslot:Tijdslot): bool
+pre-condities: tjdslot is een geldig tijdslot
+post-condities: geeft weer of het gelukt is
+
++addReservatie(in reservatie:Reservatie): bool
+pre-condities: reservatie is een geldige reservatie
+post-condities: geeft weer of het gelukt is
+
++addGebruiker(in gebruiker:Gebruiker): bool
+pre-condities: gebruiker is een geldige gebruiker
+post-condities: geeft weer of het gelukt is
+
++addTicket(in ticket:Ticket): bool
+pre-condities: zaal is een geldige zaal
+post-condities: geeft weer of het gelukt is
+
+
++destroyCinema(in cinema:Cinema): bool
+pre-condities: cinema is een geldige bestaande cinema
+post-condities: de cinema wordt verwijderd
+
++removeZaal(in zaal:Zaal): bool
+pre-condities: zaal is een geldige zaal
+post-condities: geeft weer of het gelukt is
+
++removeTijdslot(in tijdslot:Tijdslot): bool
+pre-condities: tjdslot is een geldig tijdslot
+post-condities: geeft weer of het gelukt is
+
++removeReservatie(in reservatie:Reservatie): bool
+pre-condities: reservatie is een geldige reservatie
+post-condities: geeft weer of het gelukt is
+
++removeGebruiker(in gebruiker:Gebruiker): bool
+pre-condities: gebruiker is een geldige gebruiker
+post-condities: geeft weer of het gelukt is
+
++removeTicket(in ticket:Ticket): bool
+pre-condities: zaal is een geldige zaal
+post-condities: geeft weer of het gelukt is

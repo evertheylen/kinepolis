@@ -1,0 +1,14 @@
+// Implementatie door Anthony.
+// Testen door iedereen.
+
+// zaal type
+// ID int
+// plaatsen int
+
++getID(): int
+precondities: geen
+postcondities: geeft een ID terug
+
++getPlaatsen(): int
+precondities: geen
+postcondities: geeft het aantal plaatsen
