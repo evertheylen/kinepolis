@@ -167,13 +167,13 @@ func main() {
 	
 	fmt.Print("{")
 	j := 1
-	for i:=0; i<9; i+=1 {
+	for i:=0; i<6; i+=1 {
 		j+=i+j+1
 		
 		averages := make(chan float64, workers)
 		
 		for k:=0; k<workers; k++ {
-			go test(averages, j, 2000)
+			test(averages, j, 2000)
 		}
 		
 		total := 0.0

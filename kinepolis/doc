@@ -1,0 +1,7 @@
+Alle klassen ./struct hebben de volgende methodes:
++insert(element)
++delete(key)
++retrieve(key)
++inorder()
+
+De initializer zal ook de nodige informatie krijgen om te weten op welk attribuut er gesorteerd moet worden. 
