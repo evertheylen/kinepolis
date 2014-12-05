@@ -1,24 +1,20 @@
 // Implementatie door Evert.
 // Testen door Stijn.
-// Nota: 	We hadden blijkbaar iets fout gelezen/begrepen, daarom dat we de geavanceerde gegevensstructuren
-// 			ook al hadden gemaakt voor opdracht 2, waardoor we bij opdracht 4 al voor alle gegevensstructuren
-//			een contract hadden. Als ik het mij goed herinner hebben we voor de hashmap gekozen om het
-//			contract van Stijn te gebruiken.
 
 Specification contract ADT Hashmap (HashItemType is het type van elementen die in de hashmap worden opgeslagen, KeyType is het type van de zoeksleutels, addressType is een manier om open addressing te doen):
 
 +createHashMap()
-//Maakt een hashmap aan.
+// Maakt een hashmap aan.
 Precondities:Geen
 Postcondities:Een nieuwe hashmap is aangemaakt.
 
 +destroyHashMap()
-//Verwijdert een bestaande hashmap .
+// Verwijdert een bestaande hashmap .
 Precondities: Geen
 Postcondities: De hashmap is verwijderd.
 
 +hashMapIsEmpty: boolean {query}
-//Gaat na of de hashmap leeg is.
+// Gaat na of de hashmap leeg is.
 Precondities: Geen
 Postcondities: Geeft True weer als de hashmap leeg is en False als hij niet leeg is.
 
@@ -37,16 +33,16 @@ Precondities: Geef een Searchkey in die je wilt verwijderen uit de hashmap.
 Postcondities: Success geeft weer of het verwijderen gelukt is.
 
 +hashMapRetrieve(in searchKey: KeyType, out tableItem: TableItemType, out success: boolean)
-//Gaat een waarde opzoeken aan de hand van de ingegeven zoeksleutel.
-Precondities:Geef een zoeksleutel in die je wilt terugvinden.
-Postcondities:Success geeft weer of het opzoeken gelukt is.
+// Gaat een waarde opzoeken aan de hand van de ingegeven zoeksleutel.
+Precondities: Geef een zoeksleutel in die je wilt terugvinden.
+Postcondities: Success geeft weer of het opzoeken gelukt is.
 
-+inorderTraversal(in visit: FunctionType)
-//Doorloopt de hashmap.
-Precondities:Geen
++inorderTraversal(in visit: FunctionType) { query }
+// Doorloopt de hashmap.
+Precondities: Geen
 Postcondities: Geeft de items van de hashmap weer.
 
 +changeOpenAddressing(in addressway: addressType)
-//De manier van openaddressing van de Hashmap verandert.
-//Precondities: originele manier van openaddressing
-//Postcondities: andere manier van openaddressing.
+// De manier van openaddressing van de Hashmap verandert.
+// Precondities: originele manier van openaddressing
+// Postcondities: andere manier van openaddressing.
