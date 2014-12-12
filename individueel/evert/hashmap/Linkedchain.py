@@ -52,8 +52,9 @@ class Linkedchain:
             node1.next = newnode
             newnode.next = node2
         self.size += 1
+        return True
     
-    # Modification by Evert Heylen
+    # Modified
     def retrieve(self, key):
         current = self.head
         while current != None:
@@ -75,44 +76,15 @@ class Linkedchain:
             return s
         else:
             return 'Empty Linked chain'
+        
     def __repr__(self):
         return self.__str__()
+    
+    def inorder(self):
+        current = self.head
+        while current != None:
+            yield current.item
+            current = current.next
 
-# DO NOT USE :)
-class DoublyLinkedchain(Linkedchain):
-    def __init__(self):
-        Linkedchain.__init__(self)
-        self.precede(self.head)
-        
-    def precede(self, current = None, previous = None):
-        if current != None:
-            if current != self.head and previous != None:
-                current.precede = previous
-                self.precede(current.next, current)
-            else:
-                self.precede(current.next, current)
-        else:
-            return
-                
-    def remove(self, node):
-        i = self.head
-        current = Linkedchain.remove(self,node)
-        if current == None:
-            return None # didn't find it.
-        while i != current.precede:
-            i = i.next
-        current.next.precede = i
-        
-    def insert(self, newnode, node1 = None, node2 = None):
-        Linkedchain.insert(self, newnode, node1, node2)
-        i = self.head
-        if i == newnode:
-            newnode.precede = None
-        else:
-            while i.next != newnode:
-                i.next = i.next.next
-            newnode.precede = i
-        if newnode.next != None:
-            newnode.next.precede = newnode
     
 
