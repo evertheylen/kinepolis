@@ -1,5 +1,8 @@
 # Author: Evert Heylen
+# Testcode door: Stijn Janssens
 
+
+# As an example, we can use the Linkedchain
 from Linkedchain import *
 
 
@@ -16,7 +19,9 @@ def createModFunc(mod):
 
 
 
-# As derived from the comments in the source below:
+################
+# Some documentation:
+#
 # When inserting, the class of the objects inserted should implement the function .searchkey().
 # The function .searchkey() should be of type A, so that type A:
 #    - is convertible to an int (__int__ must be implemented)
@@ -45,6 +50,18 @@ def createModFunc(mod):
 #
 # On top of that, it should be capable of initializing without parameters.
 # 
+# The hashFunc/addressFunc should both be methods that take an integer and return
+# an integer.
+#
+# You can't (or rather, you shouldn't) change the way of addressing while the
+# hashmap contains data. Therefore, there is no function changeOpenAddressing.
+# If you really want to switch to another addressing way, you need to create a
+# new hashmap, something like this:
+#   newhashmap = Hashmap( <new parameters, including new way of addressing> )
+#   for element in oldhashmap.hashMapInorderTraversal():
+#       newhashmap.hashMapInsert(element)
+# newhashmap will then contain the same data, while using another way of addressing.
+#
 class Hashmap:
     def __init__(self, length=23, hashFunc=None, addressFunc=lineairProbing, chaining=None):
         # chaining is a class, hashFunc and addressFunc are both functions.
@@ -73,18 +90,19 @@ class Hashmap:
         # el can be of every type, but it needs to offer the .searchkey() function,
         # which should be convertible to an int. (see above)
         location = self._hashFunc(int(el.searchkey()))
+        origloc = location
         
         checked = [False] * self._length
-        i = 0
+        i = 1
         while self._array[location] != None and self._chaining == None:
             checked[location] = True
+            #print("loc:",location, checked)
             if all(checked):
                 return False    # All spots are taken!
             
             # This spot is already taken and we don't chain, so calculate next location
             # with the _addressFunc.
-            location += self._addressFunc(i)
-            
+            location = origloc + self._addressFunc(i)
             # Make location 'loop', so that it'll never reach an index not in our array
             location = location % self._length
             
@@ -134,23 +152,26 @@ class Hashmap:
         # However, you *will* need to define a wrapper class for the 'int' type.
         
         location = self._hashFunc(int(key))
+        #print("location =", location)
+        origloc = location
         
-        checked = [False] * self._length
-       
         if self._chaining == None:
             checked = [False] * self._length
-            i=0
-            while self._array[location].searchkey() != key:
+            i=1
+            while not all(checked):
                 checked[location] = True
-                if all(checked):
-                    return None    # All spots have been checked, it's not here!
+                #print("location =", location)
+                if self._array[location] != None and self._array[location].searchkey() == key:
+                    break
                 
-                location += self._addressFunc(i)
+                location = origloc + self._addressFunc(i)
                 
                 # Make location 'loop', so that it'll never reach an index not in our array
                 location = location % self._length
                 i+=1
             # By this point we've reached the right location
+            if all(checked):
+                return None
             return self._array[location]
         else:
             if self._array[location] != None:
@@ -162,25 +183,26 @@ class Hashmap:
     
     def hashMapDelete(self, key):
         location = self._hashFunc(int(key))
-        
-        checked = [False] * self._length
-       
+        origloc = location
         if self._chaining == None:
-            checked = [False] * length
-            i = 0
-            while self._array[location].searchkey() != key:
+            checked = [False] * self._length
+            i = 1
+            while not all(checked):
                 checked[location] = True
-                if all(checked):
-                    return False    # All spots have been checked, it's not here!
+                if self._array[location] != None and self._array[location].searchkey() == key:
+                    break
                 
-                location += self._addressFunc(i)
+                location = origloc + self._addressFunc(i)
                 
                 # Make location 'loop', so that it'll never reach an index not in our array
                 location = location % self._length
                 i+=1
             # By this point we've reached the right location
-            self._array[location] = None # Delete
-            return True
+            if self._array[location] != None:
+                self._array[location] = None # Delete
+                return True
+            else:
+                return False    # the right location did not contain the element
         else:
             if self._array[location] != None:
                 # The chaining class will take care of it from now.
@@ -192,7 +214,8 @@ class Hashmap:
             else:
                 return False # Not in this array
     
-    def inorderTraversal(self):
+    
+    def hashMapInorderTraversal(self):
         for el in self._array:
             if el != None:
                 if self._chaining == None:
@@ -201,6 +224,16 @@ class Hashmap:
                 else:
                     for el_subelement in el.inorder():
                         yield el_subelement
+    
+    
+    def isEmpty(self):
+        for el in self.hashMapInorderTraversal():
+            return False
+        return True
+    
+    
+    def destroyHashMap(self):
+        del(self)
     
     def __repr__(self):
         s = ""

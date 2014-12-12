@@ -1,3 +1,7 @@
+
+# Modified version of the Linkedchain, originally made by Stijn.
+# Modified by Evert Heylen, as an example for the hash table.
+
 class Node:
     def __init__(self, item = None, next = None, precede = None):
         self.item = item
