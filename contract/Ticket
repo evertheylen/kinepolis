@@ -2,9 +2,9 @@
 // Testen door iedereen.
 
 //ID int
-//ReservatieID int
+//ReservationID int
 +getID(): int
 
-+getReservatieID(): int
++getReservationID(): int
 
-+setReservatieID(in ID: int): bool
++setReservationID(in ID: int): bool
