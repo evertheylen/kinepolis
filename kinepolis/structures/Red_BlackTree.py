@@ -1,26 +1,27 @@
-import Red_BlackNode
+import Red_BlackNode\ update
 
 class Red_BlackTree:
     '''The class Red_BlackTree is the exact representation of the contract. All the methods are available for use in another program exept for create, this is not available in python and I used the standard initializer to do this. The implementation that is done in this class is fairly simple as most of the complicated calculation happen inside the Red_BlackNode module.'''
-    def __init__(self, rootItem = None):
+    def __init__(self, attribute, rootItem = None):
         '''Initialization of the Red_BlackTree class'''
-        self.rootItem = Red_BlackNode.Node(rootItem)
+        self.attribute = attribute
+        self.rootItem = Red_BlackNode.Node(self.attribute, rootItem)
         
     def destroyRed_BlackTree(self):
         '''Sets the root of the RedBlackTree to None therefore destroying it completely.'''
-        self.rootItem = Red_BlackNode.Node(None)
+        self.rootItem = Red_BlackNode.Node(self.attribute, None)
         return True
     
     def isEmpty(self):
         '''Method to check if the tree is empty or not.'''
-        if self.rootItem.item == None:
+        if self.rootItem.searchkey() == None:
             return True
         else:
             return False
         
     def insert(self, newItem):
         '''The entire insert operation is implemented within the Red_BlackNode. It returns the result of this operation.'''
-        return self.rootItem.insert(newItem, self) 
+        return self.rootItem.insert(self.attribute, newItem, self) 
         
         
     def inorderTraversal(self, visit = None):

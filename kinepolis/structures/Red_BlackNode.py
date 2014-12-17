@@ -1,5 +1,5 @@
 class Node:
-    def __init__(self, item = None, next = None, leftpointer = None, rightpointer = None, leftchild = None, rightchild = None, parent = None):
+    def __init__(self, attribute, item = None, next = None, leftpointer = None, rightpointer = None, leftchild = None, rightchild = None, parent = None):
         '''The standard python initializer. With all the aspects of a redblack node.'''
         self.item = item
         self.next = next
@@ -8,39 +8,45 @@ class Node:
         self.leftchild = leftchild
         self.rightchild = rightchild
         self.parent = parent
-        
+        self.attribute = attribute
+    
+    def searchkey(self):
+        if self.item == None:
+            return None
+        return self.item.__dict__[self.attribute]
+    
     def __le__(self, t2):
         '''Operator overloading for lesser then or equal.'''
-        return self.item <= t2.item
+        return self.searchkey() <= t2.searchkey()
         
     def __ge__(self, t2):
         '''Operator overloading for greater then or equal.'''
-        return self.item >= t2.item
+        return self.searchkey() >= t2.searchkey()
         
     def __lt__(self, t2):
         '''Operator overloading for lesser then.'''
-        return self.item < t2.item
+        return self.searchkey() < t2.searchkey()
         
     def __gt__(self, t2):
         '''Operator overloading for greater then.'''
-        return self.item > t2.item
-        
+        return self.searchkey() > t2.searchkey()
+                
     def __repr__(self):
         '''Operator overloading for the visual representation of a Node when it gets printed.'''
         if self.item != None:
-            output = str(self.item)
+            output = str(self.searchkey())
         else:
             return ('Empty node')
         if self.next != None:
             output += ', '+str(self.next)
         return output
         
-    def insert(self, newItem, tree):
+    def insert(self, attribute, newItem, tree):
         '''Insert method for one Node. Tree is an argument for the use of fix_rotation later in this method.'''
-        tempNode = Node(newItem)
+        tempNode = Node(attribute, newItem)
         if self.fix_rotation(tree) == 1:
             # If this equals 1 than the order of the tree is changed and the original position of self is now its parent.
-            return self.parent.insert(newItem, tree)
+            return self.parent.insert(attribute, newItem, tree)
         else:
             if newItem == self.item:
                 self.treeItem = self.item
@@ -52,11 +58,11 @@ class Node:
                 self.item = newItem
                 return True
                 
-            elif self.leftchild == None and newItem < self.item:
+            elif self.leftchild == None and newItem.__dict__[self.attribute] < self.searchkey():
                 # If the location were newitem should be placed is on the left of the current Item and that location is empty then newItem gets placed there.
                 if self.fix_rotation(tree) == 1:
                     # If the order of the tree has changed then insert gets redone to see if this location is still free or not.
-                    self.insert(newItem, tree)
+                    self.insert(attribute, newItem, tree)
                 self.leftchild = tempNode
                 self.leftpointer = 'red'
                 tempNode.parent = self
@@ -64,10 +70,10 @@ class Node:
                 tree.rootItem.fix_rotation(tree)
                 return True
                 
-            elif self.rightchild == None and newItem > self.item:
+            elif self.rightchild == None and newItem.__dict__[self.attribute] > self.searchkey():
                 # Same as the left insert but on the right.
                 if self.fix_rotation(tree) == 1:
-                    self.insert(newItem, tree)        
+                    self.insert(attribute, newItem, tree)        
                 self.rightchild = tempNode
                 self.rightpointer = 'red'
                 tempNode.parent = self
@@ -76,37 +82,39 @@ class Node:
                     
             else:
                 # If we aren't in a leaf then we pick the correct side based on the searchalgorithm, we reorder the tree on that side and we run the insert algorithm for the next leaf.
-                if newItem < self.item:
+                if newItem.__dict__[self.attribute] < self.searchkey():
                     if self.leftchild.fix_rotation(tree) == 1:
-                        return self.leftchild.parent.insert(newItem, tree)
+                        return self.leftchild.parent.insert(attribute, newItem, tree)
                     else:
                     
-                        return self.leftchild.insert(newItem, tree)
+                        return self.leftchild.insert(attribute, newItem, tree)
                 else:
                     if self.rightchild.fix_rotation(tree) == 1:
 
-                        return self.rightchild.parent.insert(newItem, tree)
+                        return self.rightchild.parent.insert(attribute, newItem, tree)
                     else:                        
 
-                        return self.rightchild.insert(newItem, tree)
+                        return self.rightchild.insert(attribute, newItem, tree)
                                 
         
     def inorderTraversal(self, visit):
         '''The inorderTraversal is just a recursive algorithm. It prints out the left most subtree of a tree, then the root and then the rightmost subtree. If we do that. The tree is printed out in order.'''
-        if self.item != None and self.leftchild == None and self.rightchild == None:
+        if self.searchkey != None and self.leftchild == None and self.rightchild == None:
             if visit != None:
                 visit()
             self.leftpointer = None                                         #Makes sure there are no pointers left over after some rotation.
-            self.rightpointer = None  
-            print(self.item, self.leftpointer, self.leftchild, self.rightpointer, self.rightchild, self.parent)     #This if-statement makes sure it is a leaf and then it gets printed.
+            self.rightpointer = None
+            yield self.item  
         else:
             if self.leftchild != None:
-                self.leftchild.inorderTraversal(visit)                      #First the leftsubtree
+                for i in self.leftchild.inorderTraversal(visit):
+                    yield i
             if visit != None:
                 visit()
-            print(self.item, self.leftpointer, self.leftchild, self.rightpointer, self.rightchild, self.parent)         #Then print the root.
+            yield self.item
             if self.rightchild != None:
-                self.rightchild.inorderTraversal(visit)                     # Then the rightsubtree.
+                for i in self.rightchild.inorderTraversal(visit):                     # Then the rightsubtree.
+                    yield i
 
     def retrieve(self, searchKey):
         '''The retrieve method looks for a searchKey and returns that searchkey if it is in the tree.If it isn't it returns False.'''
@@ -118,25 +126,25 @@ class Node:
                 
     def find_searchKey(self, searchKey):
         '''This function is used to find the location of an item in the tree. It returns the node with all its atributes.'''
-        if searchKey == self.item:                                          #The basecase of the recursive algorithm: if the current location has the correct searchKey then that is the item that we are looking for.
+        if searchKey == self.searchkey():                                          #The basecase of the recursive algorithm: if the current location has the correct searchKey then that is the item that we are looking for.
             itemLocation = self
             return itemLocation
         
-        elif self.leftchild == None and searchKey < self.item:              #Two only possible ways that the searchKey we are looking for is not in the tree.
+        elif self.leftchild == None and searchKey < self.searchkey():              #Two only possible ways that the searchKey we are looking for is not in the tree.
             return None
             
-        elif self.rightchild == None and searchKey > self.item:
+        elif self.rightchild == None and searchKey > self.searchkey():
             return None   
         
         else:
-            if searchKey < self.item:                                       # Standard binary search algorith.
+            if searchKey < self.searchkey():                                       # Standard binary search algorith.
                 return self.leftchild.find_searchKey(searchKey)
             else:
                 return self.rightchild.find_searchKey(searchKey)
                     
     def find_successor(self, successorlist):   
         '''The method find_successor returns the inorder succesorlist of the item. Its a list of all the items in the tree. In the deletealgorithm this list gets sorted and the inorder successor can be determined. It traverses the tree using an inorderTraversal.'''
-        if self.item != None and self.leftchild == None and self.rightchild == None:
+        if self.searchkey != None and self.leftchild == None and self.rightchild == None:
             successorlist.append(self)
         else:
             if self.leftchild != None:
@@ -228,11 +236,11 @@ class Node:
         self.find_successor(successorlist)                                  #The inorder successor is the item : self < inordersuccessor and self >= everything which is < inorder successor            
         successor = None
         for i in range(len(sorted(successorlist))-1):                       #find the inorder successor of the item.
-            if sorted(successorlist)[i].item == searchKey:
+            if sorted(successorlist)[i].searchkey() == searchKey:
                 successor = sorted(successorlist)[i+1]
         if successor == None:
             successor = sorted(successorlist)[-1]
-        successorLocation = self.find_searchKey(successor.item)             #The succesor is found.
+        successorLocation = self.find_searchKey(successor.searchkey())             #The succesor is found.
         if itemLocation.leftchild == None and itemLocation.rightchild == None:
             #If node to be deleted is a red leaf, remove leaf, done.
             if itemLocation.parent != None:
@@ -244,11 +252,11 @@ class Node:
                     itemLocation.parent.rightchild = None
                 elif itemLocation < itemLocation.parent and itemLocation.parent.leftpointer == 'black':
                 #The node itself is a black leaf
-                    itemLocation.item = None
+                    itemLocation.searchkey() = None
                     itemLocation.parent.leftpointer = 'blackblack'  #Make the parent a doubleblack pointer and go to the fixdoubleblack algorithm.
                     itemLocation.fixdoubleblack(tree)
                 elif itemLocation > itemLocation.parent and itemLocation.parent.rightpointer == 'black':
-                    itemLocation.item = None
+                    itemLocation.searchkey() = None
                     itemLocation.parent.rightpointer = 'blackblack'
                     itemLocation.fixdoubleblack(tree)
             else:
@@ -436,9 +444,9 @@ class Node:
         if self.leftpointer == 'red' and self.rightpointer == 'red':      # A four node cannot stay in a Red-Black Tree
             self.leftpointer = 'black'
             self.rightpointer = 'black'
-            if self.parent != None and self.item < self.parent.item:      #Fixes the splitsing of a 2-node parent.
+            if self.parent != None and self.searchkey() < self.parent.searchkey():      #Fixes the splitsing of a 2-node parent.
                 self.parent.leftpointer = 'red'
-            elif self.parent != None and self.item > self.parent.item:
+            elif self.parent != None and self.searchkey() > self.parent.searchkey():
                 self.parent.rightpointer = 'red'
                 
         if self.leftpointer == 'red' and self.leftchild.leftpointer == 'red':
