@@ -1,9 +1,10 @@
 class Ticket:
-    """ klasse voor een Ticket """
-    
-    def __init__(self, ID, reservatieID):
+    def __init__(self, ID=None, ReservationID=None):
         self.ID = ID
-        self.reservatieID = reservatieID
+        self.ReservationID = ReservationID
         
-        # men kan de bijhorende gebruiker bereiken via de bijhorende reservatie.
+    def getReservationID(self):
+        return ReservationID
     
+    def setReservationID(self, ReservationID):
+        self.ReservationID = ReservationID

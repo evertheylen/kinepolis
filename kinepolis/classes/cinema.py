@@ -1,8 +1,5 @@
 class Cinema:
-    '''Class which contains al the other objects, like Theater and Show.'''    
-    
-    
-    def __init__(self, name=None, theaters=None, timeslot=None, show=None, reservations=None, users=None, tickets=None):
+    def __init__(self, name=None, theaters=None, timeslots=None, shows=None, reservations=None, users=None, tickets=None):
         self.name = name
         self.theaters = theaters
         self.timeslots = timeslots
