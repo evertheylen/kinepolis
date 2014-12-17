@@ -1,4 +1,4 @@
-class Reservatie:
+class Reservation:
     """ Klasse voor een reservatie """
     
     def __init__(self, ID, userID, timeStamp, vertoningsID, plaatsen):
