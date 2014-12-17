@@ -1,14 +1,13 @@
-class Gebruiker:
-    """ Klasse voor een gebruiker """
+class User:
     
-    def __init__(self, ID, voornaam, achternaam, email):
-        """ Allemaal string, buiten ID: int. """
+    def __init__(self, ID, firstname, lastname, mail):
+        """ All string, except ID: int. """
         
         self.ID = ID
-        self.voornaam = voornaam
-        self.achternaam = achternaam
-        self.email = email
+        self.firstname = firstname
+        self.lastname = lastname
+        self.mail = mail
     
     def sendMail(self, message):
         pass
-        # stuur zogezegd een mail naar de gebruiker
+        # send a mail, but not really :)

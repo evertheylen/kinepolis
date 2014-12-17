@@ -1,6 +1,6 @@
 import structures
 
-def createDataStructure(T, attr):
+def createDataStructure(T, attr, **kwargs):
     """ Creates a data structure of type T (or string, see below), where the elements 
     are ordered/searched for in attribute attr. """
     
@@ -13,7 +13,7 @@ def createDataStructure(T, attr):
             print("%s is not a valid type."%T)
             return None
     
-    return T(attr)
+    return T(attr, **kwargs)
 
 # Testing
 """
