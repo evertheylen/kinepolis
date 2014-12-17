@@ -3,12 +3,12 @@
 
 // Cinema type, bevat al de rest
 
-// string naam
-// []Zaal zalen
-// []Tijdslot Tijdslots
-// []Vertoning Vertoningen
-// []Reservatie Reservaties
-// []Gebruiker Gebruikers
+// string name
+// []Theater Theaters
+// []Timeslot Timeslots
+// []Show Shows
+// []Reservation Reservations
+// []User Users
 // []Ticket Tickets
 
 
@@ -16,19 +16,19 @@
 pre-condities: geen
 post-condities: een nieuwe Cinema is gemaakt
 
-+addZaal(in zaal:Zaal): bool
++addTheater(in theater:Theater): bool
 pre-condities: zaal is een geldige zaal
 post-condities: geeft weer of het gelukt is
 
-+addTijdslot(in tijdslot:Tijdslot): bool
++addTimeslot(in timeslot:Timeslot): bool
 pre-condities: tjdslot is een geldig tijdslot
 post-condities: geeft weer of het gelukt is
 
-+addReservatie(in reservatie:Reservatie): bool
++addReservation(in reservation:Reservation): bool
 pre-condities: reservatie is een geldige reservatie
 post-condities: geeft weer of het gelukt is
 
-+addGebruiker(in gebruiker:Gebruiker): bool
++addUser(in user:User): bool
 pre-condities: gebruiker is een geldige gebruiker
 post-condities: geeft weer of het gelukt is
 
@@ -41,19 +41,19 @@ post-condities: geeft weer of het gelukt is
 pre-condities: cinema is een geldige bestaande cinema
 post-condities: de cinema wordt verwijderd
 
-+removeZaal(in zaal:Zaal): bool
++removeTheater(in theater:Theater): bool
 pre-condities: zaal is een geldige zaal
 post-condities: geeft weer of het gelukt is
 
-+removeTijdslot(in tijdslot:Tijdslot): bool
++removeTimeslot(in timeslot:Timeslot): bool
 pre-condities: tjdslot is een geldig tijdslot
 post-condities: geeft weer of het gelukt is
 
-+removeReservatie(in reservatie:Reservatie): bool
++removeReservation(in reservation:Reservation): bool
 pre-condities: reservatie is een geldige reservatie
 post-condities: geeft weer of het gelukt is
 
-+removeGebruiker(in gebruiker:Gebruiker): bool
++removeUser(in user:User): bool
 pre-condities: gebruiker is een geldige gebruiker
 post-condities: geeft weer of het gelukt is
 
