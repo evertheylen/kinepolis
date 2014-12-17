@@ -1,8 +1,9 @@
-#Auteur: Anthony Hermans
-from timeslot import *
-from theater import *
-#from ticket import *
-#from reservation import *
+# Auteur: Anthony Hermans
+
+from .timeslot import *
+from .theater import *
+from .ticket import *
+from .reservation import *
 
 class Show():
     def __init__(self, ID, date=None, theater=None , theatherID=None, timeslot=None,freeplaces = None,tickets = None, reservations = None):
@@ -31,7 +32,7 @@ class Show():
     def setDate(self, date):
         self.date = date
 
-    def getdate(self):
+    def getDate(self):
         return self.date
 
     def setFreePlaces(self):
@@ -41,32 +42,32 @@ class Show():
         return self.freeplaces
 
     def addTicket(self):
-        pass #stack gebruiken
+        pass # TODO stack gebruiken
 
     def popTicket(self):
         pass #stack gebruiken
 
     def isEmptyTickets(self):
-        if self.tickets == 0:
+        if self.tickets.isEmpty():
             return True
         else:
             return False
 
     def addReservatie():
         pass
-        # als de reservatie geldig is, doorvoeren, anders error.
+        # if the reservation is valid, add it, otherwise error.
 
-        # gebruik self.addTicket om toe te voegen in de Stack (? zie boven)
-
-        # voeg toe in self.reservaties
+        # use self.addTicket to add tickets to stack??? TODO
 
 
     def delReservatie():
         pass
-        # Verwijder reservatie uit Stack?
+        # Delete reservation from Stack?
+        # TODO Good question
+    
 
     def isEmptyReservations(self):
-        if self.Reservations == 0:
+        if self.reservations.isEmpty():
             return True
         else:
             return False

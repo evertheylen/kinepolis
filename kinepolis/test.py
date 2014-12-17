@@ -25,6 +25,7 @@ def test(name, t, oracle=True):
 
 
 def testDataStruct(name):
+    print("\n\n---------- starting test for datastruct:",name)
     ds = createDataStructure(name, "ID")
     
     test("ds empty", ds.isEmpty(), True)
@@ -97,12 +98,15 @@ def testDataStruct(name):
         ds.delete(u.ID)
     
     test("ds empty3", ds.isEmpty(), True)
+    
+    # Yes, this test is new :)
+    test("ds attribute", ds.attribute(), "ID")
+    
+    print("-------------\n\n")
 
 
 
 # Test here
 testDataStruct("RedBlackTree")
 
-    
-    
-    
+

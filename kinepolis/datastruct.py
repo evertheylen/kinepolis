@@ -14,24 +14,3 @@ def createDataStructure(T, attr, **kwargs):
             return None
     
     return T(attr, **kwargs)
-
-# Testing
-"""
-usarr = createDataStructure("UnsortedArray", "val")
-
-class Test:
-    def __init__(self, v):
-        self.val = v
-
-usarr.insert(Test(7))
-usarr.insert(Test(8))
-
-for i in usarr.inorder():
-    print(i.val)
-
-usarr.insert(Test(456))
-usarr.delete(8)
-
-for i in usarr.inorder():
-    print(i.val)
-"""

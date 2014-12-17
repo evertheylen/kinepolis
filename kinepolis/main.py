@@ -6,7 +6,7 @@ import pickle
 import signal
 
 from datastruct import *
-from klassen import *
+from classes import *
 
 from frontend import start_frontend
 from backend import start_backend
@@ -32,16 +32,21 @@ Example:
 filename = "kinepolis_data"
 data = {}
 
+
 def sigint(signal, frame):
-        print('\nSaving...')
+    save()
+    sys.exit(1)
 
-        # save data again
-        f = open(filename, 'wb+')
-        pickle.dump(data, f)
-        f.close()
 
-        print(rgbtext('Saving done!',green))        
-        sys.exit(1)
+def save():
+    print('\nSaving...')
+
+    # save data again
+    f = open(filename, 'wb+')
+    pickle.dump(data, f)
+    f.close()
+
+    print(rgbtext('Saving done!',green))
 
 
 def main():
@@ -90,15 +95,13 @@ def main():
     
     
     if "-b" in sys.argv:
-        start_backend(data)
+        start_backend(data, save)
     else:
         start_frontend(data)
     
     
     # save data again
-    f = open(filename, 'wb+')
-    pickle.dump(data, f)
-    f.close()
+    save()
 
 
 if __name__=="__main__":
