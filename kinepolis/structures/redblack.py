@@ -88,14 +88,11 @@ class Node:
                     if self.leftchild.fix_rotation(tree) == 1:
                         return self.leftchild.parent.insert(attribute, newItem, tree)
                     else:
-                    
                         return self.leftchild.insert(attribute, newItem, tree)
                 else:
                     if self.rightchild.fix_rotation(tree) == 1:
-
                         return self.rightchild.parent.insert(attribute, newItem, tree)
                     else:                        
-
                         return self.rightchild.insert(attribute, newItem, tree)
                                 
         
@@ -132,7 +129,7 @@ class Node:
             itemLocation = self
             return itemLocation
         
-        # TODO fix: order of None!
+
         elif self.leftchild == None and searchKey < self.searchkey():              #Two only possible ways that the searchKey we are looking for is not in the tree.
             return None
             
@@ -594,6 +591,8 @@ class RedBlackTree:
     def retrieve(self, searchKey): 
         '''Retrieve returns de value that is found and doesn't change the tree.'''
         (success, value) = self.rootItem.retrieve(searchKey)
+
+        return value
         #print('De operatie was {0}, {1} is de gevonden waarde'.format(success, value))
         
     def delete(self, searchKey):
