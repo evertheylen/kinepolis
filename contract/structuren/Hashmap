@@ -13,7 +13,7 @@ Postcondities:Een nieuwe hashmap is aangemaakt.
 Precondities: Geen
 Postcondities: De hashmap is verwijderd.
 
-+IsEmpty: boolean {query}
++isEmpty: boolean {query}
 // Gaat na of de hashmap leeg is.
 Precondities: Geen
 Postcondities: Geeft True weer als de hashmap leeg is en False als hij niet leeg is.
