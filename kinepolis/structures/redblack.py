@@ -561,11 +561,11 @@ class RedBlackTree:
     def __init__(self, attribute, rootItem = None):
         '''Initialization of the Red_BlackTree class'''    
         self.rootItem = Node(attribute, rootItem)
-        self.attribute = attribute
+        self._attribute = attribute
         
     def attribute(self):
         '''Returns the attribute of the Red_BlackTree'''
-        return self.attribute
+        return self._attribute
         
     def isEmpty(self):
         '''Method to check if the tree is empty or not.'''    
@@ -576,7 +576,7 @@ class RedBlackTree:
         
     def insert(self, newItem):
         '''The entire insert operation is implemented within the Red_BlackNode. It returns the result of this operation.'''    
-        return self.rootItem.insert(self.attribute, newItem, self) 
+        return self.rootItem.insert(self._attribute, newItem, self) 
         
         
     def inorder(self, visit = None):
@@ -585,8 +585,9 @@ class RedBlackTree:
 
     def sort(self):
         '''Returns a sorted list of the tree. This is done by generators and an inorderTraversal'''
-        return [u for u in self.inorder()]
-    
+        #return [u for u in self.inorder()]
+        return True
+        
     def retrieve(self, searchKey):
         '''Retrieve returns de value that is found and doesn't change the tree.'''    
         (success, value) = self.rootItem.retrieve(searchKey)
