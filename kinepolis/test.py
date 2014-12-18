@@ -25,6 +25,7 @@ def test(name, t, oracle=True):
 
 
 def testDataStruct(name):
+    print("\n\n---------- starting test for datastruct:",name)
     ds = createDataStructure(name, "ID")
     
     test("ds empty", ds.isEmpty(), True)
@@ -75,7 +76,6 @@ def testDataStruct(name):
         ds.insert(u)
     
     test("ds empty2", ds.isEmpty(), False)
-
     
     inorderList = [u for u in ds.inorder()]
     
@@ -94,47 +94,22 @@ def testDataStruct(name):
     test("ds retrieve after delete", ds.retrieve(307), None)
     
     # Must be done apart from eachother, or python will lose its mind (generators etc...)
-    '''for u in [u for u in ds.inorder()]:
-        if (u.ID != 104):
-            ds.delete(u.ID)
-            print('done for ',u.ID)'''
-    ds.delete(325)
-    ds.delete(324)
-    ds.delete(323)
-    ds.delete(322)
-    ds.delete(321)
-    ds.delete(320)
-    ds.delete(319)
-    ds.delete(318)
-    ds.delete(317)
-    ds.delete(316)
-    ds.delete(315)
-    ds.delete(314)
-    ds.delete(313)
-    ds.delete(312)
-    ds.delete(311)
-    ds.delete(310)
-    ds.delete(309)
-    ds.delete(308)
-    ds.delete(307)
-    ds.delete(306)
-    ds.delete(305)
-    ds.delete(304)
-    ds.delete(303)
-    ds.delete(302)
-    ds.delete(301)
-    ds.delete(104)
-    ds.delete(103)
-    ds.delete(102)
-    ds.delete(101)
-    ds.delete(100)
+    for u in [u for u in ds.inorder()]:
+        ds.delete(u.ID)
+    
     test("ds empty3", ds.isEmpty(), True)
+    
+    # Yes, this test is new :)
+    test("ds attribute", ds.attribute(), "ID")
+    
+    # Also new :)
+    # TODO details about sort()...
+    test("ds sort()", ds.sort())
+    
+    print("-------------\n\n")
 
 
 
 # Test here
-testDataStruct("RedBlackTree")
+testDataStruct("UnsortedArray")
 
-    
-    
-    
