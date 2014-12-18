@@ -31,7 +31,7 @@ postcondities: indien er een element met deze zoeksleutel wordt gevonden --> suc
 precondities: geen
 postcondities: indien het element is gevonden, success is true en BSTItem bevat dit element.
 
-+inorderTraversal(in visit: FunctionType)
++inorder(in visit: FunctionType)
 // De binaire zoekboom wordt doorlopen en bij elk element wordt de functie visit uitgevoerd.
 precondities: geen
 postcondities: geen
