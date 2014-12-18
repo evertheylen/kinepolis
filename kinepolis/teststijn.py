@@ -78,12 +78,13 @@ def testDataStruct(name):
 
     
     inorderList = [u for u in ds.inorder()]
-    
     test("ds inorder", inorderList[5].firstname, "ccccc")
     
     ds.delete(104)  # Delete Evert
     
     inorderList = [u for u in ds.inorder()]
+    
+    ds.inorder()
     
     test("ds inorder after delete", inorderList[5].firstname, "ddddd")
     
@@ -93,23 +94,21 @@ def testDataStruct(name):
     ds.delete(307)
     test("ds retrieve after delete", ds.retrieve(307), None)
     
-    '''
-    # Must be done apart from eachother, or python will lose its mind (generators etc...)
+    #''' Must be done apart from eachother, or python will lose its mind (generators etc...)
+    
     temp = [u for u in ds.inorder()]
-    print(type(temp))
-    for u in temp[::1]:
+    for u in temp[::-1]:
         if (u.ID != 9999):
-            print('about to do for', u.ID)
             ds.delete(u.ID)
-            print('done for ',u.ID)
     '''
+
     ds.delete(100)
     ds.delete(101)
     ds.delete(102)
     ds.delete(103)
-    '''
     ds.delete(104)
-    
+    ds.delete(105)
+    ds.delete(106)
     ds.delete(301)
     ds.delete(302)
     ds.delete(303)
