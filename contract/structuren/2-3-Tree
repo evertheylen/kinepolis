@@ -33,7 +33,7 @@ postcondities: indien er een element met deze zoeksleutel wordt gevonden --> suc
 precondities: geen
 postcondities: indien het element is gevonden, success is true en TreeItem bevat dit element.
 
-+inorderTraversal(in visit: FunctionType)
++inorder(in visit: FunctionType)
 // De 2-3-boom wordt doorlopen en bij elk element wordt de functie visit uitgevoerd.
 precondities: geen
 postcondities: geen
