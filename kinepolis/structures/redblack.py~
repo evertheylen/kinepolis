@@ -88,11 +88,22 @@ class Node:
                     if self.leftchild.fix_rotation(tree) == 1:
                         return self.leftchild.parent.insert(attribute, newItem, tree)
                     else:
+<<<<<<< HEAD
                         return self.leftchild.insert(attribute, newItem, tree)
                 else:
                     if self.rightchild.fix_rotation(tree) == 1:
                         return self.rightchild.parent.insert(attribute, newItem, tree)
                     else:                        
+=======
+                    
+                        return self.leftchild.insert(attribute, newItem, tree)
+                else:
+                    if self.rightchild.fix_rotation(tree) == 1:
+
+                        return self.rightchild.parent.insert(attribute, newItem, tree)
+                    else:                        
+
+>>>>>>> 0a89decd75d4c1c1f6106a9ff08601b36c46d4eb
                         return self.rightchild.insert(attribute, newItem, tree)
                                 
         
@@ -128,10 +139,12 @@ class Node:
         if searchKey == self.searchkey():                                          #The basecase of the recursive algorithm: if the current location has the correct searchKey then that is the item that we are looking for.
             itemLocation = self
             return itemLocation
-            
-        #if self.searchkey() == None:
-            #return None    
         
+<<<<<<< HEAD
+        
+=======
+        # TODO fix: order of None!
+>>>>>>> 0a89decd75d4c1c1f6106a9ff08601b36c46d4eb
         elif self.leftchild == None and searchKey < self.searchkey():              #Two only possible ways that the searchKey we are looking for is not in the tree.
             return None
             
@@ -232,6 +245,7 @@ class Node:
         '''The main delete function of the node. It finds the inorder successor and based on the location of the leaf that needs to be deleted it swaps it or not.'''
         itemLocation = self.find_searchKey(searchKey)                       #Find the node n that contains the value to be deleted.
         if itemLocation == None:
+            #print("Het item dat u wilt deleten bevindt zich niet in de boom.")
             return False
         successorlist = []
         self.find_successor(successorlist)                                  #The inorder successor is the item : self < inordersuccessor and self >= everything which is < inorder successor            
@@ -246,23 +260,17 @@ class Node:
             #If node to be deleted is a red leaf, remove leaf, done.
             if itemLocation.parent != None:
                 if itemLocation < itemLocation.parent and itemLocation.parent.leftpointer == 'red':
-                    itemLocation.item.__dict__[self.attribute] = None
-                    itemLocation.item = None
                     itemLocation.parent.leftchild = None
                     itemLocation.parent.leftpointer = None
                 elif itemLocation > itemLocation.parent and itemLocation.parent.rightpointer == 'red':
-                    itemLocation.item.__dict__[self.attribute] = None
-                    itemLocation.item = None
                     itemLocation.parent.rightchild = None
                     itemLocation.parent.rightchild = None
                 elif itemLocation < itemLocation.parent and itemLocation.parent.leftpointer == 'black':
                 #The node itself is a black leaf
-                    itemLocation.item.__dict__[self.attribute] = None
                     itemLocation.item = None
                     itemLocation.parent.leftpointer = 'blackblack'  #Make the parent a doubleblack pointer and go to the fixdoubleblack algorithm.
                     itemLocation.fixdoubleblack(tree)
                 elif itemLocation > itemLocation.parent and itemLocation.parent.rightpointer == 'black':
-                    itemLocation.item.__dict__[self.attribute] = None
                     itemLocation.item = None
                     itemLocation.parent.rightpointer = 'blackblack'
                     itemLocation.fixdoubleblack(tree)
@@ -282,9 +290,7 @@ class Node:
                     else:
                         itemLocation.parent.rightchild = itemLocation.leftchild
                         itemLocation.leftchild.parent = itemLocation.parent
-                        itemLocation.parent.rightpointer = 'black'
-                itemLocation.item.__dict__[self.attribute] = None
-                itemLocation.item = None 
+                        itemLocation.parent.rightpointer = 'black' 
             else:
                 if itemLocation.parent == None:
                     tree.rootItem = itemLocation.rightchild
@@ -298,8 +304,7 @@ class Node:
                         itemLocation.parent.rightchild = itemLocation.rightchild
                         itemLocation.rightchild.parent = itemLocation.parent
                         itemLocation.parent.rightpointer = 'black'
-                itemLocation.item.__dict__[self.attribute] = None
-                itemLocation.item = None     
+     
         else:     
             #If it has two internal nodes, swap with successor.
             successorLocation.originalparent = successor.parent.item                 
@@ -346,12 +351,10 @@ class Node:
                     #If the in-order successor is a black leaf. Then we make the successor a double black leaf and we do fixdoubleblack on it.
                     
                     if itemLocation.item < successorLocation.originalparent and successorLocation.parent.leftpointer == 'black':
-                        successorLocation.item.__dict__[self.attribute] = None
                         successorLocation.item = None
                         successorLocation.parent.leftpointer = 'blackblack'
                         successorLocation.fixdoubleblack(tree)
                     elif itemLocation.item > successorLocation.originalparent and successorLocation.parent.rightpointer == 'black':
-                        successorLocation.item.__dict__[self.attribute] = None
                         successorLocation.item = None
                         successorLocation.parent.rightpointer = 'blackblack'
                         successorLocation.fixdoubleblack(tree)             
@@ -584,7 +587,7 @@ class RedBlackTree:
     
     def isEmpty(self):
         '''Method to check if the tree is empty or not.'''
-        if self.rootItem == None or self.rootItem.searchkey() == None:
+        if self.rootItem.searchkey() == None:
             return True
         else:
             return False
@@ -603,19 +606,25 @@ class RedBlackTree:
     def retrieve(self, searchKey): 
         '''Retrieve returns de value that is found and doesn't change the tree.'''
         (success, value) = self.rootItem.retrieve(searchKey)
+<<<<<<< HEAD
         return value
+=======
+>>>>>>> 0a89decd75d4c1c1f6106a9ff08601b36c46d4eb
         #print('De operatie was {0}, {1} is de gevonden waarde'.format(success, value))
         
     def delete(self, searchKey):
         '''The entire delete operation is implemented within the Red_BlackNode. It returns the result of this operation.'''
         return self.rootItem.delete(searchKey, self)
         
+    def sort(self):
+        return True
         
-'''# Own testcode...        
-boom = RedBlackTree()
-print(boom.isEmpty())
+        
+# Own testcode...        
+'''boom = Red_BlackTree()
+#print(boom.isEmpty())
 boom.insert(10)
-print(boom.isEmpty())
+#print(boom.isEmpty())
 boom.insert(100)
 boom.insert(30)
 boom.insert(80)
@@ -629,8 +638,6 @@ boom.insert(90)
 boom.insert(20)
 boom.delete(30)
 boom.delete(70)
-print(boom.rootItem)
-
-inorderList = [u for u in ds.inorder()]
-print(inorderList)
-print(boom.isEmpty())'''
+#print(boom.rootItem)
+boom.inorderTraversal()
+#print(boom.isEmpty())'''
