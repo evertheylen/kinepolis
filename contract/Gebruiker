@@ -2,20 +2,20 @@
 // door Pieter
 
 // int ID
-// string Voornaam
-// string Achternaam
-// string Emailadres
+// string Firstname
+// string Lastname
+// string Mailaddress
 
 +getID(): int
 
-+getVoornaam(): string
++getFirstname(): string
 
-+getAchternaam(): string
++getLastname(): string
 
-+getEmailadres(): string
++getMailaddress(): string
 
-+setVoornaam(in voornaam:string)
++setFirstname(in firstname:string)
 
-+setAchternaam(in achternaam:string)
++setLastname(in lastname:string)
 
-+setEmailadres(in email:string)
++setMailaddress(in mail:string)
