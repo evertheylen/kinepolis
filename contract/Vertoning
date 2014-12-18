@@ -1,31 +1,31 @@
 // Implementatie door Anthony.
 // Testen door iedereen.
 
-// int zaalnummer
-// Tijdslot tijdslot
-// Datum datum
-// int vrijeplaatsen
-//[]Ticket Tickets // als Stack
-//[]Reservatie Reservaties // als Queue
-//+kanStarten(): bool
+// int theaternumber
+// Timeslot timeslot
+// Date date
+// int freeseats
+//[]Ticket tickets // als Stack
+//[]Reservation reservations // als Queue
+//+canStart(): bool
 	
 +getID(): int
 
-+getZaalNummer(): int
++getTheaterNumber(): int
 
-+getTijdslot(): Tijdslot
++getTimeslot(): Timeslot
 
-+getDatum(): Datum
++getDate(): Date
 
-+getVrijePlaatsen(): int
++getFreeSeats(): int
 
-+setZaalNummer(in zaalnr:int): bool // succes
++setTheaterNumber(in theaternumber:int): bool // succes
 
-+setTijdslot(in tijdslot:Tijdslot): bool
++setTimeslot(in timeslot:Timeslot): bool
 
-+setDatum(in datum:Datum): bool
++setDate(in date:Date): bool
 
-+setVrijePlaatsen(in vrijeplaatsen:int): bool
++setFreeSeats(in freeseats:int): bool
 
 +addTicket(): bool
 
@@ -33,4 +33,4 @@
 	
 +isEmptyTickets(): bool
 
-+isEmptyReservaties(): bool
++isEmptyReservations(): bool
