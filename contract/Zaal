@@ -1,14 +1,14 @@
 // Implementatie door Anthony.
 // Testen door iedereen.
 
-// zaal type
+// theater type
 // ID int
-// plaatsen int
+// seats int
 
 +getID(): int
 precondities: geen
 postcondities: geeft een ID terug
 
-+getPlaatsen(): int
++getSeats(): int
 precondities: geen
 postcondities: geeft het aantal plaatsen
