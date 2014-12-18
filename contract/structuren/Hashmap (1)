@@ -10,32 +10,32 @@ Postcondities:Een nieuwe hashmap is aangemaakt.
 Precondities:Geen
 Postcondities:De hashmap is verwijderd.
 
-+hashMapIsEmpty: boolean {query}
++isEmpty: boolean {query}
 //Gaat na of de hashmap leeg is.
 Precondities:Geen
 Postcondities: Geeft True weer als de hashmap leeg is en False als hij niet leeg is.
 
-+hashMapInsert(in newItem: TableItemType, out success: boolean)
++insert(in newItem: TableItemType, out success: boolean)
 // Voegt newItem toe aan een hashmap met items met verschillende search key
 // waarden, verschillend van de search key van newItem. Success geeft weer
 // of het toevoegen gelukt is.
 Precondities: Geef een waarde in die je wilt toevoegen aan de hashmap.
 Postcondities: Success geeft weer of het toevoegen gelukt is.
 
-+hashMapDelete(in searchKey: KeyType, out success: boolean)
++delete(in searchKey: KeyType, out success: boolean)
 // Verwijdert een item met een SearchKey
 // die overeenkomt met de ingegeven SearchKey. Success geeft weer
 // of het verwijderen gelukt is.
 Precondities: Geef een Searchkey in die je wilt verwijderen uit de hashmap.
 Postcondities: Success geeft weer of het verwijderen gelukt is.
 
-+hashMapRetrieve(in searchKey: KeyType, out tableItem: TableItemType,
++retrieve(in searchKey: KeyType, out tableItem: TableItemType,
 out success: boolean)
 //Gaat een waarde opzoeken aan de hand van de ingegeven zoeksleutel.
 Precondities:Geef een zoeksleutel in die je wilt terugvinden.
 Postcondities:Success geeft weer of het opzoeken gelukt is.
 
-+inorderTraversal(in visit: FunctionType)
++inorder(in visit: FunctionType)
 //Doorloopt de hashmap.
 Precondities:Geen
 Postcondities: Geeft de items van de hashmap weer.
