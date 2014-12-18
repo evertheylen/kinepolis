@@ -1,5 +1,6 @@
 class Node:
     def __init__(self, attribute, item = None, next = None, precede = None, leftpointer = None, rightpointer = None, leftchild = None, rightchild = None, parent = None):
+        '''The standard python initializer. With all the aspects of a redblack node.'''    
         self.item = item
         self.next = next
         self.precede = precede
@@ -11,23 +12,29 @@ class Node:
         self.attribute = attribute
         
     def searchkey(self):
+        '''Return the searchkey of an item. This is the attribute of the item that is defined as the searchkey'''
         if self.item == None:
             return None
         return self.item.__dict__[self.attribute]
         
     def __le__(self, t2):
+        '''Operator overloading for lesser then or equal.'''    
         return self.searchkey() <= t2.searchkey()
         
     def __ge__(self, t2):
+        '''Operator overloading for greater then or equal.'''    
         return self.searchkey() >= t2.searchkey()
         
     def __lt__(self, t2):
+        '''Operator overloading for lesser then.'''    
         return self.searchkey() < t2.searchkey()
         
     def __gt__(self, t2):
+        '''Operator overloading for greater then.'''    
         return self.searchkey() > t2.searchkey()
         
     def __repr__(self):
+        '''Operator overloading for the visual representation of a Node when it gets printed.'''    
         if self.item != None:
             output = str(self.searchkey())
         else:
@@ -37,28 +44,33 @@ class Node:
         return output
         
     def insert(self, attribute, newItem, tree):
+        '''Insert method for one Node. Tree is an argument for the use of fix_rotation later in this method.'''    
         tempNode = Node(attribute, newItem)
         if self.fix_rotation(tree) == 1:
+            # If this equals 1 than the order of the tree is changed and the original position of self is now its parent.
             return self.parent.insert(newItem, tree)
         else:
             if newItem == self.item:
                 self.treeItem = self.item
                 return False
                 
-            if self.searchkey() == None:
+            if self.searchkey() == None:        # If the tree is empty then a new root is made.
                 self.item = newItem
                 return True
                 
             elif self.leftchild == None and newItem.__dict__[attribute] < self.searchkey():
+                # If the location were newitem should be placed is on the left of the current Item and that location is empty then newItem gets placed there.
                 if self.fix_rotation(tree) == 1:
+                    # If the order of the tree has changed then insert gets redone to see if this location is still free or not.
                     self.insert(attribute, newItem, tree)
                 self.leftchild = tempNode
                 self.leftpointer = 'red'
-                tempNode.parent = self
+                tempNode.parent = self              #Insert and reorder the tree afterwards.
                 tree.rootItem.fix_rotation(tree)
                 return True
                 
             elif self.rightchild == None and newItem.__dict__[attribute] > self.searchkey():
+                # Same as the left insert but on the right.
                 if self.fix_rotation(tree) == 1:
                     self.insert(attribute, newItem, tree)        
                 self.rightchild = tempNode
@@ -68,6 +80,7 @@ class Node:
                 return True  
                     
             else:
+                # If we aren't in a leaf then we pick the correct side based on the searchalgorithm, we reorder the tree on that side and we run the insert algorithm for the next leaf.
                 if newItem.__dict__[attribute] < self.searchkey():
                     if self.leftchild.fix_rotation(tree) == 1:
                         return self.leftchild.parent.insert(attribute, newItem, tree)
@@ -102,6 +115,7 @@ class Node:
                     yield i
 
     def retrieve(self, searchKey):
+        '''The retrieve method looks for a searchKey and returns that searchkey if it is in the tree.If it isn't it returns False.'''    
         treeItem = self.find_searchKey(searchKey)
         if treeItem != None:    
             return True, treeItem.item
@@ -110,31 +124,25 @@ class Node:
                 
     def find_searchKey(self, searchKey, delete=0):
         '''This function is used to find the location of an item in the tree. If delete = 1, all the nodes are transformed to a 3 or 4 node on the way to the item.'''
-        if searchKey == self.searchkey():
+        if searchKey == self.searchkey():           #The basecase of the recursive algorithm: if the current location has the correct searchKey then that is the item that we are looking for.
             itemLocation = self
             return itemLocation
         
-        elif self.leftchild == None and searchKey < self.searchkey():
+        elif self.leftchild == None and searchKey < self.searchkey():       #Two only possible ways that the searchKey we are looking for is not in the tree.
             return None
             
         elif self.rightchild == None and searchKey > self.searchkey():
             return None   
         
         else:
-            if delete == 1:
-                '''if self.parent != None:
-                    self.fix_nodes()'''
-                if searchKey < self.searchkey():
-                    return self.leftchild.find_searchKey(searchKey,1)
-                else:
-                    return self.rightchild.find_searchKey(searchKey,1)
+            # Standard binary search algorithm.
+            if searchKey < self.searchkey():
+                return self.leftchild.find_searchKey(searchKey)
             else:
-                if searchKey < self.searchkey():
-                    return self.leftchild.find_searchKey(searchKey)
-                else:
-                    return self.rightchild.find_searchKey(searchKey)
+                return self.rightchild.find_searchKey(searchKey)
                     
     def find_successor(self, successorlist):   
+        '''The method find_successor returns the inorder succesorlist of the item. Its a list of all the items in the tree. In the deletealgorithm this list gets sorted and the inorder successor can be determined. It traverses the tree using an inorderTraversal.'''
         if self.item != None and self.leftchild == None and self.rightchild == None:
             successorlist.append(self)
         else:
@@ -144,19 +152,8 @@ class Node:
             if self.rightchild != None:
                 self.rightchild.find_successor(successorlist)        
     
-    def fix_nodes(self):    
-        '''Fixes that all nodes on the way to a node that has to be deleted are 3 or 4 nodes.'''
-        if self.leftpointer == 'black' and self.rightpointer == 'black':
-            # self is a 2 node
-            if self.item < self.parent.item and self.parent.leftpointer != 'red':
-                # self is not in the same node as its parent (and thus is not a 3 node)
-                self.leftpointer = 'red'
-                self.rightpointer = 'red'
-            elif self.item > self.parent.item and self.parent.rightpointer != 'red':
-                self.leftpointer = 'red'
-                self.rightpointer = 'red'
-    
     def fixdoubleblack(self, tree):
+        '''Fix double black is a different way of looking at a delete. I have based myself on another way than in the course material but I found it easier to code. Basically it looks at the pointer of siblings and parents and it makes some of them a doubleblack pointer. This isn't allowed in the tree and this function gets rid of them by rotating and color changing.'''
         if self.parent.leftpointer == 'blackblack':                         #This is the part for a left doubleblack pointer, the part of the right one is exactly the same but mirrored. 
             if self.parent.leftchild.leftchild == None and self.parent.leftchild.rightchild == None:
                 self.parent.leftchild = None
@@ -229,18 +226,19 @@ class Node:
                     #self.parent.rightchild = None
                     self.parent.parent.leftpointer = 'black'
     def delete(self, searchKey, tree):
-        itemLocation = self.find_searchKey(searchKey,1)     #Zoek de knoop n die het te verwijderen item bevat en vorm alle knopen op het pad om tot een 3 of 4 knoop.
+        '''The main delete function of the node. It finds the inorder successor and based on the location of the leaf that needs to be deleted it swaps it or not.'''
+        itemLocation = self.find_searchKey(searchKey,1)     #Find the node n that contains the value to be deleted.
         if itemLocation == None:
             return False
         successorlist = []
-        self.find_successor(successorlist)          #The inorder successor is the item zo dat self < inordersuccessor and self >= alles dat < inorder successor            
+        self.find_successor(successorlist)          #The inorder successor is the item : self < inordersuccessor and self >= everything which is < inorder successor                
         successor = None
-        for i in range(len(sorted(successorlist))-1):       #Zoek de successor van het item en vorm alle knopen op het pad om tot een 3 of 4 knoop.
+        for i in range(len(sorted(successorlist))-1):       #find the inorder successor of the item.
             if sorted(successorlist)[i].searchkey() == searchKey:
                 successor = sorted(successorlist)[i+1]
         if successor == None:
             successor = sorted(successorlist)[-1]
-        successorLocation = self.find_searchKey(successor.searchkey(),1)
+        successorLocation = self.find_searchKey(successor.searchkey(),1)        #The succesor is found.
         if itemLocation.leftchild == None and itemLocation.rightchild == None:
             #If node to be deleted is a red leaf, remove leaf, done.
             if itemLocation.parent != None:
@@ -253,7 +251,7 @@ class Node:
                 elif itemLocation < itemLocation.parent and itemLocation.parent.leftpointer == 'black':
                 #The node itself is a black leaf
                     itemLocation.item = None
-                    itemLocation.parent.leftpointer = 'blackblack'
+                    itemLocation.parent.leftpointer = 'blackblack'      #Make the parent a doubleblack pointer and go to the fixdoubleblack algorithm.
                     itemLocation.fixdoubleblack(tree)
                 elif itemLocation > itemLocation.parent and itemLocation.parent.rightpointer == 'black':
                     itemLocation.item = None
@@ -261,7 +259,7 @@ class Node:
                     itemLocation.fixdoubleblack(tree)
                    
             else:
-                tree.rootItem = Node(None, None)
+                tree.rootItem = Node(None, None)         #If it is the last item in the tree.
         elif itemLocation.leftchild == None or itemLocation.rightchild == None:
             #If it is a single-child parent, replace with its child.
             if itemLocation.rightchild == None:
@@ -294,11 +292,11 @@ class Node:
         else:     
             #If it has two internal nodes, swap with successor.
             successorLocation_originalparent = successor.parent                 
-            tempItem = successor                           #Swap het item en zijn successor
+            tempItem = successor                           #Swap the item and its successor
             successorLocation = itemLocation
             itemLocation = tempItem
             if successorLocation.parent != None:
-                if itemLocation.searchkey() < successorLocation_originalparent.searchkey() and successorLocation.parent.leftpointer == 'red':
+                if itemLocation.searchkey() < successorLocation_originalparent.searchkey() and successorLocation.parent.leftpointer == 'red':                   #If the inorder successor is red, it must be a leaf so we just remove the leaf.
                     successorLocation.parent.leftchild = None
                     successorLocation.parent.leftpointer = None
                 elif itemLocation.searchkey() > successorLocation_originalparent.searchkey() and successorLocation.parent.rightpointer == 'red':  
@@ -306,6 +304,7 @@ class Node:
                     successorLocation.parent.rightpointer = None
                     
                 elif successorLocation.leftchild != None and successorLocation.rightchild == None:
+                    # If the inorder successor is a single child parent we can do the same algorithm as if the searchKey was a single child parent.
                     if successorLocation.parent == None:
                         tree.rootItem = successorLocation.leftchild
                         successorLocation.leftchild.parent = None
@@ -333,7 +332,7 @@ class Node:
                             successorLocation.parent.rightpointer = 'black'
                       
                 else:
-                    #If the in-order successor is a black leaf.
+                    ##If the in-order successor is a black leaf. Then we make the successor a double black leaf and we do fixdoubleblack on it.
                     
                     if itemLocation.item < successorLocation_originalparent and successorLocation.parent.leftpointer == 'black':
                         successorLocation.item = None
@@ -345,7 +344,8 @@ class Node:
                         successorLocation.fixdoubleblack(tree)             
 
     def forcedrotateleft(self, tree):
-        originalself = self
+        '''The function forced rotate left is basically an inward rotation to the left but without the checks if it needs to be done or not, therefore it is forced. It is used in the fix_doubleblack function.'''
+        originalself = self                                         #Sets all the original positions in a save spot. They can be used later in the algorithm without the fear of the value that may have been changed due to the rotation. It is easier to correctly change the order of the tree if I have these original variables. The same principle is also used in the rest of the rotations.
         originalselfright = self.rightchild
         originalselfleft = self.leftchild
         originalselflpoint = self.leftpointer
@@ -355,9 +355,9 @@ class Node:
         originalparent = self.parent
         
 
-        self.rightchild = originalselfrightleft
+        self.rightchild = originalselfrightleft                         #Actual start of the rotation.                          
         if originalselfrightleft != None:
-            originalselfrightleft.parent = self         #!!!!!!!!!!!!!!!!!!!!!!!
+            originalselfrightleft.parent = self         
         self.rightpointer = originalselfright.leftpointer
         self.parent = originalselfright
         self.parent.leftpointer = originalselfrpoint            
@@ -367,12 +367,13 @@ class Node:
             originalparent.rightchild = originalselfright
         elif originalparent != None and originalself < originalparent:               
             originalparent.leftchild = originalselfright                
-        if originalparent == None:
+        if originalparent == None:                                      #If the original parent was None then it was the root of the tree that participated in this rotation and therefore we have a new root. To make this clear to the rest of the program I return a 1.
             tree.rootItem = self.parent
             return 1
             
     
     def forcedrotateright(self, tree):       
+        '''Forced inward rotation to the right.'''
         originalself = self
         originalselfright = self.rightchild
         originalselfleft = self.leftchild
@@ -384,7 +385,7 @@ class Node:
 
         self.leftchild = originalselfleftright
         if originalselfleftright != None:
-            originalselfleftright.parent = self #!!!!!!!!!!!!!!!!!!!!!!!
+            originalselfleftright.parent = self 
         self.leftpointer = originalselfleft.rightpointer
         self.parent = originalselfleft
         self.parent.rightpointer = originalselflpoint
@@ -399,6 +400,7 @@ class Node:
             return 1
                         
     def forcedrotateleft2(self, tree):
+        '''Forced outward rotation to the left.'''
         originalself = self
         originalselfright = self.rightchild
         originalselfleft = self.leftchild
@@ -418,6 +420,7 @@ class Node:
         self.forcedrotateright(tree)                    
   
     def forcedrotateright2(self, tree):
+        '''Forced outward rotation to right.'''
         originalself = self
         originalselfright = self.rightchild
         originalselfleft = self.leftchild
@@ -437,8 +440,8 @@ class Node:
         self.forcedrotateleft(tree)
             
     def fix_rotation(self,tree):
-        
-        if self.leftpointer == 'red' and self.rightpointer == 'red':
+        '''The method to reorder the tree entirely. Often used throughout the program. A combination of all the above forced rotations with checks to see if a rotation needs to be done or not.'''
+        if self.leftpointer == 'red' and self.rightpointer == 'red':                    # A four node cannot stay in a Red-Black Tree
             self.leftpointer = 'black'
             self.rightpointer = 'black'
             if self.parent != None and self.searchkey() < self.parent.searchkey():      #Fixes the splitsing of a 2-node parent.
@@ -448,7 +451,7 @@ class Node:
                 
         if self.leftpointer == 'red' and self.leftchild.leftpointer == 'red':
     
-            #Werkende rotatie naar rechts langs binnen
+            #Forced rotate right
             
             originalself = self
             originalselfright = self.rightchild
@@ -461,7 +464,7 @@ class Node:
 
             self.leftchild = originalselfleftright
             if originalselfleftright != None:
-                originalselfleftright.parent = self #!!!!!!!!!!!!!!!!!!!!!!!'''
+                originalselfleftright.parent = self 
             self.leftpointer = originalselfleft.rightpointer
             self.parent = originalselfleft
             self.parent.rightpointer = originalselflpoint
@@ -478,7 +481,7 @@ class Node:
             return 1
         elif self.rightpointer == 'red' and self.rightchild.rightpointer == 'red':
 
-            #Werkende rotatie naar links langs binnen
+            #Forced rotate left
             
             originalself = self
             originalselfright = self.rightchild
@@ -491,7 +494,7 @@ class Node:
     
             self.rightchild = originalselfrightleft
             if originalselfrightleft != None:
-                originalselfrightleft.parent = self         #!!!!!!!!!!!!!!!!!!!!!!!'''
+                originalselfrightleft.parent = self         
             self.rightpointer = originalselfright.leftpointer
             self.parent = originalselfright
             self.parent.leftpointer = originalselfrpoint            
@@ -508,7 +511,7 @@ class Node:
             return 1
         if self.leftpointer == 'red' and self.leftchild.rightpointer == 'red':
             
-            #Werkende rotatie langs buiten naar links die dikwijls aan het begin voorkomt, namelijk het "hoekje", nadat 3 elementen zijn geinsert.
+            #Forced rotate left 2, this rotation is the 'corner' shape that often happens at the third insert of an item in the redblacktree.
                         
             originalself = self
             originalselfright = self.rightchild
@@ -531,7 +534,7 @@ class Node:
             
         if self.rightpointer == 'red' and self.rightchild.leftpointer == 'red':
         
-            #Werkende rotatie langs buiten naar rechts die dikwijls aan het begin voorkomt, namelijk het "hoekje", nadat 3 elementen zijn geinsert.
+            #Forced rotate right 2, this rotation is the 'corner' shape that often happens at the third insert of an item in the redblacktree.
             
             originalself = self
             originalselfright = self.rightchild
@@ -554,28 +557,43 @@ class Node:
         return 0, None
         
 class RedBlackTree:
+    '''The class Red_BlackTree is the exact representation of the contract. All the methods are available for use in another program exept for create, this is not available in python and I used the standard initializer to do this. The implementation that is done in this class is fairly simple as most of the complicated calculation happen inside the Red_BlackNode module.'''
     def __init__(self, attribute, rootItem = None):
+        '''Initialization of the Red_BlackTree class'''    
         self.rootItem = Node(attribute, rootItem)
         self.attribute = attribute
         
+    def attribute(self):
+        '''Returns the attribute of the Red_BlackTree'''
+        return self.attribute
+        
     def isEmpty(self):
+        '''Method to check if the tree is empty or not.'''    
         if self.rootItem.searchkey() == None:
             return True
         else:
             return False
         
     def insert(self, newItem):
+        '''The entire insert operation is implemented within the Red_BlackNode. It returns the result of this operation.'''    
         return self.rootItem.insert(self.attribute, newItem, self) 
         
         
     def inorder(self, visit = None):
+        '''Inorder Traversal is also implemented in the Red_BlackNode.'''    
         return self.rootItem.inorderTraversal(visit)
+
+    def sort(self):
+        '''Returns a sorted list of the tree. This is done by generators and an inorderTraversal'''
+        return [u for u in self.inorder()]
     
     def retrieve(self, searchKey):
+        '''Retrieve returns de value that is found and doesn't change the tree.'''    
         (success, value) = self.rootItem.retrieve(searchKey)
         return value
         
     def delete(self, searchKey):
+        '''The entire delete operation is implemented within the Red_BlackNode. It returns the result of this operation.'''    
         return self.rootItem.delete(searchKey, self)
         
 '''boom = Red_BlackTree()
