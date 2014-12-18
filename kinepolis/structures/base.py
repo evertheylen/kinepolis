@@ -1,4 +1,6 @@
 
+# Not used.
+
 class Base:
     """ Base class. Should be extended by another data structure.
     """

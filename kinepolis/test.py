@@ -102,11 +102,15 @@ def testDataStruct(name):
     # Yes, this test is new :)
     test("ds attribute", ds.attribute(), "ID")
     
+    # Also new :)
+    # TODO details about sort()...
+    test("ds sort()", ds.sort())
+    
     print("-------------\n\n")
 
 
 
 # Test here
-testDataStruct("RedBlackTree")
+testDataStruct("UnsortedArray")
 
 

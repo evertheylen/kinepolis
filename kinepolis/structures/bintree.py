@@ -1,4 +1,3 @@
-from .base import *
 
-class BinTree(Base):
+class BinTree:
     pass
