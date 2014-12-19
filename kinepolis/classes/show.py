@@ -10,7 +10,7 @@ class Show():
         self.theater = theater
         self.ID = ID
         self.date = date
-        self.tijdslot = tijdslot
+        self.timeslot = timeslot
         self.freeplaces = freeplaces
         self.theaterID = theater
         self.tickets = tickets

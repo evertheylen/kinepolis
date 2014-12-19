@@ -71,8 +71,34 @@ def main():
     # Initialize variables if needed.
     if "--init" in sys.argv:
         #--- INIT VARS HERE ---
+        data["kinepolis"] = Cinema()
+        print('Creating cinema')
+        data["kinepolis"].theaters = createDataStructure("RedBlackTree", "ID")
+        for t in [
+        Theater(1,100),
+        Theater(2, 65),
+        Theater(3, 86),
+        Theater(4, 250)
+        ]:
+            data["kinepolis"].theaters.insert(t)
+        print('Theaters of this cinema:')
+        for i in data["kinepolis"].theaters.inorder():
+            print('ID: ',i.ID, '   Number of seats: ', i.places)
         
-        data["thing"] = 8
+        data["kinepolis"].timeslots = createDataStructure("USLinkedChain", "ID")
+        for t in [
+        Timeslot(14,30),
+        Timeslot(17,00),
+        Timeslot(20,00),
+        Timeslot(22,30)]:
+            data["kinepolis"].timeslots.insert(t)
+        print('Timeslots of this cinema:')
+        for i in data["kinepolis"].timeslots.inorder():
+            print(i)
+            
+        data["kinepolis"].shows = createDataStructure("SLinkedChain", "ID")
+        a = data["kinepolis"]
+        data["kinepolis"].shows.insert(Show(1, datetime.date(2014,7,15), a.theaters.retrieve(1), 1, Timeslot(14,30), a.theaters.retrieve(1).places))
         
         #--- END OF INIT ---
         
