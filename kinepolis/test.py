@@ -69,7 +69,7 @@ def testDataStruct(name):
             User(319, "ttttt", "TTTTT", "tttttmail"),
             User(320, "uuuuu", "UUUUU", "uuuuumail"),
             User(317, "rrrrr", "RRRRR", "rrrrrmail"),
-            User(321, "vvvvv", "VVVVV", "vvvvvmail"),
+            User(321, "AAAvvvvv", "VVVVV", "vvvvvmail"),
             
         ]
         
@@ -97,10 +97,7 @@ def testDataStruct(name):
         
         # Also new :)
         sortedOnName = list(ds.sort("firstname"))
-        #print(sortedOnName)
-        test("ds sort()", sortedOnName[0].firstname, "Anthony")
-        for i in sortedOnName:
-            print(i.firstname)
+        test("ds sort()", sortedOnName[0].firstname, "AAAvvvvv")
         
         # Must be done apart from eachother, or python will lose its mind (generators etc...)
         for u in list(ds.inorder()):
