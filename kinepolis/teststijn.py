@@ -86,8 +86,6 @@ def testDataStruct(name):
         
         test("ds getTop2", ds.getTop(), users[27])
         
-        print(ds)
-        
         ds.destroyStack()
         
         test("ds empty3", ds.isEmpty(), True)
