@@ -75,7 +75,7 @@ def main():
         print('Creating cinema')
         data["kinepolis"].theaters = createDataStructure("RedBlackTree", "ID")
         for t in [
-        Theater(1,100),
+        Theater(1,10),
         Theater(2, 65),
         Theater(3, 86),
         Theater(4, 250)
@@ -116,10 +116,10 @@ def main():
             
             print('Reservatie ', reservatie.ID, ': ', reservatie.places, ' plaatsen')
             tickets = Stack()
-            if tickets.length <= a.theater.freeplaces-reservatie.places:
+            if tickets.length <= a.theater.places-reservatie.places:
                 for i in range(reservatie.places):
                     tickets.push(Ticket())
-                    reservations.dequeue
+                data["kinepolis"].reservations.dequeue()
                 
             else:
                 print('reservatie geweigerd, te weinig plaats in de zaal.')
