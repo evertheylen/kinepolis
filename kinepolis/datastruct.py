@@ -1,4 +1,10 @@
 import structures
+# imports all Table-like structures
+
+from structures.heap import Heap
+from structures.stack import Stack
+# imports the simple datastructs like heap and stack.
+# these are separate classes, and can not be used with createDataStructure().
 
 def createDataStructure(T, attr, **kwargs):
     """ Creates a data structure of type T (or string, see below), where the elements 

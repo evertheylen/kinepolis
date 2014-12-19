@@ -10,12 +10,12 @@ def mergesort(l, attr):
     
     #print('now merge',l[:mid]," and ",l[mid:])
 
-    _merge(l, l[:mid], l[mid:])
+    _merge(l, attr, l[:mid], l[mid:])
     #print('returning',l)
     return l
 
 
-def _merge(thelist, first, second):
+def _merge(thelist, attr, first, second):
     # thelist will contain the sorted (total) list. first and second are both sorted lists on their own.
     i=0
     j=0

@@ -1,5 +1,7 @@
 # Could be used as an example for other datatstructures
 
+import sorting
+
 class UnsortedArray:
     def __init__(self, attribute):
         self.array = []
@@ -36,8 +38,9 @@ class UnsortedArray:
 
     def sort(self, attr, sortFunc = sorting.bubblesort):
         # because this is an UnsortedArray, we change the order of the array itself
-        sortFunc(self.array)
-        
+        print("called", self.array)
+        self.array = sortFunc(self.array, attr)
+        print("called", self.array)
         # 'passthrough' of another generator
         yield from self.inorder()
 

@@ -1,5 +1,6 @@
 import datastruct
 import classes
+import sorting
 
 from etc import *
 
@@ -21,6 +22,7 @@ def start_backend(data, save):
     
     backendlocals.update(classes.__dict__)  # add module classes to console
     backendlocals.update(datastruct.__dict__)  # add module datastruct to console
+    backendlocals.update(sorting.__dict__)  # add module sorting to console
     
     console.locals = backendlocals
     

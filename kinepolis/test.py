@@ -83,7 +83,7 @@ def testDataStruct(name):
     
     ds.delete(104)  # Delete Evert
     
-    inorderList = [u for u in ds.inorder()]
+    inorderList = list(ds.inorder())
     
     test("ds inorder after delete", inorderList[5].firstname, "ddddd")
     
@@ -92,6 +92,13 @@ def testDataStruct(name):
     
     ds.delete(307)
     test("ds retrieve after delete", ds.retrieve(307), None)
+    
+    # Also new :)
+    sortedOnName = list(ds.sort("ID"))
+    #print(sortedOnName)
+    test("ds sort()", sortedOnName[0].firstname, "Anthony")
+    for i in sortedOnName:
+        print(i.firstname)
     
     # Must be done apart from eachother, or python will lose its mind (generators etc...)
     for u in [u for u in ds.inorder()]:
@@ -102,9 +109,6 @@ def testDataStruct(name):
     # Yes, this test is new :)
     test("ds attribute", ds.attribute(), "ID")
     
-    # Also new :)
-    # TODO details about sort()...
-    test("ds sort()", ds.sort())
     
     print("-------------\n\n")
 
