@@ -1,43 +1,40 @@
 class Reservation:
     """ Class for a reservation """
     
-    def __init__(self, ID, userID, timeStamp, showID, places):
+    def __init__(self, ID, user, timeStamp, show, places):
         """ timeStamp is of type datetime.datetime """
         
         self.ID = ID
-        self.userID = userID
+        self.user = user
         self.timeStamp = timeStamp
-        self.showID = showID
+        self.show = show
         self.places = places
     
-        # self.tickets is made manually
-        
-        # TODO Stack implementation, add here
        
        
     def getID(self):
         return self.ID
     
-    def getUserID(self):
-        return self.userID
+    def getUser(self):
+        return self.user
     
     def getTimeStamp(self):
         return self.timeStamp
     
-    def getShowID(self):
-        return self.showID
+    def getShow(self):
+        return self.show
     
     def getPlaces(self):
         return self.places
     
-    def setUserID(self, uid):
-        self.userID = uid
+    def setUser(self, user):
+        self.user = user
     
     def setTimeStamp(self, ts):
         self.timeStamp = ts
     
-    def setShowID(self, showID):
-        self.showID = showID
+    def setShow(self, show):
+        self.show = show
     
     def setPlaces(self, pl):
         self.places = pl

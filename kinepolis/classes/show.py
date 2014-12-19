@@ -1,33 +1,35 @@
 # Auteur: Anthony Hermans
 
-from .timeslot import *
-from .theater import *
-from .ticket import *
-from .reservation import *
+from structures.stack import Stack
+from structures.queue import Queue
 
-class Show():
-    def __init__(self, ID, date=None, theater=None , FilmID=None, timeslot=None,freeplaces = None,tickets = None, reservations = None):
-        self.theater = theater
+from .ticket import Ticket
+
+class Show:
+    def __init__(self, ID, date, timeslot, theater, film, freeplaces=-1, tickets = Stack()):
         self.ID = ID
         self.date = date
         self.timeslot = timeslot
+        self.theater = theater
+        self.film = film
+        if freeplaces == -1:
+            freeplaces = theater.places
         self.freeplaces = freeplaces
-        self.filmID = FilmID
+        
         self.tickets = tickets
-        self.reservations = reservations
+        
 
-    def setTheater(self, ID):
-        self.theater = Theater()
-        self.theater.getID(ID)
+    def setTheater(self, theater):
+        self.theater = theater
         
     def getfilmID(self):
-        return self.filmID
+        return self.film.ID
 
     def getTheater(self):
         return self.theater
 
     def setTimeslot(self, timeslot):
-        self.timeslot = Slot(timeslot)
+        self.timeslot = timeslot
 
     def getTimeslot(self):
         return self.timeslot
@@ -38,48 +40,21 @@ class Show():
     def getDate(self):
         return self.date
 
-    def setFreePlaces(self):
-        self.freeplaces = self.Show.freeplaces
+    def setFreePlaces(self, freeplaces):
+        self.freeplaces = freeplaces
 
     def getFreePlaces(self):
         return self.freeplaces
-        
-    def addReservation(self, reservation):
-        if reservation.places > self.freeplaces:
-            print('Er is te weinig plaats in de zaal voor uw reservatie. Deze zal niet kunnen worden afgewerkt.')
-            return False
-        else:
-            self.freeplaces -= reservation.places
-            return True
+            
 
-    def addTicket(self):
-        pass # TODO stack gebruiken
+    # Tickets -----------------------------
+
+    def pushTicket(self, ticket):
+        return self.tickets.push(ticket)
 
     def popTicket(self):
-        pass #stack gebruiken
+        return self.tickets.pop()
 
     def isEmptyTickets(self):
-        if self.tickets.isEmpty():
-            return True
-        else:
-            return False
-
-    def addReservatie():
-        pass
-        # if the reservation is valid, add it, otherwise error.
-
-        # use self.addTicket to add tickets to stack??? TODO
-
-
-    def delReservatie():
-        pass
-        # Delete reservation from Stack?
-        # TODO Good question
-    
-
-    def isEmptyReservations(self):
-        if self.reservations.isEmpty():
-            return True
-        else:
-            return False
+        return self.tickets.isEmpty()
 

@@ -13,3 +13,4 @@ import datetime
 class Timeslot(datetime.time):
     def __str__(self):
         return ("{:%H:%M}".format(self))
+    

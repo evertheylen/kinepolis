@@ -70,69 +70,111 @@ def main():
     
     # Initialize variables if needed.
     if "--init" in sys.argv:
-        #--- INIT VARS HERE ---
+        #--- INIT VARS HERE ---------------------------------------------------------------------
+        
         data["kinepolis"] = Cinema()
-        print('Creating cinema')
+        
+        # ----- Theaters -----
         data["kinepolis"].theaters = createDataStructure("RedBlackTree", "ID")
         for t in [
-        Theater(1,10),
-        Theater(2, 65),
-        Theater(3, 86),
-        Theater(4, 250)
-        ]:
+            # Theater(ID, places)
+            Theater(1, 10),
+            Theater(2, 65),
+            Theater(3, 86),
+            Theater(4, 250)]:
+            
             data["kinepolis"].theaters.insert(t)
+        
         print('Theaters of this cinema:')
         for i in data["kinepolis"].theaters.inorder():
             print('ID: ',i.ID, '   Number of seats: ', i.places)
         
-        data["kinepolis"].timeslots = createDataStructure("USLinkedChain", "ID")
-        for t in [
-        Timeslot(14,30),
-        Timeslot(17,00),
-        Timeslot(20,00),
-        Timeslot(22,30)]:
-            data["kinepolis"].timeslots.insert(t)
+        # ----- Timeslots -----
+        # NOTE Timeslots is simply a python list, the only thing we ever need to do is know 
+        # whether it's in it or not. (see Opgave.pdf, no ADT required)
+        data["kinepolis"].timeslots = [ Timeslot(14,30),
+                                        Timeslot(17,00),
+                                        Timeslot(20,00),
+                                        Timeslot(22,30)]
+            
         print('Timeslots of this cinema:')
-        for i in data["kinepolis"].timeslots.inorder():
+        for i in data["kinepolis"].timeslots:
             print(i)
+        
+        # ----- Films -----
+        data["kinepolis"].films = createDataStructure("BinTree", "ID")
+        for f in [
+            # Film(ID, title, rating)
+            Film(1, "Star Wars", 8.1),
+            Film(2, "Tron Legacy", 8.9),
+            Film(3, "The Avengers", 8),
+            Film(4, "The Guardians of the Galaxy", 8.5)]:
             
+            data["kinepolis"].films.insert(f)
+        
+        print('Films of this cinema:')
+        for f in data["kinepolis"].films.inorder():
+            print(f.title)
+        
+        # ----- Shows -----
         data["kinepolis"].shows = createDataStructure("SLinkedChain", "ID")
-        film = Film(1, "Star Wars", 8.9)
-        a = data["kinepolis"]
-        data["kinepolis"].shows.insert(Show(1, datetime.date(2014,7,15), a.theaters.retrieve(1), film.ID, Timeslot(14,30), a.theaters.retrieve(1).places))
-        print('First show of this cinema:  ')
+        #       Show(ID,
+        #           date, timeslot, 
+        #           theater,
+        #           film,
+        #           [freeplaces])
+        
+        data["kinepolis"].shows.insert(
+            Show(1,
+                datetime.date(2014,7,15), Timeslot(20,00),
+                data["kinepolis"].theaters.retrieve(3),
+                data["kinepolis"].films.retrieve(2),
+                ))
+        
+        data["kinepolis"].shows.insert(
+            Show(2,
+                datetime.date(2014,7,16), Timeslot(20,00),
+                data["kinepolis"].theaters.retrieve(1),
+                data["kinepolis"].films.retrieve(4),
+                ))
+        
+        print('Second show of this cinema:  ')
         a= data["kinepolis"].shows.retrieve(1)
-        print('ID: ',a.ID,'  Date: ',a.date,'  Theater: ', a.theater, '  FilmID ', a.filmID,'  Timeslot: ', a.timeslot, '  Initial free places: ', a.freeplaces)
-        
-        user1 = User(1,'Stijn', 'Janssens', 'janssens.stijn@hotmail.com')
-        user2 = User(2,'Evert', 'Heylen', 'hoeweetikdatmailadresnu@gmail.com')
+        print('ID: ',a.ID,'  Date:',a.date,'  Theater:', a.theater, '  Film:', a.film.title,'  Timeslot:', a.timeslot, '  Initial free places: ', a.freeplaces)
         
         
-        data["kinepolis"].reservations = Queue()
-        data["kinepolis"].reservations.enqueue(Reservation(1,user1.ID, Timeslot(14,30), data["kinepolis"].shows.retrieve(1).ID, 4))
-        data["kinepolis"].reservations.enqueue(Reservation(2, user2.ID, Timeslot(20,00), data["kinepolis"].shows.retrieve(1).ID, 7))
-        
-        tickets = Stack()
-        
-        for i in range(2):
-            reservatie = data["kinepolis"].reservations.getFront()
+        # ----- Users -----
+        data["kinepolis"].users = createDataStructure("Hashmap", "ID")
+        for u in [
+            # User(ID, firstname, lastname, email)
+            User(1,'Stijn', 'Janssens', 'janssens.stijn@hotmail.com'),
+            User(2,'Evert', 'Heylen', 'hoeweetikdatmailadresnu@gmail.com'),
+            User(3,'Anthony', 'Hermans', 'anthony@herma.ns')]:
             
-            print('Reservatie ', reservatie.ID, ': ', reservatie.places, ' plaatsen')
+            data["kinepolis"].users.insert(u)        
+        
+        # ----- Reservations -----
+        #   Reservation(ID, 
+        #               user,
+        #               timeStamp,
+        #               show,
+        #               places)
+        
+        data["kinepolis"].reservations.enqueue(
+            Reservation(1,
+                        data["kinepolis"].users.retrieve(2),
+                        datetime.datetime.now(),
+                        data["kinepolis"].shows.retrieve(1),
+                        4))
             
-            if a.addReservation(reservatie) == True:
-                data["kinepolis"].reservations.dequeue()
-                for i in range(reservatie.places):
-                    tickets.push(Ticket())
-            
-            '''tickets = Stack()
-            if tickets.length <= a.theater.places-reservatie.places:
-                for i in range(reservatie.places):
-                    tickets.push(Ticket())
-                data["kinepolis"].reservations.dequeue()
-                
-            else:
-                print('reservatie geweigerd, te weinig plaats in de zaal.')'''
-        #--- END OF INIT ---
+        data["kinepolis"].reservations.enqueue(
+            Reservation(2,
+                        data["kinepolis"].users.retrieve(3),
+                        datetime.datetime.now(),
+                        data["kinepolis"].shows.retrieve(2),
+                        5))
+        
+        #--- END OF INIT --------------------------------------------------------------------
         
         # save data
         f = open(filename, 'wb+')

@@ -1,12 +1,3 @@
-# Author: Evert Heylen
-# Date: 14-11-2014
-
-class EmptyQueue(Exception):
-    def __init__(self, value='Queue is empty'):
-        self.value = value
-    def __str__(self):
-        return self.value
-
 
 class Node:
     def __init__(self, data):
@@ -24,19 +15,8 @@ class Queue:
         self.tail = None
         self.length = 0
     
-    def attribute(self):
-        return self._attribute
-    
-    def __len__(self):
+    def length(self):
         return self.length
-    
-    
-    def __repr__(self):
-        s = '['
-        for el in self.traverse():
-            s += ' '+str(el)
-        return s + ' ]'
-    
     
     def enqueue(self, item):
         if self.length == 0:
@@ -51,41 +31,45 @@ class Queue:
             #print('newnode.prv.nxt =',newnode)
             self.tail = newnode
             #print('self.tail =',newnode)
-        self.length+=1
-    
+        self.length += 1
+        return True # success
     
     def dequeue(self):
         if self.length == 0:
-            raise EmptyQueue()
+            return None
         elif self.length == 1:
             head = self.head
             self.head = None
             self.tail = None
             self.length = 0
-            return head
+            return head.data
         else:
             head = self.head
             self.head.nxt.prv = None
             self.head = head.nxt
             self.length -= 1
-            return head
-    
+            return head.data
     
     def getFront(self):
         if self.length == 0:
-            raise EmptyQueue()
             return None
         return self.head.data
     
-    
-    def traverse(self):
+    def inorder(self):
         nextptr = self.head
         while nextptr != None:
-            yield nextptr
+            yield nextptr.data
             nextptr = nextptr.nxt
-            
-    def destroyStack(self):
-        del(self)
+    
+    def __len__(self):
+        return self.length
+    
+    def __repr__(self):
+        s = '['
+        for el in self.inorder():
+            s += ' '+str(el)
+        return s + ' ]'
+ 
 
 
 

@@ -14,8 +14,11 @@ def quadraticProbing(x):
     return x**2
 
 
-def createModFunc(mod):
-    return lambda x: x % mod
+def createModFuncString(mod):
+    # Problem:  pickle doesn't save lambda's.
+    # Solution: don't use lambda's
+    # However, this is dangerous.
+    return "lambda x: x%"+str(mod)
 
 
 
@@ -61,7 +64,7 @@ class Deleted:
 
 
 class Hashmap:
-    def __init__(self, attr, length=21, hashFunc=None, collisionSolution = USLinkedChain, toInt = int):
+    def __init__(self, attr, length=21, hashFuncString=None, collisionSolution = USLinkedChain, toInt = int):
         # chaining is a class, hashFunc and addressFunc are both functions.
         # If chaining is None, we don't chain.
         # If addressFunc is None, we will utilize the chaining method.
@@ -86,16 +89,22 @@ class Hashmap:
             self._addressFunc = collisionSolution
                 # function to calculate next address, be it by probing or double hashing
         
-        # Default hashFunc
-        if hashFunc == None:
-            hashFunc = createModFunc(self._length)
+        # Default hashFuncString
+        # Why use strings?
+        # because pickle can't pickle lambda's, but it can pickle strings.
+        # therefore, the string is the function, and it gets eval'd everytime you want
+        # to use the hashFunc.
+        if hashFuncString == None:
+            hashFuncString = createModFuncString(self._length)
         
         # The hashing function.
-        self._hashFunc = hashFunc
+        self._hashFuncString = hashFuncString
         
         # The function that translates stuff to an int, default is just the int function.
         self._toInt = toInt
     
+    def _hashFunc(self):
+        return eval(self._hashFuncString)
     
     def attribute(self):
         return self._attribute
@@ -107,7 +116,7 @@ class Hashmap:
         """ Private function to calculate the location in the array of some element.
         Note that the element does not need to be in the array. """
         
-        location = self._hashFunc(self._toInt(key))
+        location = self._hashFunc()(self._toInt(key))
         origloc = location
         
         if self._chaining == None:  # probing
@@ -240,10 +249,12 @@ class Hashmap:
         for i in templist:
             yield i
     
+    
     def isEmpty(self):
         for el in self.inorder():
             return False
         return True
+    
     
     def __repr__(self):
         s = ""

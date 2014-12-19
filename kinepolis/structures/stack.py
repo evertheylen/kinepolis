@@ -9,14 +9,11 @@ class Node:
     def __repr__(self):
         return repr(self.data)
 
+
 class Stack:
     def __init__(self, top = None):
         self.stackTop = top
         self.length = 0
-    
-    def destroyStack(self):
-        self.stackTop.next = None        
-        self.stackTop = None
         
     def isEmpty(self):
         if self.stackTop == None:
@@ -31,6 +28,7 @@ class Stack:
         if prevtop != None:
             prevtop.prev = self.stackTop
         self.length += 1
+        return True # success
         
     def pop(self):
         self.stackTop = self.stackTop.next
