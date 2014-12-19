@@ -16,8 +16,10 @@ class Node:
             output += ', '+str(self.next)
         return output
 
+
+
 class USLinkedChain:
-    def __init__(self, head = None, size = 0):
+    def __init__(self, attribute, head = None, size = 0):
         self.head = head
         self.size = size
         self._attribute = attribute
@@ -27,9 +29,12 @@ class USLinkedChain:
         
     def retrieve(self, searchkey):
         current = self.head
-        while searchkey != current.item.__dict__[_attribute]:
+        while current != None and searchkey != current.item.__dict__[self._attribute]:
             current = current.next
-        return(current.item)      
+        if current != None:
+            return(current.item)
+        else:
+            return(None) 
         
     def isEmpty(self):
         if self.size == 0:
@@ -39,11 +44,11 @@ class USLinkedChain:
         
     def delete(self, searchkey):
         current = self.head
-        if self.head.item.__dict__[_attribute] == searchkey:
+        if self.head.item.__dict__[self._attribute] == searchkey:
             self.head = self.head.next
             return(True)
         else:
-            while searchkey != current.next.item.__dict__[_attribute]:
+            while searchkey != current.next.item.__dict__[self._attribute]:
                 current = current.next
             current.next = current.next.next
             return(True)
@@ -52,19 +57,27 @@ class USLinkedChain:
     def insert(self, searchkey):
         current = self.head
         if current == None:
-            self.head = Node(_attribute, searchkey)
+            self.head = Node(self._attribute, searchkey)
             self.size += 1
             return True
         while current != None:
             previous = current
             current = current.next
         
-        tempnode = Node(_attribute, searchkey)
+        tempnode = Node(self._attribute, searchkey)
         previous.next = tempnode
         current = tempnode
         tempnode.next = None
         self.size += 1
         return True
+    def ownbubble(self):
+        pass  
+        
+    def inorder(self):
+        current = self.head
+        while current != None:
+            yield current.item
+            current = current.next
         
     def sort(self, attribute, sortFunc = ownbubble):
         # TODO linkedchain: 
@@ -77,20 +90,13 @@ class USLinkedChain:
         
         yield from self.inorder()
     
-    def inorder(self):
-        current = self.head
-        while current != None:
-            yield current
-            current = current.next
-    
     def __str__(self):
         if self.head != None:
             return str(self.head)
         else:
             return ('Empty Linked chain')
         
-def ownbubble():
-    pass    
+  
     
     
 '''class DoublyLinkedchain(Linkedchain):
