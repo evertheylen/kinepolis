@@ -2,7 +2,7 @@
 
 import sorting
 
-class UnsortedArray:
+class USArray:
     def __init__(self, attribute):
         self.array = []
         self._attribute = attribute
