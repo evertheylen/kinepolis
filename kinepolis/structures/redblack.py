@@ -1,3 +1,5 @@
+import sorting:
+
 class Node:
     def __init__(self, attribute, item = None, next = None, precede = None, leftpointer = None, rightpointer = None, leftchild = None, rightchild = None, parent = None):
         '''The standard python initializer. With all the aspects of a redblack node.'''    
@@ -583,9 +585,11 @@ class RedBlackTree:
         '''Inorder Traversal is also implemented in the Red_BlackNode.'''    
         return self.rootItem.inorderTraversal(visit)
 
-    def sort(self):
+    def sort(self, attribute, sortFunc):
         '''Returns a sorted list of the tree. This is done by generators and an inorderTraversal'''
-        return list(self.inorder())
+        treeArray = list(self.inorder())
+        treeArray = sortFunc(treeArray, attribute)
+        return treeArray        
         
     def retrieve(self, searchKey):
         '''Retrieve returns de value that is found and doesn't change the tree.'''    
