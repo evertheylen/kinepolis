@@ -6,7 +6,7 @@ from .usarray import USArray
 from .redblack import RedBlackTree
 from .uslinkedchain import USLinkedChain
 from .slinkedchain import SLinkedChain
-from .stack import Stack
+
 
 # Also, update the names here
-valid_names = ["BinTree", "USArray", "RedBlackTree", "USLinkedChain", "SLinkedChain", "Stack"]
+valid_names = ["BinTree", "USArray", "RedBlackTree", "USLinkedChain", "SLinkedChain", "Hashmap"]
