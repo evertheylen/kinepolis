@@ -6,19 +6,22 @@ from .ticket import *
 from .reservation import *
 
 class Show():
-    def __init__(self, ID, date=None, theater=None , theatherID=None, timeslot=None,freeplaces = None,tickets = None, reservations = None):
+    def __init__(self, ID, date=None, theater=None , FilmID=None, timeslot=None,freeplaces = None,tickets = None, reservations = None):
         self.theater = theater
         self.ID = ID
         self.date = date
         self.timeslot = timeslot
         self.freeplaces = freeplaces
-        self.theaterID = theater
+        self.filmID = FilmID
         self.tickets = tickets
         self.reservations = reservations
 
     def setTheater(self, ID):
         self.theater = Theater()
         self.theater.getID(ID)
+        
+    def getfilmID(self):
+        return self.filmID
 
     def getTheater(self):
         return self.theater

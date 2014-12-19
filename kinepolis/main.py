@@ -97,8 +97,14 @@ def main():
             print(i)
             
         data["kinepolis"].shows = createDataStructure("SLinkedChain", "ID")
+        film = Film(1, "Star Wars", 8.9)
         a = data["kinepolis"]
-        data["kinepolis"].shows.insert(Show(1, datetime.date(2014,7,15), a.theaters.retrieve(1), 1, Timeslot(14,30), a.theaters.retrieve(1).places))
+        data["kinepolis"].shows.insert(Show(1, datetime.date(2014,7,15), a.theaters.retrieve(1), film.ID, Timeslot(14,30), a.theaters.retrieve(1).places))
+        print('First show of this cinema:  ')
+        a= data["kinepolis"].shows.retrieve(1)
+        print('ID: ',a.ID,'  Date: ',a.date,'  Theater: ', a.theater, '  FilmID ', a.filmID,'  Timeslot: ', a.timeslot, '  Initial free places: ', a.freeplaces)
+        
+        
         
         #--- END OF INIT ---
         
