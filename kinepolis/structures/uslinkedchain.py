@@ -1,8 +1,21 @@
-import Node
 import sorting
 
-# TODO rename file uslinkedchain
-# TODO rename UnsortedArray -> USArray
+class Node:
+    def __init__(self, attribute, item = None, next = None, precede = None):
+        self._attribute = attribute
+        self.item = item
+        self.next = next
+        self.precede = precede
+
+    def __str__(self):
+        if self.item != None:
+            output = str(self.item.__dict__[_attribute])
+        else:
+            return ('Empty node')
+        if self.next != None:
+            output += ', '+str(self.next)
+        return output
+
 class USLinkedChain:
     def __init__(self, head = None, size = 0):
         self.head = head
@@ -39,14 +52,14 @@ class USLinkedChain:
     def insert(self, searchkey):
         current = self.head
         if current == None:
-            self.head = Node.Node(_attribute, searchkey)
+            self.head = Node(_attribute, searchkey)
             self.size += 1
             return True
         while current != None:
             previous = current
             current = current.next
         
-        tempnode = Node.Node(_attribute, searchkey)
+        tempnode = Node(_attribute, searchkey)
         previous.next = tempnode
         current = tempnode
         tempnode.next = None
@@ -77,7 +90,7 @@ class USLinkedChain:
             return ('Empty Linked chain')
         
 def ownbubble():
-    
+    pass    
     
     
 '''class DoublyLinkedchain(Linkedchain):
@@ -113,5 +126,3 @@ def ownbubble():
             newnode.precede = i
         if newnode.next != None:
             newnode.next.precede = newnode'''
-    
-
