@@ -107,7 +107,7 @@ class SLinkedChain:
             yield current.item
             current = current.next
     
-    def sort(self, attribute, sortFunc = None):
+    def sort(self, attribute, sortFunc = sorting.bubblesort):
         '''Basic function to sort the chain. If no sortfunction is given the default linkbased bubblesort will be used.'''
         if attribute == self._attribute:
             yield from self.inorder()
@@ -116,7 +116,7 @@ class SLinkedChain:
             current = self.head                         #if it doesn't need to be sorted on the searchkey, the chain must be sorted on the different attribute.
             listchain = []
             while current != None:
-                listchain.append(current)
+                listchain.append(current.item)
                 current = current.next
             listchain = sortFunc(listchain, attribute)  #Sort the array.
             for i in listchain:
