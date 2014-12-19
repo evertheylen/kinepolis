@@ -1,31 +1,50 @@
-from .uslinkedchain import USLinkedChain
+#from .uslinkedchain import USLinkedChain
+
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.prev = None
+        self.next = None
+    
+    def __repr__(self):
+        return repr(self.data)
 
 class Stack:
-    def __init__(self, attribute, top = None):
-        self._attribute = attribute
-        self.linkedchain = USLinkedChain(attribute, top)
+    def __init__(self, top = None):
         self.stackTop = top
     
-    def attribute(self):
-        return self._attribute
-    
     def destroyStack(self):
-        self.linkedchain.head = None
+        self.stackTop.next = None        
+        self.stackTop = None
         
     def isEmpty(self):
-        if self.linkedchain.head == None:
+        if self.stackTop == None:
             return True
         else:
             return False
     
     def push(self, newItem):
-        self.linkedchain.insert(newItem, 'push')
-        self.stackTop = self.linkedchain.head
+        prevtop = self.stackTop
+        self.stackTop = Node(newItem)
+        self.stackTop.next = prevtop
+        if prevtop != None:
+            prevtop.prev = self.stackTop
         
     def pop(self):
-        self.linkedchain.delete(self.linkedchain.head.item.__dict__[self._attribute])
-        self.stackTop = self.linkedchain.head
-        return self.stackTop.item
+        self.stackTop = self.stackTop.next
+        return self.stackTop.data
         
     def getTop(self):
-        return self.stackTop.item
+        return self.stackTop.data
+        
+'''s = Stack()
+print(s.isEmpty())
+s.push(30)
+s.push(40)
+s.push(20)
+print(s.getTop())
+s.pop()
+print(s.getTop())
+print(s.isEmpty())
+s.destroyStack()
+print(s.isEmpty())'''
