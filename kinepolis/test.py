@@ -114,7 +114,7 @@ def testDataStruct(name):
         
         print("-------------\n\n")
     except Exception as e:
-        print(rgbtext(e))
+        print(rgbtext(str(e)))
 
 
 # Test here
