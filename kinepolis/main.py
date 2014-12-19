@@ -104,8 +104,25 @@ def main():
         a= data["kinepolis"].shows.retrieve(1)
         print('ID: ',a.ID,'  Date: ',a.date,'  Theater: ', a.theater, '  FilmID ', a.filmID,'  Timeslot: ', a.timeslot, '  Initial free places: ', a.freeplaces)
         
+        user1 = User(1,'Stijn', 'Janssens', 'janssens.stijn@hotmail.com')
+        user2 = User(2,'Evert', 'Heylen', 'hoeweetikdatmailadresnu@gmail.com')
         
         
+        data["kinepolis"].reservations = Queue()
+        data["kinepolis"].reservations.enqueue(Reservation(1,user1.ID, Timeslot(14,30), data["kinepolis"].shows.retrieve(1).ID, 4))
+        data["kinepolis"].reservations.enqueue(Reservation(2, user2.ID, Timeslot(20,00), data["kinepolis"].shows.retrieve(1).ID, 7))
+        for i in range(2):
+            reservatie = data["kinepolis"].reservations.getFront()
+            
+            print('Reservatie ', reservatie.ID, ': ', reservatie.places, ' plaatsen')
+            tickets = Stack()
+            if tickets.length <= a.theater.freeplaces-reservatie.places:
+                for i in range(reservatie.places):
+                    tickets.push(Ticket())
+                    reservations.dequeue
+                
+            else:
+                print('reservatie geweigerd, te weinig plaats in de zaal.')
         #--- END OF INIT ---
         
         # save data

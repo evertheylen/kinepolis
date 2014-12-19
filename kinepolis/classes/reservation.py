@@ -1,7 +1,7 @@
 class Reservation:
     """ Class for a reservation """
     
-    def __init__(self, ID, userID, timeStamp, showID, plaatsen):
+    def __init__(self, ID, userID, timeStamp, showID, places):
         """ timeStamp is of type datetime.datetime """
         
         self.ID = ID
