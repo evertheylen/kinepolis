@@ -585,8 +585,7 @@ class RedBlackTree:
 
     def sort(self):
         '''Returns a sorted list of the tree. This is done by generators and an inorderTraversal'''
-        #return [u for u in self.inorder()]
-        return True
+        return list(self.inorder())
         
     def retrieve(self, searchKey):
         '''Retrieve returns de value that is found and doesn't change the tree.'''    
