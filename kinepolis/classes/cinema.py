@@ -1,4 +1,5 @@
 from structures.queue import Queue
+from .ticket import Ticket
 
 class Cinema:
     def __init__(self, name="defaultname", theaters=None, timeslots=None, shows=None, films=None, users=None, reservations = Queue(), autoExecute=True):
@@ -42,9 +43,10 @@ class Cinema:
         # count of -1 means we execute all reservations possible.
         while True:
             reservation = self.reservations.dequeue()
-            if (count != -1 and i<count) or (reservation == None):
+            if (count != -1 and i>=count) or (reservation == None):
                 # Break if we are about to exceed the count, or if there are no more reservations left
                 break
 
             for i in range(reservation.places):
-                reservation.show.tickets.pushTicket(Ticket())
+                #print("should push")
+                reservation.show.pushTicket(Ticket())

@@ -1,4 +1,4 @@
+from etc import *
+
 def start_frontend(data):
-    while True:
-        print(data)
-        data["thing"] = input("thing? ")
+    print(rgbtext("Frontend not implemented yet, please use the backend (-b).", cyan))

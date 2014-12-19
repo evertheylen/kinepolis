@@ -50,6 +50,7 @@ class Show:
     # Tickets -----------------------------
 
     def pushTicket(self, ticket):
+        #print("pushing ticket")
         return self.tickets.push(ticket)
 
     def popTicket(self):

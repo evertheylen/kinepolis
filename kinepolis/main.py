@@ -85,7 +85,7 @@ def main():
             
             data["kinepolis"].theaters.insert(t)
         
-        print('Theaters of this cinema:')
+        print('\nTheaters of this cinema:')
         for i in data["kinepolis"].theaters.inorder():
             print('ID: ',i.ID, '   Number of seats: ', i.places)
         
@@ -97,7 +97,7 @@ def main():
                                         Timeslot(20,00),
                                         Timeslot(22,30)]
             
-        print('Timeslots of this cinema:')
+        print('\nTimeslots of this cinema:')
         for i in data["kinepolis"].timeslots:
             print(i)
         
@@ -112,7 +112,7 @@ def main():
             
             data["kinepolis"].films.insert(f)
         
-        print('Films of this cinema:')
+        print('\nFilms of this cinema:')
         for f in data["kinepolis"].films.inorder():
             print(f.title)
         
@@ -138,8 +138,8 @@ def main():
                 data["kinepolis"].films.retrieve(4),
                 ))
         
-        print('Second show of this cinema:  ')
-        a= data["kinepolis"].shows.retrieve(1)
+        print('\nSecond show of this cinema:  ')
+        a = data["kinepolis"].shows.retrieve(2)
         print('ID: ',a.ID,'  Date:',a.date,'  Theater:', a.theater, '  Film:', a.film.title,'  Timeslot:', a.timeslot, '  Initial free places: ', a.freeplaces)
         
         
@@ -160,14 +160,14 @@ def main():
         #               show,
         #               places)
         
-        data["kinepolis"].reservations.enqueue(
+        data["kinepolis"].addReservation(
             Reservation(1,
                         data["kinepolis"].users.retrieve(2),
                         datetime.datetime.now(),
                         data["kinepolis"].shows.retrieve(1),
                         4))
             
-        data["kinepolis"].reservations.enqueue(
+        data["kinepolis"].addReservation(
             Reservation(2,
                         data["kinepolis"].users.retrieve(3),
                         datetime.datetime.now(),
@@ -181,7 +181,7 @@ def main():
         pickle.dump(data, f)
         f.close()
         
-        print("Succesfully initialized the file '%s'."%filename)
+        print("\nSuccesfully initialized the file '%s'."%filename)
     
     
     # load data
