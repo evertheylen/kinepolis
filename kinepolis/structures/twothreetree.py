@@ -1,5 +1,5 @@
 #Auteur: Anthony Hermans
-#Testcode door Evert Heylen
+
 class Node:
     def __init__(self, data = None, parent = None, children = None):
         self.data = data
@@ -28,20 +28,20 @@ class TwoThreeTree():
             current = self.root.next
             i = i - 1
         message = "De 2-3 boom is verwijderd."
-        print(message)
+        #print(message)
         return
 
     def isEmpty(self):
         if self.size == 0:
-            print("De 2-3 boom is leeg.")
+            #print("De 2-3 boom is leeg.")
             return
 
         else:
-            print("De 2-3 boom is niet leeg.")
+            #print("De 2-3 boom is niet leeg.")
             return
 
 
-    def TwoThreeTreeInsert(self, data):
+    def insert(self, data):
         new = Node(data)
         if self.size <=3 :
             if self.size == 0:
@@ -63,7 +63,7 @@ class TwoThreeTree():
                         self.rightchild = Node(data)
                         self.size += 1
 
-    def TwoThreeTreeDelete(self, searchkey):
+    def delete(self, searchkey):
         if self.root.data == searchkey:
             self.root = self.rightchild
             self.size-=1
@@ -73,53 +73,53 @@ class TwoThreeTree():
                     self.leftchild = None
                     self.size-=1
                 else:
-                    print("Zit niet in deze boom")
+                    #print("Zit niet in deze boom")
             if self.root.data < searchkey and searchkey < self.root.data:
                 if self.midchild.data == searchkey:
                     self.midchild = None
                 else:
-                    print("Item is niet gevonden")
+                    #print("Item is niet gevonden")
 
             if searchkey >= self.root.data:
                 if self.rightchild.data == searchkey:
                     self.rightchild = None
                     self.size-=1
                 else:
-                    print("Zit niet in deze boom")
+                    #print("Zit niet in deze boom")
 
-    def TwoThreeTreeRetrieve(self, searchkey):
+    def retrieve(self, searchkey):
         if self.root.data == searchkey:
-            print("Item "+ str(searchkey) + " is gevonden")
+            #print("Item "+ str(searchkey) + " is gevonden")
         else:
             if searchkey < self.root.data:
                 if self.leftchild.data == searchkey:
-                    print("Item "+ str(searchkey) + " is gevonden")
+                    #print("Item "+ str(searchkey) + " is gevonden")
                 else:
-                    print("Item is niet gevonden")
+                    #print("Item is niet gevonden")
             if self.root.data < searchkey and searchkey < self.root.data:
                 if self.midchild.data == searchkey:
-                    print("Item "+ str(searchkey) + " is gevonden")
+                    #print("Item "+ str(searchkey) + " is gevonden")
                 else:
-                    print("Item is niet gevonden")
+                    #print("Item is niet gevonden")
             if searchkey > self.root.data:
                 if self.rightchild.data == searchkey:
-                    print("Item "+ str(searchkey) + " is gevonden")
+                    #print("Item "+ str(searchkey) + " is gevonden")
                 else:
-                    print("Item is niet gevonden")
+                    #print("Item is niet gevonden")
 
-    def TwoThreeTreeInorderTraversal(self):
+    def inorder(self):
         i = 0
         current = self.root
         while current != None:
             if i == 1:
                 current = self.root.data
-                print(current)
+                yield current
             if i == 0 and self.leftchild != None:
                 current = self.leftchild.data
-                print(current)
+                yield current
             if i > 1 and self.rightchild != None:
                 current = self.rightchild.data
-                print(current)
+                yield current
             i+=1
             if i == self.size:
                 break

@@ -124,4 +124,5 @@ if __name__=='__main__':
     testDataStruct("Hashmap")   # inorder tests will fail, this is normal and should not be considered an error
                                 # also, watch out with using a non-chaining method, the hashmap may get filled up
     testDataStruct("BinTree")
+    testDataStruct("TwoThreeTree")
     

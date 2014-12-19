@@ -1,6 +1,7 @@
 
 
-from structures.heap import Heap
+#from structures.heap import Heap
+# TODO implement heap here
 
 def heapsort():
-    return Heap()
+    pass
