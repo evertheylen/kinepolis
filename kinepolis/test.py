@@ -95,7 +95,7 @@ def testDataStruct(name):
     test("ds retrieve after delete", ds.retrieve(307), None)
     
     # Also new :)
-    sortedOnName = list(ds.sort("ID"))
+    sortedOnName = list(ds.sort("firstname"))
     #print(sortedOnName)
     test("ds sort()", sortedOnName[0].firstname, "Anthony")
     for i in sortedOnName:

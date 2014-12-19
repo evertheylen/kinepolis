@@ -46,11 +46,13 @@ class USLinkedChain:
         current = self.head
         if self.head.item.__dict__[self._attribute] == searchkey:
             self.head = self.head.next
+            self.size -= 1
             return(True)
         else:
             while searchkey != current.next.item.__dict__[self._attribute]:
                 current = current.next
             current.next = current.next.next
+            self.size -= 1
             return(True)
         return(False)
             
@@ -70,8 +72,15 @@ class USLinkedChain:
         tempnode.next = None
         self.size += 1
         return True
-    def ownbubble(self):
-        pass  
+    def ownbubble(self, attribute):
+        for maxloc in range(self.size, 1, -1):
+            current = self.head
+            for i in range(maxloc):
+                if current != None and current.next != None and current.item.__dict__[attribute] > current.next.item.__dict__[attribute]:
+                    current.item, current.next.item = current.next.item, current.item
+                if current != None:
+                    current = current.next
+            
         
     def inorder(self):
         current = self.head
@@ -79,14 +88,17 @@ class USLinkedChain:
             yield current.item
             current = current.next
         
-    def sort(self, attribute, sortFunc = ownbubble):
-        # TODO linkedchain: 
-        current = self.head
-        listchain = []
-        while current != None:
-            listchain.append(current)
-            current = current.next
-        sortFunc(listchain)
+    def sort(self, attribute, sortFunc = None):
+        if sortFunc == None:
+            self.ownbubble(attribute)
+        
+        else:
+            current = self.head
+            listchain = []
+            while current != None:
+                listchain.append(current)
+                current = current.next
+            sortFunc(listchain)
         
         yield from self.inorder()
     
