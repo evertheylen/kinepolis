@@ -7,3 +7,6 @@ __pycache__/
 
 # gedit files
 *~
+
+# default file for data
+kinepolis_data
