@@ -43,14 +43,14 @@ class BinTree:
         if self.right == None:
             return None
         
-        return self.right.mostleft()
+        return self.right._mostleft()
     
     
     def _inorder_predecessor(self):
         if self.left == None:
             return None
         
-        return self.left.mostright()
+        return self.left._mostright()
     
     
     def _mostleft(self):
@@ -86,8 +86,8 @@ class BinTree:
         return True
         
     
-    def delete(self, item):
-        tree, where = self.retrieve(item)
+    def delete(self, key):
+        tree, where = self._retrieve(key)
         #print('tree=',tree,'treepar=',tree.parent,'where=',where)
         
         if where != 'root':
@@ -126,11 +126,11 @@ class BinTree:
             return True
     
     def sort(self, attr, sortFunc=sorting.bubblesort):
-        if attr == self._attribute():
+        if attr == self.attribute():
             yield from self.inorder()
         else:
             templist = list(self.inorder())
-            sortFunc(templist)
+            sortFunc(templist, attr)
             for i in templist:
                 yield i
             

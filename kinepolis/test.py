@@ -4,6 +4,7 @@ from datastruct import *
 from classes import *
 from etc import *
 
+import traceback
 
 def testClasses():
     res = Reservatie(5, 4, datetime.datetime.now(), 45, 78)
@@ -82,9 +83,9 @@ def testDataStruct(name, **kwargs):
         inorderList = list(ds.inorder())
         
         test("ds inorder", inorderList[5].firstname, "ccccc")
-        
+
         ds.delete(104)  # Delete Evert
-        
+
         inorderList = list(ds.inorder())
         
         test("ds inorder after delete", inorderList[5].firstname, "ddddd")
@@ -111,7 +112,9 @@ def testDataStruct(name, **kwargs):
         
         print("-------------\n\n")
     except Exception as e:
-        print(rgbtext(str(e)))
+        print(rgb(255,0,0))
+        traceback.print_exc()
+        print(endc)
 
 
 # Tests here

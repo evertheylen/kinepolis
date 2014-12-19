@@ -60,9 +60,10 @@ def args(T):
     print("The initializer of {} takes these arguments:\n\t{}".format(T.__name__, args))
 
 
-def switchDataStruct(oldds, newT, newAttr):
-    # TODO datatstruct should provide a function .attribute()
-    newds = datastruct.createDataStruct(newT, oldds.attribute())
+def switchDataStruct(oldds, newT, newAttr=None):
+    if newAttr == None:
+        newAttr = oldds.attribute()
+    newds = datastruct.createDataStruct(newT, newAttr)
     
     for element in oldds.inorder():
         newds.insert(element)
