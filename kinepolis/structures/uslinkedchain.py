@@ -12,7 +12,7 @@ class Node:
     def __str__(self):
         '''Basic visual representation of a node.'''
         if self.item != None:
-            output = str(self.item.__dict__[_attribute])
+            output = str(self.item.__dict__[self._attribute])
         else:
             return ('Empty node')
         if self.next != None:

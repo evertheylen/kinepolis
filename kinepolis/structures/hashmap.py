@@ -5,7 +5,7 @@
 # As an example, we can use the (unsorted) linked chain
 from structures.uslinkedchain import USLinkedChain
 
-
+import sorting
 
 def lineairProbing(x):
     return x
@@ -145,17 +145,18 @@ class Hashmap:
     def insert(self, el):
         location = self._locationOf(self._key(el))
             
-        if self._chaining == None:
+        if self._chaining == None:  # we use probing
             if location == -1:
                 return False
             
             # if the location isn't -1; we can just insert
             self._array[location] = el
             return True
-        else:
+        
+        else:  # we use chaining
             if self._array[location] == None:
-                # Create a new instance of the desired chaining class
-                self._array[location] = self._chaining()
+                # Create a new instance of the desired chaining class, with the same attribute
+                self._array[location] = self._chaining(self.attribute())
                 return self._array[location].insert(el)
                 # el should have a method .__dict__[self._attribute], because reusing the int()
                 # functionality will also be problematic for the chaining, as it
@@ -191,68 +192,35 @@ class Hashmap:
         # element.__dict__[self._attribute] will be the same as int(element.__dict__[self._attribute]).
         # However, you *will* need to define a wrapper class for the 'int' type.
         
-        location = self._hashFunc(int(key))
-        #print("location =", location)
-        origloc = location
+        location = self._locationOf(key)
         
         if self._chaining == None:
-            checked = [False] * self._length
-            i=1
-            while not all(checked):
-                checked[location] = True
-                #print("location =", location)
-                if self._array[location] != None and self._array[location].__dict__[self._attribute] == key:
-                    break
-                
-                location = origloc + self._addressFunc(i)
-                
-                # Make location 'loop', so that it'll never reach an index not in our array
-                location = location % self._length
-                i+=1
-            # By this point we've reached the right location
-            if all(checked):
+            if location == -1:
                 return None
-            return self._array[location]
-        else:
-            if self._array[location] != None:
-                # The chaining class will take care of it from now.
-                return self._array[location].retrieve(key)
             else:
+                return self._array[location]
+        else:
+            if self._array[location] == None:
                 return None
+            else:
+                # chaining class handles it from here
+                return self._array[location].retrieve(key)
     
     
     def delete(self, key):
-        location = self._hashFunc(int(key))
-        origloc = location
+        location = self._locationOf(key)
+        
         if self._chaining == None:
-            checked = [False] * self._length
-            i = 1
-            while not all(checked):
-                checked[location] = True
-                if self._array[location] != None and self._array[location].__dict__[self._attribute] == key:
-                    break
-                
-                location = origloc + self._addressFunc(i)
-                
-                # Make location 'loop', so that it'll never reach an index not in our array
-                location = location % self._length
-                i+=1
-            # By this point we've reached the right location
-            if self._array[location] != None:
-                self._array[location] = None # Delete
-                return True
+            if location == -1:
+                return None
             else:
-                return False    # the right location did not contain the element
+                self._array[location] = Deleted(key)
         else:
-            if self._array[location] != None:
-                # The chaining class will take care of it from now.
-                el = self._array[location].remove(key)
-                # We won't delete empty chains
-                if el != None:
-                    return True # Succes!
-                return False # Not so much succes, not in the chain object
+            if self._array[location] == None:
+                return False
             else:
-                return False # Not in this array
+                # chaining class handles it from here
+                return self._array[location].delete(key)
     
     
     def inorder(self):
@@ -262,9 +230,15 @@ class Hashmap:
                     # simply yield the element
                     yield el
                 else:
-                    for el_subelement in el.inorder():
-                        yield el_subelement
+                    # yield all elements from chaining class
+                    yield from el.inorder()
     
+    
+    def sort(self, attr, sortingFunc=sorting.bubblesort):
+        templist = list(self.inorder())
+        sortingFunc(templist, attr)
+        for i in templist:
+            yield i
     
     def isEmpty(self):
         for el in self.inorder():

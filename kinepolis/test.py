@@ -24,10 +24,10 @@ def test(name, t, oracle=True):
         print("test {}: succes! got: {}".format(name, t))
 
 
-def testDataStruct(name):
+def testDataStruct(name, **kwargs):
     try:
         print("\n\n---------- starting test for datastruct:",name)
-        ds = createDataStructure(name, "ID")
+        ds = createDataStructure(name, "ID", **kwargs)
         
         test("ds empty", ds.isEmpty(), True)
         
@@ -79,7 +79,7 @@ def testDataStruct(name):
         
         test("ds empty2", ds.isEmpty(), False)
         
-        inorderList = [u for u in ds.inorder()]
+        inorderList = list(ds.inorder())
         
         test("ds inorder", inorderList[5].firstname, "ccccc")
         
@@ -114,8 +114,11 @@ def testDataStruct(name):
         print(rgbtext(str(e)))
 
 
-# Test here
-
-testDataStruct("SLinkedChain")
-testDataStruct("USArray")
-
+# Tests here
+if __name__=='__main__':
+    testDataStruct("SLinkedChain")
+    testDataStruct("USArray")
+    testDataStruct("Hashmap")   # inorder tests will fail, this is normal and should not be considered an error
+                                # also, watch out with using a non-chaining method, the hashmap may get filled up
+    testDataStruct("BinTree")
+    
