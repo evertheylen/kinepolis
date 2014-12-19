@@ -1,4 +1,4 @@
-# Could be used as an example for other datatstructs
+# Could be used as an example for other datatstructures
 
 class UnsortedArray:
     def __init__(self, attribute):
@@ -14,6 +14,7 @@ class UnsortedArray:
             return False
 
         self.array.append(el)
+        return True
 
     def retrieve(self, key):
         for el in self.array:
@@ -33,9 +34,12 @@ class UnsortedArray:
             return True
         return False
 
-    def sort(self):
-        # TODO sort()...
-        return True
+    def sort(self, attr, sortFunc = sorting.bubblesort):
+        # because this is an UnsortedArray, we change the order of the array itself
+        sortFunc(self.array)
+        
+        # 'passthrough' of another generator
+        yield from self.inorder()
 
     def inorder(self):
         """ For an UnsortedArray, it's not sure to be sorted.
