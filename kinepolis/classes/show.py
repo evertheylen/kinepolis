@@ -43,6 +43,14 @@ class Show():
 
     def getFreePlaces(self):
         return self.freeplaces
+        
+    def addReservation(self, reservation):
+        if reservation.places > self.freeplaces:
+            print('Er is te weinig plaats in de zaal voor uw reservatie. Deze zal niet kunnen worden afgewerkt.')
+            return False
+        else:
+            self.freeplaces -= reservation.places
+            return True
 
     def addTicket(self):
         pass # TODO stack gebruiken
