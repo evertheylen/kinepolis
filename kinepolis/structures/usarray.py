@@ -38,9 +38,8 @@ class USArray:
 
     def sort(self, attr, sortFunc = sorting.bubblesort):
         # because this is an UnsortedArray, we change the order of the array itself
-        print("called", self.array)
         self.array = sortFunc(self.array, attr)
-        print("called", self.array)
+ 
         # 'passthrough' of another generator
         yield from self.inorder()
 

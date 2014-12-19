@@ -1,8 +1,10 @@
-Alle klassen ./struct hebben de volgende methodes:
+Alle klassen in ./structures hebben de volgende methodes:
 +insert(element)
 +delete(key)
 +retrieve(key)
 +inorder()
++sort()
++attribute()
 
 insert(element) moet het element op de juist plaats zetten. Dit wordt gedaan op basis van de zoeksleutel.
 
