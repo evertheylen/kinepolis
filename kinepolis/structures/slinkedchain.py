@@ -20,4 +20,118 @@ class Node:
         return output
 
 class SLinkedChain:
-    pass
+    '''ADT Sorted Linked Chain. It inserts the item at the correct place so that the chain is sorted at all times.'''
+    def __init__(self, attribute, head = None, size = 0):
+        '''Standard python initializer'''
+        self.head = head
+        self.size = size
+        self._attribute = attribute
+        
+    def attribute(self):
+        '''Returns the attribute or searchkey used in the linked chain.'''
+        return self._attribute
+        
+    def retrieve(self, searchkey):
+        '''Looks for an item based on its searchkey in the linked chain. Returns the item if found, else returns None.'''
+        current = self.head
+        while current != None and searchkey < current.item.__dict__[self.attribute]:
+            #Traverse the linked list until the searchkey is found.
+            current = current.next
+        if current != None and current.item.__dict__[self.attribute] == searchkey:
+            return(current.item)
+        else:
+            return(None)
+        
+    def isEmpty(self):
+        '''If the size of a linked chain is zero, this method will return True.'''
+        if self.size == 0:
+            return True
+        else:
+            return False
+            
+    def delete(self, searchkey):
+        '''Basic delete function based on the given searchkey.'''
+        current = self.head
+        if self.head.item.__dict__[self._attribute] == searchkey:
+            #Special case: the item to be deleted is the head.
+            self.head = self.head.next
+            self.size -= 1
+            return(True)
+        else:
+            while searchkey < current.next.item.__dict__[self._attribute]:
+                #Traverse the linked chain looking for the searchkey.
+                current = current.next
+            if current.item.__dict__[self._attribute] == searchkey:     #If found, the next pointer skips the deleted item.
+                current.next = current.next.next
+                self.size -= 1
+                return(True)
+            else:
+                return(False)
+        
+    def insert(self, item):
+        '''Basic insert method based on the item. The position will be so that the order of the chain stays intact.'''
+        current = self.head
+        if current == None:
+            #If the list is empty, then the new item is the head.
+            self.head = Node(self._attribute, item)
+            self.size += 1
+            return True
+        
+        if item.__dict__[self._attribute] < current.item.__dict__[self._attribute]:
+            #If the item is smaller than the current head.
+            self.head = Node(self._attribute, item)
+            self.head.next = current
+            self.size += 1
+            return True
+        
+        while current != None and current.next != None and current.next < item.__dict__[self._attribute]:
+            #Else traverse the chain until the correct location is found.
+            previous = current
+            current = current.next
+        if current.next != None:
+            tempNode = Node(self._attribute, item)  #Add the new node in the correct position.
+            previous.next = tempNode
+            tempNode.next = current
+            self.size += 1
+            return True
+        else:
+            tempNode = Node(self._attribute, item) #Add the item at the end of the chain.
+            previous.next = tempNode
+            current = tempNode
+            tempNode.next = None
+            self.size += 1
+            return True
+        
+        def inorder(self):
+            '''Method to give back all elements of the chain inorder.'''
+            current = self.head
+            while current != None:
+                yield current.item
+                current = current.next
+        
+        def sort(self, attribute, sortFunc = None):
+            '''Basic function to sort the chain. If no sortfunction is given the default linkbased bubblesort will be used.'''
+            if attribute == self._attribute:
+                yield from self.inorder()
+                return
+            else:
+                current = self.head                         #if it doesn't need to be sorted on the searchkey, the chain must be sorted on the different attribute.
+                listchain = []
+                while current != None:
+                    listchain.append(current)
+                    current = current.next
+                listchain = sortFunc(listchain, attribute)  #Sort the array.
+                for i in listchain:
+                    yield i
+                
+        def __str__(self):
+            '''Basic chain representation.'''
+        if self.head != None:
+            return str(self.head)
+        else:
+            return ('Empty Linked chain')
+                    
+                        
+                
+            
+    

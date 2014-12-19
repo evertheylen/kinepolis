@@ -117,10 +117,9 @@ class USLinkedChain:
             while current != None:
                 listchain.append(current)
                 current = current.next
-            sortFunc(listchain) #Sort the array.
+            sortFunc(listchain, attribute) #Sort the array.
+        yield from self.inorder()
         
-        yield from self.inorder()   #Yield all the items.
-    
     def __str__(self):
         '''Basic chain representation.'''
         if self.head != None:

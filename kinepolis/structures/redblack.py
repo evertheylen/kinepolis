@@ -1,4 +1,4 @@
-import sorting:
+import sorting
 
 class Node:
     def __init__(self, attribute, item = None, next = None, precede = None, leftpointer = None, rightpointer = None, leftchild = None, rightchild = None, parent = None):
@@ -589,7 +589,8 @@ class RedBlackTree:
         '''Returns a sorted list of the tree. This is done by generators and an inorderTraversal'''
         treeArray = list(self.inorder())
         treeArray = sortFunc(treeArray, attribute)
-        return treeArray        
+        for i in treeArray:
+            yield i
         
     def retrieve(self, searchKey):
         '''Retrieve returns de value that is found and doesn't change the tree.'''    
