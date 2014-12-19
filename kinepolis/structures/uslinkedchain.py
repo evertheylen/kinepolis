@@ -68,9 +68,13 @@ class USLinkedChain:
             return(True)
         return(False)       # If the searchkey isn't in the list return False
             
-    def insert(self, item):
+    def insert(self, item, push=None):
         '''Basic insert method based on the item. NOT ON THE SEARCHKEY!'''
-        current = self.head
+        current = self.head        
+        if push=='push':
+            self.head = Node(self._attribute, item)
+            self.head.next = current
+            
         if current == None:
             # If the list is empty, then the new item is the head.
             self.head = Node(self._attribute, item)

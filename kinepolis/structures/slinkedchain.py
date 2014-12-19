@@ -62,7 +62,6 @@ class SLinkedChain:
                 #Traverse the linked chain looking for the searchkey.
                 current = current.next
             if current.next.item.__dict__[self._attribute] == searchkey:     #If found, the next pointer skips the deleted item.
-                print(current.next.item.__dict__[self._attribute])
                 current.next = current.next.next
                 self.size -= 1
                 return(True)
