@@ -4,6 +4,7 @@
 from .bintree import BinTree
 from .usarray import UnsortedArray
 from .redblack import RedBlackTree
+from .linkedchain import LinkedChain
 
 # Also, update the names here
 valid_names = ["BinTree", "UnsortedArray", "RedBlackTree"]

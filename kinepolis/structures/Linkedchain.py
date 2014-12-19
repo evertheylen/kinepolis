@@ -1,6 +1,9 @@
 import Node
+import sorting
 
-class USLinkedchain:
+# TODO rename file uslinkedchain
+# TODO rename UnsortedArray -> USArray
+class USLinkedChain:
     def __init__(self, head = None, size = 0):
         self.head = head
         self.size = size
@@ -21,7 +24,7 @@ class USLinkedchain:
         else:
             return False  
         
-    def remove(self, searchkey):
+    def delete(self, searchkey):
         current = self.head
         if self.head.item.__dict__[_attribute] == searchkey:
             self.head = self.head.next
@@ -50,7 +53,8 @@ class USLinkedchain:
         self.size += 1
         return True
         
-    def sort(self, attribute, sortFunc = sorting.bubblesort):
+    def sort(self, attribute, sortFunc = ownbubble):
+        # TODO linkedchain: 
         current = self.head
         listchain = []
         while current != None:
@@ -60,12 +64,22 @@ class USLinkedchain:
         
         yield from self.inorder()
     
+    def inorder(self):
+        current = self.head
+        while current != None:
+            yield current
+            current = current.next
+    
     def __str__(self):
         if self.head != None:
             return str(self.head)
         else:
             return ('Empty Linked chain')
-            
+        
+def ownbubble():
+    
+    
+    
 '''class DoublyLinkedchain(Linkedchain):
     def __init__(self):
         Linkedchain.__init__(self)
