@@ -115,5 +115,5 @@ def testDataStruct(name):
 
 
 # Test here
-testDataStruct("UnsortedLinkedChain")
+testDataStruct("USLinkedChain")
 

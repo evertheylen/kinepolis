@@ -7,4 +7,4 @@ from .redblack import RedBlackTree
 from .uslinkedchain import USLinkedChain
 
 # Also, update the names here
-valid_names = ["BinTree", "UnsortedArray", "RedBlackTree", "UnsortedLinkedChain"]
+valid_names = ["BinTree", "USArray", "RedBlackTree", "USLinkedChain"]
