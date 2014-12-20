@@ -61,7 +61,7 @@ Een contract dat voor een gesorteerde datastructuur geldt, zal er ongeveer zo ui
 In de bovenstaande functies moet het volgende gelden:
 
 ```python
-KeyType == type(element.__dict__[attribute]
+KeyType == type(element.__dict__[attribute])
 ```
 Bovendien moet element van het type ElementType zijn.
 
