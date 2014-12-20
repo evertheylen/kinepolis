@@ -1,1 +1,24 @@
-blabla
+// Implementatie door Stijn
+// Testen door iedereen.
+
+// Film type.
+
++createFilm(): Film
+precondities: geen
+postcondities: een nieuwe Film is gemaakt
+
++getTitle(): query
+precondities: geen
+postcondities: geeft de titel van de film terug
+
++getRating(): query
+precondities: geen
+postcondities: geeft de rating van de film terug
+
++setTitle(in title):
+precondities: geen
+postcondities: de filmtitel is gelijk aan title
+
++setRaing(in rating):
+precondities: geen
+postcondities: de filmrating is gelijk aan rating
