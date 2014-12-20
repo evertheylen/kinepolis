@@ -117,6 +117,6 @@ Men kan de datastructuren als volgt gebruiken:
     hashmap zal nu een Hashmap zijn, waarbij men kan retrieven en deleten gebaseerd op de ID.
   - Voor de Stack en Queue:
     ```python
-    from structures.stack import Stack
-    from structures.queue import Queue
+    from structures.stack import Stack;
+    from structures.queue import Queue;
     ```
