@@ -19,6 +19,7 @@ class USArray:
         return True
 
     def retrieve(self, key):
+        # simple sequential search
         for el in self.array:
             if el.__dict__[self.attribute()] == key:
                 return el
