@@ -1,6 +1,6 @@
-###### Documentatie
+# Documentatie
 
-##### Datastructuren
+## Datastructuren
 
 Er zijn twee grote types van datastructuren (en nog een kleine derde categorie),
 zij die zichzelf gesorteerd houden, zij die zichzelf niet gesorteerd houden, en zij waarbij men niet kan
@@ -103,7 +103,7 @@ Stack en Queue zijn niet gesorteerd, en man kan ook geen element retrieven. De c
 verschillend en staan bij de andere contracten. Ookal staan stack.py en queue.py beide in het mapje
 'structures', ze zijn geen geldige tabelimplementatie.
 
-##### Datastructuren gebruiken
+## Datastructuren gebruiken
 
 Men kan de datastructuren als volgt gebruiken:
   - Voor een tabelimplementatie, import datastruct, en roep createDataStructure() aan, bv. als volgt:
