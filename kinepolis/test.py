@@ -81,7 +81,7 @@ def testDataStruct(name, **kwargs):
         
         users = copy.deepcopy(usersarr)
         
-        for u in users:
+        for u in usersarr:
             ds.insert(u)
         
         test("ds empty2", ds.isEmpty(), False)
@@ -96,11 +96,13 @@ def testDataStruct(name, **kwargs):
         
         test("ds inorder after delete", inorderList[5].firstname, "ddddd")
         
-        test("ds retrieve", ds.retrieve(307), users[10])
+        test("ds retrieve", ds.retrieve(307), usersarr[10])
         test("ds retrieve2", ds.retrieve(104), None)
         
         ds.delete(307)
         test("ds retrieve after delete", ds.retrieve(307), None)
+        
+        test("insert item second time", ds.insert(usersarr[8]), False)
         
         # Also new :)
         sortedOnName = list(ds.sort("firstname"))
@@ -114,6 +116,9 @@ def testDataStruct(name, **kwargs):
             ds.delete(u.ID)
         
         test("ds empty3", ds.isEmpty(), True)
+        
+        test("ds delete after empty", ds.delete(321), False)
+        #Bij bintree gebeurt hier nog een error. Fixen die boel :p
         
         # Yes, this test is new :)
         test("ds attribute", ds.attribute(), "ID")
@@ -146,6 +151,7 @@ if __name__=='__main__':
     # also, watch out with using a non-chaining method, the hashmap may get filled up
     
     testDataStruct("BinTree")
+    testDataStruct("RedBlackTree")
     #testDataStruct("TwoThreeTree")
     
     # ------- Sorting methods

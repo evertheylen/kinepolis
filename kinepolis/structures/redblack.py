@@ -585,7 +585,7 @@ class RedBlackTree:
         '''Inorder Traversal is also implemented in the Red_BlackNode.'''    
         return self.rootItem.inorderTraversal(visit)
 
-    def sort(self, attribute, sortFunc):
+    def sort(self, attribute, sortFunc = sorting.bubblesort):
         '''Returns a sorted list of the tree. This is done by generators and an inorderTraversal'''
         treeArray = list(self.inorder())
         treeArray = sortFunc(treeArray, attribute)
@@ -598,7 +598,9 @@ class RedBlackTree:
         return value
         
     def delete(self, searchKey):
-        '''The entire delete operation is implemented within the Red_BlackNode. It returns the result of this operation.'''    
+        '''The entire delete operation is implemented within the Red_BlackNode. It returns the result of this operation.'''
+        if self.rootItem.searchkey() == None:
+            return False
         return self.rootItem.delete(searchKey, self)
         
 '''boom = Red_BlackTree()
