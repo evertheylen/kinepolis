@@ -11,3 +11,6 @@ class User:
     def sendMail(self, message):
         pass
         # send a mail, but not really :)
+    
+    def __str__(self):
+        return "{}: {} {} ({})".format(self.ID, self.firstname, self.lastname, self.mail)

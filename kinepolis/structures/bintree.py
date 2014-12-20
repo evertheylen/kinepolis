@@ -1,6 +1,4 @@
 
-import sorting
-
 class BinTree:
     def __init__(self, attr, root=None, parent=None):
         self.root = root
@@ -125,7 +123,12 @@ class BinTree:
             
             return True
     
-    def sort(self, attr, sortFunc=sorting.bubblesort):
+    def sort(self, attr, sortFunc=None):
+        # prevent circular depencies
+        from sorting import bubblesort
+        if sortFunc == None:
+            sortFunc = bubblesort
+        
         if attr == self.attribute():
             yield from self.inorder()
         else:
@@ -201,3 +204,4 @@ class BinTree:
     
     def __repr__(self):
         return self.__str__()
+

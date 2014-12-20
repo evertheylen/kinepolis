@@ -2,9 +2,14 @@ import datetime
 
 from datastruct import *
 from classes import *
+import sorting
+
 from etc import *
 
+from random import shuffle
+
 import traceback
+import copy
 
 def testClasses():
     res = Reservatie(5, 4, datetime.datetime.now(), 45, 78)
@@ -25,6 +30,40 @@ def test(name, t, oracle=True):
         print("test {}: succes! got: {}".format(name, t))
 
 
+# just an array to test stuff, not the actual datastructure!
+usersarr = [
+    User(100, "Emma", "Stone", "pieterstalktmij@celebmail.com"),
+    User(101, "Pieter", "Coeck", "ikstalkemma@sldfj.com"),
+    User(102, "Stijn", "Janssens", "sdflkdlkdfj_stijn"),
+    User(103, "Anthony", "Hermans", "mailanthony"),
+    User(104, "Evert", "Heylen", "mailevert"),
+    User(302, "ccccc", "CCCCC", "cccccmail"),   # 5
+    User(303, "ddddd", "DDDDD", "dddddmail"),
+    User(304, "eeeee", "EEEEE", "eeeeemail"),
+    User(305, "fffff", "FFFFF", "fffffmail"),
+    User(306, "ggggg", "GGGGG", "gggggmail"),
+    User(307, "hhhhh", "HHHHH", "hhhhhmail"),   # 10
+    User(308, "iiiii", "IIIII", "iiiiimail"),
+    User(323, "xxxxx", "XXXXX", "xxxxxmail"),
+    User(324, "yyyyy", "YYYYY", "yyyyymail"),
+    User(325, "zzzzz", "ZZZZZ", "zzzzzmail"),
+    User(309, "jjjjj", "JJJJJ", "jjjjjmail"),
+    User(310, "kkkkk", "KKKKK", "kkkkkmail"),
+    User(313, "nnnnn", "NNNNN", "nnnnnmail"),
+    User(314, "ooooo", "OOOOO", "ooooomail"),
+    User(315, "ppppp", "PPPPP", "pppppmail"),
+    User(316, "qqqqq", "QQQQQ", "qqqqqmail"),
+    User(322, "wwwww", "WWWWW", "wwwwwmail"),
+    User(311, "lllll", "LLLLL", "lllllmail"),
+    User(312, "mmmmm", "MMMMM", "mmmmmmail"),
+    User(318, "sssss", "SSSSS", "sssssmail"),
+    User(319, "ttttt", "TTTTT", "tttttmail"),
+    User(320, "uuuuu", "UUUUU", "uuuuumail"),
+    User(317, "rrrrr", "RRRRR", "rrrrrmail"),
+    User(321, "AAAvvvvv", "VVVVV", "vvvvvmail"),
+]
+
+
 def testDataStruct(name, **kwargs):
     try:
         print("\n\n---------- starting test for datastruct:",name)
@@ -40,40 +79,7 @@ def testDataStruct(name, **kwargs):
             #self.lastname = lastname
             #self.mail = mail
         
-        # just an array to test stuff, not the actual datastructure!
-        users = [
-            User(100, "Emma", "Stone", "pieterstalktmij@celebmail.com"),
-            User(101, "Pieter", "Coeck", "ikstalkemma@sldfj.com"),
-            User(102, "Stijn", "Janssens", "sdflkdlkdfj_stijn"),
-            User(103, "Anthony", "Hermans", "mailanthony"),
-            User(104, "Evert", "Heylen", "mailevert"),
-            User(302, "ccccc", "CCCCC", "cccccmail"),   # 5
-            User(303, "ddddd", "DDDDD", "dddddmail"),
-            User(304, "eeeee", "EEEEE", "eeeeemail"),
-            User(305, "fffff", "FFFFF", "fffffmail"),
-            User(306, "ggggg", "GGGGG", "gggggmail"),
-            User(307, "hhhhh", "HHHHH", "hhhhhmail"),   # 10
-            User(308, "iiiii", "IIIII", "iiiiimail"),
-            User(323, "xxxxx", "XXXXX", "xxxxxmail"),
-            User(324, "yyyyy", "YYYYY", "yyyyymail"),
-            User(325, "zzzzz", "ZZZZZ", "zzzzzmail"),
-            User(309, "jjjjj", "JJJJJ", "jjjjjmail"),
-            User(310, "kkkkk", "KKKKK", "kkkkkmail"),
-            User(313, "nnnnn", "NNNNN", "nnnnnmail"),
-            User(314, "ooooo", "OOOOO", "ooooomail"),
-            User(315, "ppppp", "PPPPP", "pppppmail"),
-            User(316, "qqqqq", "QQQQQ", "qqqqqmail"),
-            User(322, "wwwww", "WWWWW", "wwwwwmail"),
-            User(311, "lllll", "LLLLL", "lllllmail"),
-            User(312, "mmmmm", "MMMMM", "mmmmmmail"),
-            User(318, "sssss", "SSSSS", "sssssmail"),
-            User(319, "ttttt", "TTTTT", "tttttmail"),
-            User(320, "uuuuu", "UUUUU", "uuuuumail"),
-            User(317, "rrrrr", "RRRRR", "rrrrrmail"),
-            User(321, "AAAvvvvv", "VVVVV", "vvvvvmail"),
-            
-        ]
-        
+        users = copy.deepcopy(usersarr)
         
         for u in users:
             ds.insert(u)
@@ -111,18 +117,45 @@ def testDataStruct(name, **kwargs):
         
         
         print("-------------\n\n")
+        
     except Exception as e:
         print(rgb(255,0,0))
         traceback.print_exc()
         print(endc)
 
 
+def testSortingAlgo(algo):
+    users = copy.deepcopy(usersarr)
+    shuffle(users)  # shuffle users
+    algo(users, "firstname")     # sort them again
+    test("sort "+algo.__name__, users[-1].firstname, "zzzzz")
+    test("sort_empty "+algo.__name__, algo([], "ID"), [])
+
+
 # Tests here
 if __name__=='__main__':
+    # ------- Data structures
     testDataStruct("SLinkedChain")
+    testDataStruct("USLinkedChain")
     testDataStruct("USArray")
-    testDataStruct("Hashmap")   # inorder tests will fail, this is normal and should not be considered an error
-                                # also, watch out with using a non-chaining method, the hashmap may get filled up
+    testDataStruct("Hashmap")
+    # inorder tests will fail, this is normal and should not be considered an error
+    # also, watch out with using a non-chaining method, the hashmap may get filled up
+    
     testDataStruct("BinTree")
     #testDataStruct("TwoThreeTree")
+    
+    # ------- Sorting methods
+    totest = []
+    for algoname in list(sorting.__dict__.keys()):
+        # small hack to only test sorting algorithms
+        if algoname[-4:] == "sort":
+            totest.append(algoname)
+    print(totest)
+    
+    #for algoname in ['heapsort']:
+    for algoname in sorted(totest):
+        print("\ntesting",algoname)
+        testSortingAlgo(sorting.__dict__[algoname])
+    
     

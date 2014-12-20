@@ -5,8 +5,8 @@ def mergesort(l, attr):
         return l
     
     mid=len(l)//2
-    l[:mid] = mergesort(l[:mid])
-    l[mid:] = mergesort(l[mid:])
+    l[:mid] = mergesort(l[:mid], attr)
+    l[mid:] = mergesort(l[mid:], attr)
     
     #print('now merge',l[:mid]," and ",l[mid:])
 
