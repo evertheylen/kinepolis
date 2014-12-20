@@ -34,31 +34,35 @@ optie nemen.
 
 Een contract dat voor een gesorteerde datastructuur geldt, zal er ongeveer zo uit zien:
 
-    +__init__(attribute)
-    // Creëert een datatstructuur gesorteerd op attribute.
+```python
++__init__(attribute)
+# Creëert een datatstructuur gesorteerd op attribute.
 
-    +attribute(): string
-    // Geeft de attribuut waarop gesorteerd wordt. (string)
++attribute(): string
+# Geeft de attribuut waarop gesorteerd wordt. (string)
 
-    +retrieve(key: KeyType): ElementType {query}
-    // Als er een element met element.__dict__[self.attribute()] == key in de datastructuur zit, geeft
-    // dat element terug. Indien niet, geeft None terug.
++retrieve(key: KeyType): ElementType {query}
+# Als er een element met element.__dict__[self.attribute()] == key in de datastructuur zit, geeft
+# dat element terug. Indien niet, geeft None terug.
 
-    +delete(key: KeyType): Bool
-    // Geeft terug of het deleten gelukt is. Geeft ook False terug als het gezochte element niet 
-    // in de datastructuur zit.
++delete(key: KeyType): Bool
+# Geeft terug of het deleten gelukt is. Geeft ook False terug als het gezochte element niet 
+# in de datastructuur zit.
 
-    +isEmpty(): Bool
++isEmpty(): Bool
 
-    +sort(attribute: string): generator {query}
-    // Geeft een generator terug, in volgorde van de attribuut aangegeven.
++sort(attribute: string): generator {query}
+# Geeft een generator terug, in volgorde van de attribuut aangegeven.
 
-    +inorder(): generator
-    // Doorloopt de structuur in volgorde.
++inorder(): generator
+# Doorloopt de structuur in volgorde.
+```
 
-In de bovenstaande functies moet het volgende gelden: 
-    KeyType == type(element.__dict__[attribute]
+In de bovenstaande functies moet het volgende gelden:
 
+```python
+KeyType == type(element.__dict__[attribute]
+```
 Bovendien moet element van het type ElementType zijn.
 
 ### Ongesorteerde datastructuren
@@ -69,29 +73,31 @@ De verschillen met de gesorteerde datastructuren zijn als volgt:
 .sort(attribute) zal sorteren op het gekozen attribuut en een bijhorende generator returnen, maar zal ook
 de interne volgorde veranderen!
 
-    +__init__(attribute)
-    // Creëert een datatstructuur waarbij gezocht wordt op attribute.
+```python
++__init__(attribute)
+# Creëert een datatstructuur waarbij gezocht wordt op attribute.
 
-    +attribute(): string
-    // Geeft de attribuut waarop gezocht wordt. (string)
++attribute(): string
+# Geeft de attribuut waarop gezocht wordt. (string)
 
-    +retrieve(key: KeyType): ElementType {query}
-    // Als er een element met element.__dict__[self.attribute()] == key in de datastructuur zit, geeft
-    // dat element terug. Indien niet, geeft None terug.
++retrieve(key: KeyType): ElementType {query}
+# Als er een element met element.__dict__[self.attribute()] == key in de datastructuur zit, geeft
+# dat element terug. Indien niet, geeft None terug.
 
-    +delete(key: KeyType): Bool
-    // Geeft terug of het deleten gelukt is. Geeft ook False terug als het gezochte element niet 
-    // in de datastructuur zit.
++delete(key: KeyType): Bool
+# Geeft terug of het deleten gelukt is. Geeft ook False terug als het gezochte element niet 
+# in de datastructuur zit.
 
-    +isEmpty(): Bool
++isEmpty(): Bool
 
-    +sort(attribute: string): generator
-    // Geeft een generator terug, in volgorde van de attribuut aangegeven.
-    // geen query!
++sort(attribute: string): generator
+# Geeft een generator terug, in volgorde van de attribuut aangegeven.
+# geen query!
 
-    +inorder(): generator
-    // Doorloopt de structuur in de huidige volgorde. Deze volgorde kan bijvoorbeeld de volgorde zijn van
-    // toevoegen, maar ook de volgorde die door een aanroep van .sort() werd gedefinieerd.
++inorder(): generator
+# Doorloopt de structuur in de huidige volgorde. Deze volgorde kan bijvoorbeeld de volgorde zijn van
+# toevoegen, maar ook de volgorde die door een aanroep van .sort() werd gedefinieerd.
+```
 
 Een speciaal geval is de USLinkedChain. Als we geen functie specifiëeren om te gebruiken als
 sorteringsalgoritme, zal deze standaard niet de 'gewone' bubblesort gebruiken maar een speciale versie van
@@ -107,8 +113,10 @@ verschillend en staan bij de andere contracten. Ookal staan stack.py en queue.py
 
 Men kan de datastructuren als volgt gebruiken:
   - Voor een tabelimplementatie, import datastruct, en roep createDataStructure() aan, bv. als volgt:
-    hashmap = createDataStructure("Hashmap", "ID")
+    ```hashmap = createDataStructure("Hashmap", "ID")```
     hashmap zal nu een Hashmap zijn, waarbij men kan retrieven en deleten gebaseerd op de ID.
   - Voor de Stack en Queue:
+    ```python
     from structures.stack import Stack
     from structures.queue import Queue
+    ```
