@@ -106,6 +106,9 @@ def testDataStruct(name, **kwargs):
         sortedOnName = list(ds.sort("firstname"))
         test("ds sort()", sortedOnName[0].firstname, "AAAvvvvv")
         
+        sortedOnLastName = list(ds.sort("lastname", sorting.quicksort))
+        test("ds sort()", sortedOnLastName[-1].lastname, "ZZZZZ")
+        
         # Must be done apart from eachother, or python will lose its mind (generators etc...)
         for u in list(ds.inorder()):
             ds.delete(u.ID)

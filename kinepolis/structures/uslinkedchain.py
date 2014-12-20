@@ -119,7 +119,7 @@ class USLinkedChain:
             current = self.head
             listchain = []
             while current != None:
-                listchain.append(current)
+                listchain.append(current.item)
                 current = current.next
             sortFunc(listchain, attribute) #Sort the array.
         yield from self.inorder()
