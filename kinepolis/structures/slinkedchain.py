@@ -52,6 +52,8 @@ class SLinkedChain:
     def delete(self, searchkey):
         '''Basic delete function based on the given searchkey.'''
         current = self.head
+        if current == None:
+            return False
         if self.head.item.__dict__[self._attribute] == searchkey:
             #Special case: the item to be deleted is the head.
             self.head = self.head.next
