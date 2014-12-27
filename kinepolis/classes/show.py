@@ -15,6 +15,7 @@ class Show:
         if freeplaces == -1:
             freeplaces = theater.places
         self.freeplaces = freeplaces
+        # this number is managed by the 'parent' cinema
         
         self.tickets = tickets
         
@@ -59,3 +60,11 @@ class Show:
     def isEmptyTickets(self):
         return self.tickets.isEmpty()
 
+    
+    
+    # UI ----------------------------------
+    
+    def __str__(self):
+        return "[{0}] {1}, {2}\t in theater {3}\t playing {4: <50}\t{5} places left.".format(
+                self.ID, str(self.date), str(self.timeslot), str(self.theater.ID), "'"+str(self.film.title)+"'",
+                str(self.freeplaces))

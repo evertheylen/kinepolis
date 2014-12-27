@@ -140,13 +140,14 @@ def main():
         
         print('\nSecond show of this cinema:  ')
         a = data["kinepolis"].shows.retrieve(2)
-        print('ID: ',a.ID,'  Date:',a.date,'  Theater:', a.theater, '  Film:', a.film.title,'  Timeslot:', a.timeslot, '  Initial free places: ', a.freeplaces)
+        print(a)
         
         
         # ----- Users -----
-        data["kinepolis"].users = createDataStructure("Hashmap", "ID")
+        # I've changed the attribute to "mail", because no one ever remembers their own ID...
+        data["kinepolis"].users = createDataStructure("Hashmap", "mail", toInt=hash)
         for u in [
-            # User(ID, firstname, lastname, email)
+            # User(ID, firstname, lastname, mail)
             User(1,'Stijn', 'Janssens', 'janssens.stijn@hotmail.com'),
             User(2,'Evert', 'Heylen', 'hoeweetikdatmailadresnu@gmail.com'),
             User(3,'Anthony', 'Hermans', 'anthony@herma.ns')]:

@@ -62,6 +62,17 @@ class MiniButton(checkbox._ToggleControl):
         else:
             button_attributes = button_state
         
+        """
+        from code import InteractiveConsole; import rlcompleter; import readline; console = InteractiveConsole(); console.locals = locals();
+        c = ""
+        while c != "quit":
+            c = input("> ");
+            try:
+                console.push(c)
+            except Exception as e:
+                print(str(e))
+        """
+        
         self.add_line(self.rely, self.relx+1,
             button_name,
             self.make_attributes_list(button_name, button_attributes),

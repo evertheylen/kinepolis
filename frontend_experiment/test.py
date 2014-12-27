@@ -1,6 +1,8 @@
 import npyscreen
 import traceback
 
+error = None
+
 class User:
     def __init__(self, ID, firstname, lastname, mail):
         """ All string, except ID: int. """
@@ -26,8 +28,15 @@ class ViewUsers(npyscreen.MultiLineAction):
         self.add_handlers({
             "^A": self.when_add_user,
             "^D": self.when_delete_user,
-            "^X": self.exit
+            "^X": self.exit,
+            "^P": self.popup
         })
+    
+    def popup(self, whatever):
+        try:
+            npyscreen.notify_confirm("test")
+        except Exception as e:
+            error = e
     
     def display_value(self, vl):
         return str(vl)
@@ -67,6 +76,7 @@ class EditUser(npyscreen.ActionForm):
         self.wgFirstname = self.add(npyscreen.TitleText, name = "Firstname:")
         self.wgLastname = self.add(npyscreen.TitleText, name = "Lastname:")
         self.wgEmail = self.add(npyscreen.TitleText, name = "Email:")
+        self.wgPager = self.add(npyscreen.Pager, autowrap=True, values=["test", "lol"])
     
     def beforeEditing(self):
         if self.value: # editing, not creating
@@ -102,13 +112,17 @@ class EditUser(npyscreen.ActionForm):
 
 
 class MyApp(npyscreen.NPSAppManaged):
+    def __init__(self, database):
+        npyscreen.NPSAppManaged.__init__(self)
+        self.myDatabase = database
+    
     def onStart(self):
-        self.myDatabase = {
-            100: User(100, "Emma", "Stone", "pieterstalktmij@celebmail.com"),
-            101: User(101, "Pieter", "Coeck", "ikstalkemma@sldfj.com"),
-            102: User(102, "Stijn", "Janssens", "sdflkdlkdfj_stijn"),
-            103: User(103, "Anthony", "Hermans", "mailanthony"),
-            }
+        #self.myDatabase = {
+            #100: User(100, "Emma", "Stone", "pieterstalktmij@celebmail.com"),
+            #101: User(101, "Pieter", "Coeck", "ikstalkemma@sldfj.com"),
+            #102: User(102, "Stijn", "Janssens", "sdflkdlkdfj_stijn"),
+            #103: User(103, "Anthony", "Hermans", "mailanthony"),
+            #}
         
         self.addForm("MAIN", ViewUsersList)
         self.addForm("EDITUSER", EditUser)
@@ -116,8 +130,17 @@ class MyApp(npyscreen.NPSAppManaged):
  
 # start MyApp
 try:
-    app = MyApp()
+    db = {
+            100: User(100, "Emma", "Stone", "pieterstalktmij@celebmail.com"),
+            101: User(101, "Pieter", "Coeck", "ikstalkemma@sldfj.com"),
+            102: User(102, "Stijn", "Janssens", "sdflkdlkdfj_stijn"),
+            103: User(103, "Anthony", "Hermans", "mailanthony"),
+            }
+    app = MyApp(db)
     app.run()
+    
+    print("Emma is now called", db[100].firstname)
+    print(error)
 except Exception as e:
     traceback.print_exc()
     print(app.myDatabase)

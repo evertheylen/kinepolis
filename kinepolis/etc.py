@@ -22,5 +22,3 @@ def rgb(rf,gf,bf,rb=0,gb=0,bb=0):
 
 def rgbtext(s, f=red, b=black):
     return rgb(f[0],f[1],f[2],b[0],b[1],b[2]) + s + endc
-
-

@@ -188,17 +188,27 @@ class TextfieldBase(widget.Widget):
         
 
     def display_value(self, value):
+        # WARNING
+        # I have changed quite a bit here
+        a = ''
         if value == None:
-            return ''
+            a = ''
+            return a
         else:
             try:
                 str_value = str(value)
             except UnicodeEncodeError:
                 str_value = self.safe_string(value)
-                return str_value
+                a = str_value
+                f = open('/tmp/wtf', 'w'); f.write('about to return '+a); f.close()
+                return a
             except ReferenceError:                
-                return ">*ERROR*ERROR*ERROR*<"
-            return self.safe_string(str_value)
+                a = ">*ERROR*ERROR*ERROR*<"
+                f = open('/tmp/wtf', 'w'); f.write('about to return '+a); f.close()
+                return a
+            a = self.safe_string(str_value)
+            f = open('/tmp/wtf', 'w'); f.write('about to return '+a); f.close()
+            return a
 
     
     def find_width_of_char(self, ch):
