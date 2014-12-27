@@ -7,6 +7,9 @@ import locale
 from . import wgwidget as widget
 from . import npysGlobalOptions as GlobalOptions
 
+# modifications on line 95+ and line 374
+# changed len( ... ) to len( str( ... ) )
+
 class TextfieldBase(widget.Widget):
     ENSURE_STRING_VALUE = True
     def __init__(self, screen, value='', highlight_color='CURSOR', highlight_whole_widget=False,
@@ -90,10 +93,10 @@ class TextfieldBase(widget.Widget):
                 value_to_use_for_calculations = self.display_value(self.value).decode(self.encoding, 'replace')
             if cursor:
                 if self.cursor_position is False:
-                    self.cursor_position = len(value_to_use_for_calculations)
+                    self.cursor_position = len(str(value_to_use_for_calculations))
 
-                elif self.cursor_position > len(value_to_use_for_calculations):
-                    self.cursor_position = len(value_to_use_for_calculations)
+                elif self.cursor_position > len(str(value_to_use_for_calculations)):
+                    self.cursor_position = len(str(value_to_use_for_calculations))
 
                 elif self.cursor_position < 0:
                     self.cursor_position = 0
@@ -162,7 +165,7 @@ class TextfieldBase(widget.Widget):
         except TypeError:
             char_under_cur = ' '
         if self.do_colors():
-            self.parent.curses_pad.addstr(self.rely, self.cursor_position - self.begin_at + self.relx + self.left_margin, char_under_cur, self.parent.theme_manager.findPair(self, 'CURSOR_INVERSE'))
+            self.parent.curses_pad.addstr(self.rely, self.cursor_position - self.begin_at + self.relx + self.left_margin, char_under_cur, self.parent.theme_manager.findPair(self) | curses.A_STANDOUT)
         else:
             self.parent.curses_pad.addstr(self.rely, self.cursor_position - self.begin_at + self.relx + self.left_margin, char_under_cur, curses.A_STANDOUT)
             
@@ -371,7 +374,7 @@ class Textfield(TextfieldBase):
     def edit(self):
         self.editing = 1
         if self.cursor_position is False:
-            self.cursor_position = len(self.value or '')
+            self.cursor_position = len(str(self.value) or '')
         self.parent.curses_pad.keypad(1)
         
         self.old_value = self.value
