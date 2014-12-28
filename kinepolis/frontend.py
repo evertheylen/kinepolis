@@ -8,6 +8,23 @@ import traceback
 import random
 import datetime
 
+kinepolis_logo=r"""
+  _  __ _                             _  _      
+ | |/ /(_)                           | |(_)     
+ | ' /  _  _ __    ___  _ __    ___  | | _  ___ 
+ |  <  | || '_ \  / _ \| '_ \  / _ \ | || |/ __|
+ | . \ | || | | ||  __/| |_) || (_) || || |\__ \
+ |_|\_\|_||_| |_| \___|| .__/  \___/ |_||_||___/
+                       | |                      
+                       |_|                      
+
+
+To exit, press CTRL+X.
+
+Please make your choice:
+
+"""
+
 log_string = ""
 
 def log(s="****ERROR****"):
@@ -15,6 +32,7 @@ def log(s="****ERROR****"):
     if s=="****ERROR****":
         s = traceback.format_exc()
     log_string += s + "\n"
+
 
 def start_frontend(data):
     cin_name = ""
@@ -32,6 +50,7 @@ def start_frontend(data):
     try:
         app.run()
     except:
+        log()
         print("goodbye")
     
     print(log_string)
@@ -66,42 +85,29 @@ class NoBullShitText(npyscreen.Pager):
         del(kwargs["text"])
         
         npyscreen.Pager.__init__(self, *args, **kwargs)
-
-
-# Shows ----------------------------------------------------------------
-
+        
 # this class is not a form, it's a widget that should be displayed in the form ViewShowsList
 class ViewShows(npyscreen.MultiLineAction):
     def __init__(self, *args, **kwargs):
-        log("created ViewShows")
         super(ViewShows, self).__init__(*args, **kwargs)
         self.add_handlers({
             "^X": self.exit
         })
-        log("end of createing viewshows")
     
     def display_value(self, vl):
         return str(vl)
     
+    # passes the call onto the parent
     def actionHighlighted(self, selected_show, keypress):
-        self.parent.parentApp.getForm("MAKERESERVATION").show = selected_show
-        self.parent.parentApp.switchForm("MAKERESERVATION")
-    
-    #def when_add_user(self, *args, **keywords):
-        #self.parent.parentApp.getForm('EDITUSER').value = None
-        #self.parent.parentApp.switchForm('EDITUSER')
-    
-    #def when_delete_user(self, *args, **kwargs):
-        #self.parent.parentApp.myDatabase.pop(self.values[self.cursor_line].ID)
-        #self.parent.update_list()
+        self.parent.on_element_selected(selected_show, keypress)
     
     def exit(self, whatever):
-        self.parent.parentApp.switchForm(None)
+        self.parent.parentApp.switchForm("MAIN")
 
 
 class ViewShowsList(npyscreen.Form):
     def create(self):
-        self.wgTitle = self.add(NoBullShitText, text="Pick a Show.\nTo exit, press CTRL+C.\n")
+        self.wgTitle = self.add(NoBullShitText, text="Pick a Show.\nTo exit, press CTRL+X.\n")
         self.wgShows = self.add(ViewShows)
     
     def beforeEditing(self):
@@ -111,6 +117,33 @@ class ViewShowsList(npyscreen.Form):
         self.wgShows.values = list(self.parentApp.cinema.shows.sort("ID"))
         #self.wMain.values = [1, 2, 3]
         self.wgShows.display()
+    
+    # careful, the self parameter will contain the form, not the widget!
+    def on_element_selected(self, selected_show, keypress):
+        # override me!
+        pass
+
+# EnterTheater ---------------------------------------------------------
+
+class PickShowToEnter(ViewShowsList):
+    def on_element_selected(self, selected_show, keypress):
+        selected_show.popTicket()
+        if selected_show.isEmptyTickets():
+            npyscreen.notify_confirm("The film can start!")
+            # TODO Star Wars easter egg here
+        else:
+            npyscreen.notify_confirm("We still need "+str(selected_show.tickets.length)+" people "\
+                + "for the film \n   '" + selected_show.film.title+ "'.")
+        self.update_list()
+
+# Shows ----------------------------------------------------------------
+
+class PickShowReservation(ViewShowsList):
+    def on_element_selected(self, selected_show, keypress):
+        log("make reservation?")
+        self.parentApp.getForm("MAKERESERVATION").show = selected_show
+        self.parentApp.switchForm("MAKERESERVATION")
+
 
 class MagicalUserMail(npyscreen.TitleText):
     def on_leave(self):
@@ -125,18 +158,27 @@ class MagicalUserMail(npyscreen.TitleText):
             self.parent.wgUserFirstname.value = user.firstname
             self.parent.wgUserLastname.value = user.lastname
 
+
 class IntegerTitleText(npyscreen.TitleText):
     def on_leave(self):      
-        try:
-            i = int(self.value)
-        except:
-            npyscreen.notify_confirm("Not a valid integer, try again!")
+        if self.value != '':
+            try:
+                i = int(self.value)
+            except:
+                npyscreen.notify_confirm("Not a valid integer, try again!")
+
 
 class MakeReservation(npyscreen.ActionForm):
+    def __init__(self, *args, **kwargs):
+        super(MakeReservation, self).__init__(*args, **kwargs)
+        self.add_handlers({
+            "^X": self.on_cancel
+        })
+    
     def create(self):
         self.show = None  # please overwrite me with the show we are getting tickets for
         
-        self.wgTitle = self.add(NoBullShitText, text="You are buying tickets for:\nSHOW HERE\n\n")
+        self.wgTitle = self.add(NoBullShitText, text="You are buying tickets for this show:\nSHOW HERE\n\n")
         
         # User stuff
         self.add(NoBullShitText, text="Please provide some info about yourself:\n")
@@ -153,29 +195,10 @@ class MakeReservation(npyscreen.ActionForm):
     def beforeEditing(self):
         # Basically, after creating a NoBullShitText widget, it behaves like a Pager
         self.wgTitle.values[1] = str(self.show)
-        
-        # TODO
+
         # reset all values
         for toreset in [self.wgUserMail, self.wgUserFirstname, self.wgUserLastname, self.wgResPlaces]:
             toreset.value = ''
-        
-        """if self.value: # editing, not creating
-            show = self.parentApp.cinema.shows.retrieve(self.value)
-            
-            self.name = "Show ID: {}".format(show.ID)
-            self.show_ID = show.ID
-            self.wgID.value = show.ID
-            self.wgTitle.value = show.film.title
-            #self.wgFirstname.value = record.firstname
-            #self.wgLastname.value = record.lastname
-            #self.wgEmail.value = record.mail
-        else:
-            self.name = "New Show, wtf"
-            self.show_id = 0
-            self.wgID.value = 0
-            self.wgTitle.value = ""
-        """
-    
     
     def on_ok(self):
         # user stuff
@@ -191,8 +214,8 @@ class MakeReservation(npyscreen.ActionForm):
             # user init:
             # ID, firstname, lastname, mail
             user = User(
-                # ID is really awkward, because we don't really use it anymore
-                random.randint(1000,2000),
+                # ID is really awkward, because we don't use it anymore
+                hash(self.wgUserMail.value),
                 self.wgUserFirstname.value,
                 self.wgUserLastname.value,
                 self.wgUserMail.value
@@ -228,11 +251,11 @@ class MakeReservation(npyscreen.ActionForm):
             return
         
         # and switch back
-        self.parentApp.switchForm("VIEWSHOWS")
+        self.parentApp.switchForm("PICKSHOWRESERVATION")
         
-    def on_cancel(self):
+    def on_cancel(self, whatever=None):
         # simply switch to the previous form
-        self.parentApp.switchForm("VIEWSHOWS")
+        self.parentApp.switchForm("PICKSHOWRESERVATION")
 
 
 # Main menu -------------------------------------------------------
@@ -240,22 +263,31 @@ class MakeReservation(npyscreen.ActionForm):
 class MakeReservationButton(npyscreen.ButtonPress):
     def whenPressed(self):
         # this is a widget, so don't just call self.parentApp!
-        self.parent.parentApp.switchForm("VIEWSHOWS")
+        self.parent.parentApp.switchForm("PICKSHOWRESERVATION")
 
 
 class EnterTheaterButton(npyscreen.ButtonPress):
     def whenPressed(self):
-        npyscreen.notify_confirm("Entering theater...")
+        self.parent.parentApp.switchForm("PICKSHOWTOENTER")
 
 
-class MainMenu(npyscreen.Popup):
+class MainMenu(npyscreen.Form):
+    def __init__(self, *args, **kwargs):
+        super(MainMenu, self).__init__(*args, **kwargs)
+        self.add_handlers({
+            "^X": self.exit
+        })
+    
     def create(self):
         #self.add(NoBullShitText, name="Please make your choice.\n")
         log("creating MainMenu")
 
-        self.add(NoBullShitText, text="test\nnewline!\nanother one!")
+        self.add(NoBullShitText, text=kinepolis_logo)
         self.add(MakeReservationButton, name="Make a reservation")
         self.add(EnterTheaterButton, name="Enter theater")
+   
+    def exit(self, whatever):
+        self.parentApp.switchForm(None)
 
 # THE APP ---------------------------------------------------------
 
@@ -266,5 +298,6 @@ class MyCinemaApp(npyscreen.NPSAppManaged):
         
     def onStart(self):
         self.addForm("MAIN", MainMenu)
-        self.addForm("VIEWSHOWS", ViewShowsList)
+        self.addForm("PICKSHOWRESERVATION", PickShowReservation)
+        self.addForm("PICKSHOWTOENTER", PickShowToEnter)
         self.addForm("MAKERESERVATION", MakeReservation)

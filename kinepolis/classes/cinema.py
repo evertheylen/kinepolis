@@ -2,12 +2,14 @@ from structures.queue import Queue
 from .ticket import Ticket
 
 class Cinema:
-    def __init__(self, name="defaultname", theaters=None, timeslots=None, shows=None, films=None, users=None, reservations = Queue(), autoExecute=True):
+    def __init__(self, name="defaultname", theaters=None, timeslots=None, shows=None, films=None, users=None, reservations=None, autoExecute=True):
         self.name = name
         self.theaters = theaters
         self.timeslots = timeslots
         self.shows = shows
         self.films = films
+        if reservations == None:
+            reservations = Queue()
         self.reservations = reservations
         self.reservationCounter = 0
         self.users = users

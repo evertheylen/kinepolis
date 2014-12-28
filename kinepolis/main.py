@@ -163,6 +163,7 @@ def main():
         #               show,
         #               places)
         
+        """
         data["kinepolis"].addReservation(
             Reservation(1,
                         data["kinepolis"].users.retrieve("p@coeck"),
@@ -176,6 +177,7 @@ def main():
                         datetime.datetime.now(),
                         data["kinepolis"].shows.retrieve(2),
                         5))
+        """
         
         #--- END OF INIT --------------------------------------------------------------------
         

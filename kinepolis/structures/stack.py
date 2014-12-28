@@ -31,9 +31,15 @@ class Stack:
         return True # success
         
     def pop(self):
-        self.stackTop = self.stackTop.next
-        self.length -= 1
-        return self.stackTop.data
+        if self.stackTop != None:
+            self.stackTop = self.stackTop.next
+            self.length -= 1
+            if self.stackTop != None:
+                return self.stackTop.data
+            else:
+                return None
+        else:
+            return None
         
     def getTop(self):
         return self.stackTop.data

@@ -6,7 +6,7 @@ from structures.queue import Queue
 from .ticket import Ticket
 
 class Show:
-    def __init__(self, ID, date, timeslot, theater, film, freeplaces=-1, tickets = Stack()):
+    def __init__(self, ID, date, timeslot, theater, film, freeplaces=-1, tickets = None):
         self.ID = ID
         self.date = date
         self.timeslot = timeslot
@@ -17,6 +17,8 @@ class Show:
         self.freeplaces = freeplaces
         # this number is managed by the 'parent' cinema
         
+        if tickets==None:
+            tickets = Stack()
         self.tickets = tickets
         
 
@@ -65,6 +67,6 @@ class Show:
     # UI ----------------------------------
     
     def __str__(self):
-        return "[{0}] {1}, {2}\t in theater {3}\t playing {4: <50}\t{5} places left.".format(
+        return "[{0}] {1}, {2}\t in theater {3}\t playing {4: <35} {5} places left.\t({6} tickets)".format(
                 self.ID, str(self.date), str(self.timeslot), str(self.theater.ID), "'"+str(self.film.title)+"'",
-                str(self.freeplaces))
+                str(self.freeplaces), self.tickets.length)
