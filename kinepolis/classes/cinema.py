@@ -9,6 +9,7 @@ class Cinema:
         self.shows = shows
         self.films = films
         self.reservations = reservations
+        self.reservationCounter = 0
         self.users = users
         
         self.autoExecute = autoExecute
@@ -24,13 +25,14 @@ class Cinema:
     # add a reservation to the reservations queue.
     def addReservation(self, reservation):
         if reservation.places > reservation.show.freeplaces:
-            print('Er is te weinig plaats in de zaal voor uw reservatie. Deze zal niet kunnen worden afgewerkt.')
+            #print('Er is te weinig plaats in de zaal voor uw reservatie. Deze zal niet kunnen worden afgewerkt.')
             return False
         else:
             self.reservations.enqueue(reservation)
             if self.autoExecute: # automatically call executeReservations if set to True (default)
                 self.executeReservations(1)
             reservation.show.freeplaces -= reservation.places
+            self.reservationCounter += 1
             return True
     
     def isEmptyReservations(self):

@@ -5,6 +5,8 @@ from datastruct import *
 import npyscreen
 
 import traceback
+import random
+import datetime
 
 log_string = ""
 
@@ -110,6 +112,25 @@ class ViewShowsList(npyscreen.Form):
         #self.wMain.values = [1, 2, 3]
         self.wgShows.display()
 
+class MagicalUserMail(npyscreen.TitleText):
+    def on_leave(self):
+        # this method gets called whenever people leave the user mail field
+        # the purpose of this method is automatically inserting user details
+        # when the user mail is already in our system!
+        log("super epic autocomplete!")
+        
+        user = self.parent.parentApp.cinema.users.retrieve(self.value)
+        if user != None:
+            log("found user "+str(user))
+            self.parent.wgUserFirstname.value = user.firstname
+            self.parent.wgUserLastname.value = user.lastname
+
+class IntegerTitleText(npyscreen.TitleText):
+    def on_leave(self):      
+        try:
+            i = int(self.value)
+        except:
+            npyscreen.notify_confirm("Not a valid integer, try again!")
 
 class MakeReservation(npyscreen.ActionForm):
     def create(self):
@@ -119,11 +140,14 @@ class MakeReservation(npyscreen.ActionForm):
         
         # User stuff
         self.add(NoBullShitText, text="Please provide some info about yourself:\n")
-        self.wgUserMail = self.add(npyscreen.TitleText, name="Mail")
+        self.wgUserMail = self.add(MagicalUserMail, name="Mail")
         self.wgUserFirstname = self.add(npyscreen.TitleText, name="First name")
         self.wgUserLastname = self.add(npyscreen.TitleText, name="Last name")
         
         # Reservation stuff
+        # ID, user, timeStamp, show, places
+        self.add(NoBullShitText, text="\n\nDetails about your reservation:\n")
+        self.wgResPlaces = self.add(IntegerTitleText, name="Places")
     
     
     def beforeEditing(self):
@@ -132,6 +156,8 @@ class MakeReservation(npyscreen.ActionForm):
         
         # TODO
         # reset all values
+        for toreset in [self.wgUserMail, self.wgUserFirstname, self.wgUserLastname, self.wgResPlaces]:
+            toreset.value = ''
         
         """if self.value: # editing, not creating
             show = self.parentApp.cinema.shows.retrieve(self.value)
@@ -152,9 +178,60 @@ class MakeReservation(npyscreen.ActionForm):
     
     
     def on_ok(self):
-        npyscreen.notify_confirm("heya there")
+        # user stuff
+        # we update or insert the user
+        if self.wgUserMail.value == '' or self.wgUserFirstname.value == '' or \
+            self.wgUserLastname.value == '' or self.wgResPlaces.value == '':
+            npyscreen.notify_confirm("Please fill in all the fields")
+            return
+        
+        user = self.parentApp.cinema.users.retrieve(self.wgUserMail.value)
+        if user == None:
+            # inserting
+            # user init:
+            # ID, firstname, lastname, mail
+            user = User(
+                # ID is really awkward, because we don't really use it anymore
+                random.randint(1000,2000),
+                self.wgUserFirstname.value,
+                self.wgUserLastname.value,
+                self.wgUserMail.value
+                )
+            self.parentApp.cinema.users.insert(user)
+        else:
+            # updating
+            user.firstname = self.wgUserFirstname.value
+            user.lastname = self.wgUserLastname.value
+        
+        # first of all, make sure that self.wgResPlaces is a valid integer
+        places = 0
+        try:
+            places = int(self.wgResPlaces.value)
+        except:
+            npyscreen.notify_confirm("Not a valid integer, try again!")
+            return
+        
+        # reservation init:
+        # ID, user, timeStamp, show, places
+        reservation = Reservation(
+            # determining the ID is *really* awkward
+            self.parentApp.cinema.reservationCounter,
+            user,
+            datetime.datetime.now(),
+            self.show,
+            places)
+        
+        # enqueue the reservation
+        if not self.parentApp.cinema.addReservation(reservation):
+            # the reservation was invalid
+            npyscreen.notify_confirm("We don't have that many places available.")
+            return
+        
+        # and switch back
+        self.parentApp.switchForm("VIEWSHOWS")
         
     def on_cancel(self):
+        # simply switch to the previous form
         self.parentApp.switchForm("VIEWSHOWS")
 
 
@@ -165,15 +242,11 @@ class MakeReservationButton(npyscreen.ButtonPress):
         # this is a widget, so don't just call self.parentApp!
         self.parent.parentApp.switchForm("VIEWSHOWS")
 
+
 class EnterTheaterButton(npyscreen.ButtonPress):
     def whenPressed(self):
         npyscreen.notify_confirm("Entering theater...")
 
-# needed?
-class ChangeUserDetails(npyscreen.ButtonPress):
-    def whenPressed(self):
-        pass
-        # do stuff
 
 class MainMenu(npyscreen.Popup):
     def create(self):

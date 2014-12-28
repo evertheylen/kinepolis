@@ -119,7 +119,13 @@ class TitleText(widget.Widget):
         self.how_exited = self.entry_widget.how_exited
         self.editing=False
         self.display()
-
+        self.on_leave()
+    
+    def on_leave(self):
+        # WARNING own modification
+        # please override me
+        pass
+    
     def update(self, clear = True):
         if clear: self.clear()
         if self.hidden: return False

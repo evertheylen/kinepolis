@@ -1,5 +1,7 @@
 # A bunch of cool functions
 
+import hashlib
+
 # --- TEXT STUFF ---------------------
 
 endc = '\033[0m'  # Resets all ANSI attributes
@@ -22,3 +24,12 @@ def rgb(rf,gf,bf,rb=0,gb=0,bb=0):
 
 def rgbtext(s, f=red, b=black):
     return rgb(f[0],f[1],f[2],b[0],b[1],b[2]) + s + endc
+
+# --- HASHING ---------------------
+
+# because this has nothing to do with the workings of
+# the hashmap itself, we have put this function here
+# and not in hashmap.py
+
+def simple_hash(s):
+    return int(hashlib.md5(s.encode('utf-8')).hexdigest(), 16)

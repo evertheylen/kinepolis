@@ -190,25 +190,19 @@ class TextfieldBase(widget.Widget):
     def display_value(self, value):
         # WARNING
         # I have changed quite a bit here
-        a = ''
+        # 28-12-2014: should be fixed now
         if value == None:
-            a = ''
-            return a
+            return ''
         else:
             try:
                 str_value = str(value)
             except UnicodeEncodeError:
                 str_value = self.safe_string(value)
-                a = str_value
-                f = open('/tmp/wtf', 'w'); f.write('about to return '+a); f.close()
-                return a
+                return str_value
             except ReferenceError:                
-                a = ">*ERROR*ERROR*ERROR*<"
-                f = open('/tmp/wtf', 'w'); f.write('about to return '+a); f.close()
-                return a
-            a = self.safe_string(str_value)
-            f = open('/tmp/wtf', 'w'); f.write('about to return '+a); f.close()
-            return a
+                return ">*ERROR*ERROR*ERROR*<"
+            return self.safe_string(str_value)
+            
 
     
     def find_width_of_char(self, ch):
@@ -399,7 +393,8 @@ class Textfield(TextfieldBase):
         self.display()
         self.cursor_position = False
         return self.how_exited, self.value
-
+    
+    
     ###########################################################################################
     # Handlers and methods
 

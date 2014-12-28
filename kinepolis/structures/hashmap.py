@@ -77,6 +77,9 @@ class Hashmap:
         # If you want to create a hashmap with Linkedchain chaining, you write:
         #    hm = Hashmap(23, None, None, Linkedchain)
         
+        # the toInt function should be consistent across restarts
+        # i.e. don't use hash()
+        
         self._attribute = attr
         self._array = [None]*length
         self._length = length

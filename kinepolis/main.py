@@ -95,7 +95,7 @@ def main():
         data["kinepolis"].timeslots = [ Timeslot(14,30),
                                         Timeslot(17,00),
                                         Timeslot(20,00),
-                                        Timeslot(22,30)]
+                                        Timeslot(22,30) ]
             
         print('\nTimeslots of this cinema:')
         for i in data["kinepolis"].timeslots:
@@ -145,12 +145,14 @@ def main():
         
         # ----- Users -----
         # I've changed the attribute to "mail", because no one ever remembers their own ID...
-        data["kinepolis"].users = createDataStructure("Hashmap", "mail", toInt=hash)
+        data["kinepolis"].users = createDataStructure("Hashmap", "mail", toInt=simple_hash)
         for u in [
             # User(ID, firstname, lastname, mail)
             User(1,'Stijn', 'Janssens', 'janssens.stijn@hotmail.com'),
-            User(2,'Evert', 'Heylen', 'hoeweetikdatmailadresnu@gmail.com'),
-            User(3,'Anthony', 'Hermans', 'anthony@herma.ns')]:
+            User(2,'Evert', 'Heylen', 'evert@eestec.be'),
+            User(3,'Anthony', 'Hermans', 'anthony@herma.ns'),
+            User(4,'Pieter', 'Coeck', 'p@coeck'),
+            User(5,'Dummy', 'Tester', 'dum')]:
             
             data["kinepolis"].users.insert(u)        
         
@@ -163,14 +165,14 @@ def main():
         
         data["kinepolis"].addReservation(
             Reservation(1,
-                        data["kinepolis"].users.retrieve(2),
+                        data["kinepolis"].users.retrieve("p@coeck"),
                         datetime.datetime.now(),
                         data["kinepolis"].shows.retrieve(1),
                         4))
             
         data["kinepolis"].addReservation(
             Reservation(2,
-                        data["kinepolis"].users.retrieve(3),
+                        data["kinepolis"].users.retrieve("evert@eestec.be"),
                         datetime.datetime.now(),
                         data["kinepolis"].shows.retrieve(2),
                         5))
