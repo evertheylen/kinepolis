@@ -17,6 +17,83 @@ Please make your choice:
 
 """
 
+
+"""
+------- SOME DOCUMENTATION --------
+
+We use npyscreen to provide a curses-based UI (if you don't know what curses is, don't worry).
+In essence, npyscreen has three main components:
+
+  - NPSAppManaged
+    - Forms
+      - Widgets
+
+An NPSAppManaged contains Forms, and a Form contains widgets. A widget is anything that provides user input
+or even just text. To create our own forms, we need to subclass a class provided by npyscreen. For example,
+to create an app, we subclass NPSAppManaged.
+
+Our own app looks like this: (npyscreen is shortened to nps)
+
+    - MyCinemaApp(nps.NPSAppManaged)
+      contains the Cinema we're doing reservations for.
+        
+        - MainMenu(nps.Form)
+          Choice between PickShowReservation and PickShowToEnter
+          
+            - NoBullShitText(nps.Pager(nps.Widget)) some text.
+            - MakeReservationButton(nps.ButtonPress(nps.Widget)): sends user to PickShowReservation.
+            - EnterTheaterButton(nps.ButtonPress(nps.Widget)): sends user to PickShowToEnter.
+        
+        - PickShowReservation(ViewShowsList(nps.Form))
+          Let a user pick a show, and then send them to MakeReservation.
+          
+            - (see ViewShowsList for the widgets, because it isn't a npyscreen class.)
+          
+        - MakeReservation(nps.Form)
+          Let a user fill in some fields, then make the reservation and return to PickShowReservation.
+          
+            - (Some text, and nps.TitleText widgets...)
+            - MagicalUserMail(nps.TitleText(nps.Widget))
+              This is a subclass from npyscreen.TitleText, to allow us to automatically fill in the other
+              fields based on the User's mail address.
+            - IntegerTitleText(nps.TitleText(nps.Widget))
+              Also a subclass from npyscreen.TitleText, this one will notify you if you didn't fill in a
+              proper integer.
+          
+        - PickShowToEnter(ViewShowsList(nps.Form))
+          Let a user pick a show, and pop a ticket from the selected show.
+          
+            - (see ViewShowsList...)
+
+As you can see, we've subclassed quite a lot. Usually they subclass from npyscreen classes directly, but
+sometimes we subclass from classes that are NOT part of npyscreen and are instead provided by us. 
+There are two of such classes:
+
+    - NoBullShitText(nps.Pager(nps.Widget))
+      This one is just a handy class that helps us at creating a Pager. Once created, it is
+      entirely equivalent to a Pager. A Pager is a nps.Widget that shows multiline text.
+      
+    - ViewShowsList(nps.Form)
+      This provides us with a form in which the user can select a show. Because we use this twice, we
+      create a class for it instead of copy-pasting the same code twice, once for PickShowReservation
+      and once for PickShowToEnter.
+      
+      - NoBullShitText(nps.Pager(nps.Widget)): some text.
+      
+      - ViewShowsList(nps.MultiLineAction(nps.Widget))
+        This is the main widget of the form, providing a list of shows.
+        The actionHighlighted() function will pass on the call to the parent class, which is
+        ViewShowsList (calling on_element_selected(), which is overloaded by PickShowReservation and
+        PickShowToEnter, because both of them need to do something different when an element is
+        selected).
+
+
+Some explanations of nps classes:
+    - nps.TitleText is a simple text field.
+    - nps.ButtonPress is a button which calls whenPressed() when pressed :) .
+
+"""
+
 log_string = ""
 
 def log(s="****ERROR****"):
