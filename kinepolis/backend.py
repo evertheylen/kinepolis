@@ -8,16 +8,18 @@ from code import InteractiveConsole
 import rlcompleter
 import readline
 
+import inspect
+
 # Backend
 
 def start_backend(data, save):
     console = InteractiveConsole()
     
     backendlocals = {
-        "args": args,
         "switchDataStruct": switchDataStruct,
         "data": data,
         "save": save,
+        "create": create,
     }
     
     backendlocals.update(classes.__dict__)  # add module classes to console
@@ -54,10 +56,10 @@ def start_backend(data, save):
 # start of backend locals
 # these functions should only be called in the backend console
 
-def args(T):
-    #args for T.__init__: T.__init__.__code__.co_varnames
-    args = T.__init__.__code__.co_varnames[1:]
-    print("The initializer of {} takes these arguments:\n\t{}".format(T.__name__, args))
+#def args(T):
+    ##args for T.__init__: T.__init__.__code__.co_varnames
+    #args = T.__init__.__code__.co_varnames[1:]
+    #print("The initializer of {} takes these arguments:\n\t{}".format(T.__name__, args))
 
 
 def switchDataStruct(oldds, newT, newAttr=None):
@@ -69,3 +71,24 @@ def switchDataStruct(oldds, newT, newAttr=None):
         newds.insert(element)
         
     return newds
+
+
+def create(T):
+    # helper function to create new objects easily, without having to know how the code works.
+    paras = {}
+    
+    sig = inspect.signature(T.__init__)
+    for parname in sig.parameters:
+        if parname != 'self':
+            if sig.parameters[parname]._default == inspect._empty:
+                paras[parname] = eval(input("%s? "%parname))
+            else:
+                inp = input("{} [{}]? ".format(parname, sig.parameters[parname]._default))
+                if inp != '':
+                    paras[parname] = eval(inp)
+    
+    return T(**paras)
+
+
+
+
