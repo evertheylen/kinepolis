@@ -8,15 +8,7 @@ import traceback
 import random
 import datetime
 
-kinepolis_logo=r"""
-  _  __ _                             _  _      
- | |/ /(_)                           | |(_)     
- | ' /  _  _ __    ___  _ __    ___  | | _  ___ 
- |  <  | || '_ \  / _ \| '_ \  / _ \ | || |/ __|
- | . \ | || | | ||  __/| |_) || (_) || || |\__ \
- |_|\_\|_||_| |_| \___|| .__/  \___/ |_||_||___/
-                       | |                      
-                       |_|                      
+kinepolis_logo_footer="""
 
 
 To exit, press CTRL+X.
@@ -57,23 +49,6 @@ def start_frontend(data):
 
 
 # Own widget classes ----------------------------------------------------
-"""
-class NoBullShitText(npyscreen.widget.Widget):  
-    def calculate_area_needed(self):
-        return (self.name.count("\n")+1, 0)
-    
-    editable = False
-    
-    def update(self, clear=False): # no one cares about clear
-        i = 0
-        for line in self.name.split("\n"):
-            self.add_line(self.rely+i, self.relx,
-                line,
-                self.make_attributes_list(line, 2048),
-                len(line) # label width?
-                )
-            i+=1
-"""
 
 class NoBullShitText(npyscreen.Pager):
     def __init__(self, *args, **kwargs):
@@ -282,7 +257,7 @@ class MainMenu(npyscreen.Form):
         #self.add(NoBullShitText, name="Please make your choice.\n")
         log("creating MainMenu")
 
-        self.add(NoBullShitText, text=kinepolis_logo)
+        self.add(NoBullShitText, text=fancytext(self.parentApp.cinema.name)+kinepolis_logo_footer)
         self.add(MakeReservationButton, name="Make a reservation")
         self.add(EnterTheaterButton, name="Enter theater")
    
