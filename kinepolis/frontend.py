@@ -8,6 +8,10 @@ import traceback
 import random
 import datetime
 
+import threading
+import sched
+import time
+
 kinepolis_logo_footer="""
 
 
@@ -137,6 +141,7 @@ class NoBullShitText(npyscreen.Pager):
         del(kwargs["text"])
         
         npyscreen.Pager.__init__(self, *args, **kwargs)
+
         
 # this class is not a form, it's a widget that should be displayed in the form ViewShowsList
 class ViewShows(npyscreen.MultiLineAction):
@@ -182,11 +187,65 @@ class PickShowToEnter(ViewShowsList):
         selected_show.popTicket()
         if selected_show.isEmptyTickets():
             npyscreen.notify_confirm("The film can start!")
-            # TODO Star Wars easter egg here
+            self.parentApp.switchForm("WATCHSTARWARS")
         else:
             npyscreen.notify_confirm("We still need "+str(selected_show.tickets.length)+" people "\
                 + "for the film \n   '" + selected_show.film.title+ "'.")
         self.update_list()
+
+# WatchStarWars -----------------------------------------------------------
+
+class WatchStarWars(npyscreen.Form):
+    def __init__(self, *args, **kwargs):
+        super(WatchStarWars, self).__init__(*args, **kwargs)
+        self.add_handlers({
+            "^X": self.exit
+        })
+    
+    def create(self):
+        self.PlayPause = self.add(PlayPauseButton, name="Play")
+        self.Screen = self.add(NoBullShitText, text="\n"*25)
+        
+    def exit(self, whatever):
+        self.parentApp.switchForm("PICKSHOWTOENTER")
+
+
+class PlayPauseButton(npyscreen.ButtonPress):
+    def __init__(self, *args, **kwargs):
+        super(PlayPauseButton, self).__init__(*args, **kwargs)
+        self.isPlaying = False
+        self.thread = None
+        
+    def whenPressed(self):
+        # this is a widget, so don't just call self.parentApp!
+        try:
+            if self.thread == None:
+                # start the film...
+                s = sched.scheduler(time.time, time.sleep)
+
+                def do_something(sc):
+                    log("booo")
+                    if not self.isPlaying:
+                        return
+                    self.parent.Screen.values[1] = str(random.randint(1,1000))
+                    self.parent.Screen.display()
+                    # do your stuff
+                    sc.enter(1, 1, do_something, (sc,))
+
+                s.enter(1, 1, do_something, (s,))
+                self.thread = threading.Thread(target=s.run)
+                self.thread.start()
+                
+            else:
+                if self.isPlaying:
+                    self.isPlaying = False
+                else:
+                    self.isPlaying = True
+        except:
+            log()
+    
+    # TODO make it fucking work + destructor etc
+
 
 # Shows ----------------------------------------------------------------
 
@@ -353,3 +412,4 @@ class MyCinemaApp(npyscreen.NPSAppManaged):
         self.addForm("PICKSHOWRESERVATION", PickShowReservation)
         self.addForm("PICKSHOWTOENTER", PickShowToEnter)
         self.addForm("MAKERESERVATION", MakeReservation)
+        self.addForm("WATCHSTARWARS", WatchStarWars)

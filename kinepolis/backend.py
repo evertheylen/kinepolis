@@ -16,7 +16,7 @@ def start_backend(data, save):
     console = InteractiveConsole()
     
     backendlocals = {
-        "switchDataStruct": switchDataStruct,
+        "switchDataStructure": switchDataStructure,
         "data": data,
         "save": save,
         "create": create,
@@ -62,10 +62,10 @@ def start_backend(data, save):
     #print("The initializer of {} takes these arguments:\n\t{}".format(T.__name__, args))
 
 
-def switchDataStruct(oldds, newT, newAttr=None):
+def switchDataStructure(oldds, newT, newAttr=None):
     if newAttr == None:
         newAttr = oldds.attribute()
-    newds = datastruct.createDataStruct(newT, newAttr)
+    newds = datastruct.createDataStructure(newT, newAttr)
     
     for element in oldds.inorder():
         newds.insert(element)
