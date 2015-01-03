@@ -5,7 +5,7 @@ import sorting
 from etc import *
 
 from code import InteractiveConsole
-import rlcompleter
+#import rlcompleter
 import readline
 
 import inspect
@@ -29,7 +29,9 @@ def start_backend(data, save):
     console.locals = backendlocals
     
     while True:
-        c = input(rgbtext("> ", green))
+        # has to be done seperatly, otherwise a weird bug shows up
+        print(rgbtext("> ", green), end='')
+        c = input()
         if c == "q":
             return
             # exit
