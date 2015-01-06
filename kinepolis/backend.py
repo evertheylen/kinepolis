@@ -5,7 +5,7 @@ import sorting
 from etc import *
 
 from code import InteractiveConsole
-#import rlcompleter
+import rlcompleter  # modified one!
 import readline
 
 import inspect
@@ -14,6 +14,7 @@ import inspect
 
 def start_backend(data, save):
     console = InteractiveConsole()
+    
     
     backendlocals = {
         "switchDataStructure": switchDataStructure,
@@ -28,10 +29,16 @@ def start_backend(data, save):
     
     console.locals = backendlocals
     
+    # OMG Tab completion!!!
+    readline.set_completer(rlcompleter.Completer(console.locals).complete)
+    readline.parse_and_bind("tab: complete")
+    # OMG own modification to rlcompleter
+    #readline.set_completer_delims(' \t\n`~!@#$%^&*()-=+[{]}\\|;:\'",<>/?') # original
+    readline.set_completer_delims(' \t\n`~!@#$%^&*()-=+{]}\\|;:,<>/?') # no [,' or "  in here!
+    
     while True:
-        # has to be done seperatly, otherwise a weird bug shows up
-        print(rgbtext("> ", green), end='')
-        c = input()
+        # no more color for input, too much bugs
+        c = input("> ")
         if c == "q":
             return
             # exit
@@ -90,7 +97,5 @@ def create(T):
                     paras[parname] = eval(inp)
     
     return T(**paras)
-
-
 
 
