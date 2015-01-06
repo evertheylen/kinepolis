@@ -15,7 +15,6 @@ import inspect
 def start_backend(data, save):
     console = InteractiveConsole()
     
-    
     backendlocals = {
         "switchDataStructure": switchDataStructure,
         "data": data,
