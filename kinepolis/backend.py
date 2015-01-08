@@ -4,6 +4,8 @@ import sorting
 
 from etc import *
 
+from example_init import example_cinema
+
 from code import InteractiveConsole
 import rlcompleter  # modified one!
 import readline
@@ -20,6 +22,7 @@ def start_backend(data, save):
         "data": data,
         "save": save,
         "create": create,
+        "example_cinema": example_cinema,
     }
     
     backendlocals.update(classes.__dict__)  # add module classes to console
@@ -97,4 +100,4 @@ def create(T):
     
     return T(**paras)
 
-
+# also example_cinema from example_init.py

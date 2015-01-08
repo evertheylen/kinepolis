@@ -11,6 +11,8 @@ from classes import *
 from frontend import start_frontend
 from backend import start_backend
 
+from example_init import example_cinema
+
 from etc import *
 
 helptext="""
@@ -77,116 +79,8 @@ def main():
             name = "kinepolis"
         
         print(rgbtext("Initializing data[\""+name+"\"]", green))
-        #--- INIT VARS HERE ---------------------------------------------------------------------
         
-        data[name] = Cinema()
-        
-        # ----- Theaters -----
-        data[name].theaters = createDataStructure("RedBlackTree", "ID")
-        for t in [
-            # Theater(ID, places)
-            Theater(1, 10),
-            Theater(2, 65),
-            Theater(3, 86),
-            Theater(4, 250)]:
-            
-            data[name].theaters.insert(t)
-        
-        print('\nTheaters of this cinema:')
-        for i in data[name].theaters.inorder():
-            print('ID: ',i.ID, '   Number of seats: ', i.places)
-        
-        # ----- Timeslots -----
-        # NOTE Timeslots is simply a python list, the only thing we ever need to do is know 
-        # whether it's in it or not. (see Opgave.pdf, no ADT required)
-        data[name].timeslots = [ Timeslot(14,30),
-                                        Timeslot(17,00),
-                                        Timeslot(20,00),
-                                        Timeslot(22,30) ]
-            
-        print('\nTimeslots of this cinema:')
-        for i in data[name].timeslots:
-            print(i)
-        
-        # ----- Films -----
-        data[name].films = createDataStructure("BinTree", "ID")
-        for f in [
-            # Film(ID, title, rating)
-            Film(1, "Star Wars", 8.1),
-            Film(2, "Tron Legacy", 8.9),
-            Film(3, "The Avengers", 8),
-            Film(4, "The Guardians of the Galaxy", 8.5)]:
-            
-            data[name].films.insert(f)
-        
-        print('\nFilms of this cinema:')
-        for f in data[name].films.inorder():
-            print(f.title)
-        
-        # ----- Shows -----
-        data[name].shows = createDataStructure("SLinkedChain", "ID")
-        #       Show(ID,
-        #           date, timeslot, 
-        #           theater,
-        #           film,
-        #           [freeplaces])
-        
-        data[name].shows.insert(
-            Show(1,
-                datetime.date(2014,7,15), Timeslot(20,00),
-                data[name].theaters.retrieve(3),
-                data[name].films.retrieve(2),
-                ))
-        
-        data[name].shows.insert(
-            Show(2,
-                datetime.date(2014,7,16), Timeslot(20,00),
-                data[name].theaters.retrieve(1),
-                data[name].films.retrieve(4),
-                ))
-        
-        print('\nSecond show of this cinema:  ')
-        a = data[name].shows.retrieve(2)
-        print(a)
-        
-        
-        # ----- Users -----
-        # I've changed the attribute to "mail", because no one ever remembers their own ID...
-        data[name].users = createDataStructure("Hashmap", "mail", toInt=simple_hash)
-        for u in [
-            # User(ID, firstname, lastname, mail)
-            User(1,'Stijn', 'Janssens', 'janssens.stijn@hotmail.com'),
-            User(2,'Evert', 'Heylen', 'evert@eestec.be'),
-            User(3,'Anthony', 'Hermans', 'anthony@herma.ns'),
-            User(4,'Pieter', 'Coeck', 'p@coeck'),
-            User(5,'Dummy', 'Tester', 'dum')]:
-            
-            data[name].users.insert(u)        
-        
-        # ----- Reservations -----
-        #   Reservation(ID, 
-        #               user,
-        #               timeStamp,
-        #               show,
-        #               places)
-        
-        """
-        data[name].addReservation(
-            Reservation(1,
-                        data[name].users.retrieve("p@coeck"),
-                        datetime.datetime.now(),
-                        data[name].shows.retrieve(1),
-                        4))
-            
-        data[name].addReservation(
-            Reservation(2,
-                        data[name].users.retrieve("evert@eestec.be"),
-                        datetime.datetime.now(),
-                        data[name].shows.retrieve(2),
-                        5))
-        """
-        
-        #--- END OF INIT --------------------------------------------------------------------
+        data[name] = example_cinema(name)
         
         # save data
         f = open(filename, 'wb+')
