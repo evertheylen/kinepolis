@@ -84,6 +84,8 @@ class USLinkedChain:
             return True
         while current != None:
             #Else traverse the chain until the end.
+            if current.item.__dict__[self._attribute] == item.__dict__[self._attribute]:
+                return False        # A searchkey must be unique!
             previous = current
             current = current.next
         

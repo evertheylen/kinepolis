@@ -98,6 +98,8 @@ class SLinkedChain:
                 tempNode.next = current.next
                 current.next = tempNode
                 return True
+            if current.next.item.__dict__[self._attribute] == item.__dict__[self._attribute]:
+                return False        # The searchkey must be unique!
             current = current.next 
         return False
         

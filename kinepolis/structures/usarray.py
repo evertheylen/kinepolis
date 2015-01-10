@@ -14,6 +14,10 @@ class USArray:
         if self.attribute() not in el.__dict__.keys():
             # print("Wrong type!")
             return False
+            
+        for i in self.inorder():
+            if i.__dict__[self._attribute] == el.__dict__[self._attribute]:     #The searchkey must be unique!
+                return False
 
         self.array.append(el)
         return True
