@@ -52,13 +52,13 @@ class Node:
             # If this equals 1 than the order of the tree is changed and the original position of self is now its parent.
             return self.parent.insert(newItem, tree)
         else:
-            if newItem == self.item:
-                self.treeItem = self.item
-                return False
-                
             if self.searchkey() == None:        # If the tree is empty then a new root is made.
                 self.item = newItem
                 return True
+        
+            if newItem.__dict__[attribute] == self.searchkey():
+                self.treeItem = self.item
+                return False
                 
             elif self.leftchild == None and newItem.__dict__[attribute] < self.searchkey():
                 # If the location were newitem should be placed is on the left of the current Item and that location is empty then newItem gets placed there.
