@@ -2,7 +2,7 @@
 # Testcode door: Stijn Janssens
 
 
-# As an example, we can use the (unsorted) linked chain
+# By default, we can use the (unsorted) linked chain
 from structures.uslinkedchain import USLinkedChain
 
 import sorting
@@ -16,8 +16,7 @@ def quadraticProbing(x):
 
 def createModFuncString(mod):
     # Problem:  pickle doesn't save lambda's.
-    # Solution: don't use lambda's
-    # However, this is dangerous.
+    # Solution: don't use lambda's, instead use strings and python's eval() function!
     return "lambda x: x%"+str(mod)
 
 
@@ -55,42 +54,36 @@ class Deleted:
     """ Meaning: this was once an element with key self.key """
     
     def __init__(self, key):
-        self.key == key
+        self.key = key
     
     def __eq__(self, other):
-        if self.key == other.key:
+        if type(other) == Deleted and self.key == other.key:
             return True
         return False
 
 
 class Hashmap:
     def __init__(self, attr, length=21, hashFuncString=None, collisionSolution = USLinkedChain, toInt = int):
-        # chaining is a class, hashFunc and addressFunc are both functions.
-        # If chaining is None, we don't chain.
-        # If addressFunc is None, we will utilize the chaining method.
-        # If they are both not None, we will utilize the chaining method
+        # attr is a string, length is an int, hashFuncString is a string, collisionSolution is either a class or a function, toInt is a function
         
         # For example, if you want to create a hashmap with quadraticProbing,
         # length 51 and the default mod function, you write:
-        #    hm = Hashmap(51, None, quadraticProbing)
+        #    hm = Hashmap("ID", 51, None, quadraticProbing)
         
         # If you want to create a hashmap with Linkedchain chaining, you write:
-        #    hm = Hashmap(23, None, None, Linkedchain)
-        
-        # the toInt function should be consistent across restarts
-        # i.e. don't use hash()
+        #    hm = Hashmap("ID", 23, None, Linkedchain)
         
         self._attribute = attr
         self._array = [None]*length
         self._length = length
         
-        if type(collisionSolution) == type:
+        if type(collisionSolution) == type:  # meaning: it's a class
             self._chaining = collisionSolution  # chaining class
             self._addressFunc = None
-        else:
+        else:  # it's not a class
             self._chaining = None
             self._addressFunc = collisionSolution
-                # function to calculate next address, be it by probing or double hashing
+            # function to calculate next address, be it by probing or double hashing
         
         # Default hashFuncString
         # Why use strings?
@@ -100,14 +93,19 @@ class Hashmap:
         if hashFuncString == None:
             hashFuncString = createModFuncString(self._length)
         
-        # The hashing function.
+        # The hashing function string.
         self._hashFuncString = hashFuncString
         
-        # The function that translates stuff to an int, default is just the int function.
+        # the toInt function will be called to convert the searchkey, defined by attr (using __dict__[attr]),
+        # to an integer. By default, this is the default int() function, but this can be altered.
+        
+        # the toInt function should be consistent across restarts
+        # i.e. don't use hash()!
         self._toInt = toInt
     
     def _hashFunc(self):
-        return eval(self._hashFuncString)
+        return eval(self._hashFuncString)  # eval!
+        # to call the hashing function you'd then have to do self._hashFunc()( argument )
     
     def attribute(self):
         return self._attribute
@@ -129,7 +127,7 @@ class Hashmap:
             while i <= self._length:    # simple solution to prevent looping
                 # stop looping when:
                 #   - the current element is None
-                #   - the current element is Deleted, with the right key
+                #   - the current element is of type Deleted with the right key
                 #   - the element is found
                 if self._array[location] == None \
                     or (type(self._array[location]) == Deleted and self._array[location].key == key) \
@@ -161,9 +159,14 @@ class Hashmap:
             if location == -1:
                 return False
             
-            # if the location isn't -1; we can just insert
-            self._array[location] = el
-            return True
+            # if the location isn't -1; we still need to check whether or not the desired location is already
+            # occupied...
+            if self._array[location] == None or (type(self._array[location]) == Deleted and self._array[location].key == self._key(el)):
+                # if it's either None or a deleted element of the right kind
+                self._array[location] = el
+                return True
+            # else...
+            return False
         
         else:  # we use chaining
             if self._array[location] == None:
@@ -210,6 +213,7 @@ class Hashmap:
             if location == -1:
                 return None
             else:
+                if type(self._array[location]
                 return self._array[location]
         else:
             if self._array[location] == None:
@@ -224,9 +228,12 @@ class Hashmap:
         
         if self._chaining == None:
             if location == -1:
-                return None
+                return False
             else:
+                if type(self._array[location]) == Deleted:
+                    return False
                 self._array[location] = Deleted(key)
+                return True
         else:
             if self._array[location] == None:
                 return False
