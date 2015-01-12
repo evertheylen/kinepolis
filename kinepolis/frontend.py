@@ -195,7 +195,9 @@ class PickShowToEnter(ViewShowsList):
     def on_element_selected(self, selected_show, keypress):
         #selected_show.popTicket()
         if selected_show.isEmptyTickets():
-            npyscreen.notify_confirm("The film can start!")
+            if npyscreen.notify_yes_no("The show can start!\n\nDelete this show?"):
+                    # delete show
+                    self.parentApp.cinema.shows.delete(selected_show.ID)
             #self.parentApp.switchForm("WATCHSTARWARS")
         else:
             #npyscreen.notify_confirm("We still need "+str(selected_show.tickets.length)+" people "\
@@ -237,7 +239,9 @@ class ChooseAmountOfPeople(npyscreen.ActionPopup):
                 self.selected_show.popTicket()
             
             if self.selected_show.isEmptyTickets():
-                npyscreen.notify_confirm("The film can start!")
+                if npyscreen.notify_yes_no("The show can start!\n\nDelete this show?"):
+                    # delete show
+                    self.parentApp.cinema.shows.delete(self.selected_show.ID)
                 
             self.parentApp.switchForm("PICKSHOWTOENTER")
                 

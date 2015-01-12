@@ -51,15 +51,7 @@ def createModFuncString(mod):
 #
 
 class Deleted:
-    """ Meaning: this was once an element with key self.key """
-    
-    def __init__(self, key):
-        self.key = key
-    
-    def __eq__(self, other):
-        if type(other) == Deleted and self.key == other.key:
-            return True
-        return False
+    pass
 
 
 class Hashmap:
@@ -97,7 +89,7 @@ class Hashmap:
         self._hashFuncString = hashFuncString
         
         # the toInt function will be called to convert the searchkey, defined by attr (using __dict__[attr]),
-        # to an integer. By default, this is the default int() function, but this can be altered.
+        # to an integer. By default, this is the builtin int() function, but this can be altered.
         
         # the toInt function should be consistent across restarts
         # i.e. don't use hash()!
@@ -113,24 +105,37 @@ class Hashmap:
     def _key(self, element):
         return element.__dict__[self.attribute()]
     
-    def _locationOf(self, key):
+    def _locationOf(self, key, inserting=False):
         """ Private function to calculate the location in the array of some element.
         Note that the element does not need to be in the array. """
+        
+        # 'inserting' will be the difference between doing a real search (retrieve, delete) (=False)
+        # and searching for the best place to insert (=True)
+        
+        # if True, we'll keep an extra variable that contains the best place to insert.
+        # we'll still return the correction location if the key is found, but if we don't find it, we
+        # return the location of the best place to insert.
         
         location = self._hashFunc()(self._toInt(key))
         origloc = location
         
         if self._chaining == None:  # probing
+            to_insert = -1  # see above
+            
             #checked = [False] * self._length
             i = 1
             reached = False
             while i <= self._length:    # simple solution to prevent looping
+                
+                if inserting and (type(self._array[location]) == Deleted or self._array[location] == None) and to_insert == -1:
+                    # we found a good place to insert!
+                    to_insert = location
+                    
                 # stop looping when:
                 #   - the current element is None
-                #   - the current element is of type Deleted with the right key
+                #   X (the current element is of type Deleted and we're just looking for the best spot to insert)
                 #   - the element is found
                 if self._array[location] == None \
-                    or (type(self._array[location]) == Deleted and self._array[location].key == key) \
                     or (type(self._array[location]) != Deleted and self._key(self._array[location]) == key):
                     
                     reached = True
@@ -144,16 +149,27 @@ class Hashmap:
             
             # If we have reached the right element...
             if reached:
-                return location
+                # if we're inserting, return to_ins if the object is NOT found
+                if inserting:
+                    if self._array[location] != None and type(self._array[location]) != Deleted:
+                        # object found
+                        return -1  # don't insert, it's already in here
+                    else:
+                        return to_insert
+                else:
+                    # not inserting, just return location
+                    return location
             else:
-                return -1
+                return to_insert  # no need to check for inserting, it should still have it's default value of -1
+                # if we're inserting though, we should return it because it may hold a good place to insert. (otherwise -1)
+                # else, it's still -1.
         
         else:  # chaining
             return location
     
     
     def insert(self, el):
-        location = self._locationOf(self._key(el))
+        location = self._locationOf(self._key(el), True)  # we're just looking for the best spot to insert
             
         if self._chaining == None:  # we use probing
             if location == -1:
@@ -161,8 +177,8 @@ class Hashmap:
             
             # if the location isn't -1; we still need to check whether or not the desired location is already
             # occupied...
-            if self._array[location] == None or (type(self._array[location]) == Deleted and self._array[location].key == self._key(el)):
-                # if it's either None or a deleted element of the right kind
+            if self._array[location] == None or (type(self._array[location]) == Deleted and True): #self._array[location].key == self._key(el)):
+                # if it's either None or a deleted element
                 self._array[location] = el
                 return True
             # else...
@@ -182,34 +198,9 @@ class Hashmap:
     
     
     def retrieve(self, key):
-        # key needs to have some special properties:
-        #   - it needs to be convertible to an int, of course returning the same
-        #     int as converting the whole element to an int (which is then hashed)
-        #
-        #   - it also needs to have a unique value. this (probably non-int)
-        #     value is used for chaining/probing.
-        #     If we don't require this to be unique, chaining would be useless, as 
-        #     the integer representations of all elements that need to be in some 
-        #     kind of chain would all have the same (integer) searchkey (that's why 
-        #     they are chained)!
-        #     Probing would also be problematic, because it won't know when it found
-        #     the right element.
-        # Therefore, we require all elements to have a method .__dict__[self._attribute]
-        # which returns a UNIQUE searchkey of a type so that it:
-        #   - is convertible to an int (with self.toInt(el.__dict__[self._attribute]) )
-        #   - has the operator '==' defined on it.
-        # 
-        # The argument 'key' for this function should be the UNIQUE key that would
-        # have been returned by 'element.__dict__[self._attribute]', where element is the element
-        # we look for.
-        # 
-        # A special case is when we store integers.
-        # element.__dict__[self._attribute] will be the same as int(element.__dict__[self._attribute]).
-        # However, you *will* need to define a wrapper class for the 'int' type.
-        
         location = self._locationOf(key)
         
-        if self._chaining == None:
+        if self._chaining == None:  # probing
             if location == -1:
                 return None
             else:
@@ -217,7 +208,7 @@ class Hashmap:
                     return None
                 # else...
                 return self._array[location]
-        else:
+        else:  # chaining
             if self._array[location] == None:
                 return None
             else:
@@ -232,9 +223,9 @@ class Hashmap:
             if location == -1:
                 return False
             else:
-                if type(self._array[location]) == Deleted:
+                if type(self._array[location]) == Deleted or self._array[location] == None:
                     return False
-                self._array[location] = Deleted(key)
+                self._array[location] = Deleted()
                 return True
         else:
             if self._array[location] == None:

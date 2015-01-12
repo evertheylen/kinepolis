@@ -589,7 +589,11 @@ class MultiLineAction(MultiLine):
         pass
     
     def h_act_on_highlighted(self, ch):
-        return self.actionHighlighted(self.values[self.cursor_line], ch)
+        # modified by Evert
+        try:
+            return self.actionHighlighted(self.values[self.cursor_line], ch)
+        except:
+            return
 
     def set_up_handlers(self):
         super(MultiLineAction, self).set_up_handlers()

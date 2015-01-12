@@ -20,22 +20,22 @@ usersarr = {
     318: User(318, "sssss", "SSSSS", "sssssmail"),
     319: User(319, "ttttt", "TTTTT", "tttttmail"),
     320: User(320, "uuuuu", "UUUUU", "uuuuumail"),
-    317: User(317, "rrrrr", "RRRRR", "rrrrrmail"),
-    321: User(321, "AAAvvvvv", "VVVVV", "vvvvvmail"),
+    343: User(343, "rrrrr", "RRRRR", "rrrrrmail"),
+    366: User(366, "AAAvvvvv", "VVVVV", "vvvvvmail"),
 }
 
 
-keys = [320, 321, 322, 101, 102, 103, 104, 302, 303, 304, 311, 312, 316, 317, 318, 319]
-keys_in_hm = [322, 321]
+keys = list(usersarr.keys())
+keys_in_hm = [311, 322]
 
 
-ha = structures.Hashmap("ID", 23, None, structures.hashmap.lineairProbing)
+ha = structures.Hashmap("ID", 23, None, structures.hashmap.quadraticProbing)
 
 #for u in usersarr.values():
     #ha.insert(u)
 
 ha.insert(usersarr[322])
-ha.insert(usersarr[321])
+ha.insert(usersarr[311])
 
 errors = 0
 
@@ -83,7 +83,7 @@ for _ in range(50000):
             errors+=1
         print("ha.delete(%d)"%key_to_delete)
     else:
-        print("skipping")
+        print("pass")
             
 
 print(errors)

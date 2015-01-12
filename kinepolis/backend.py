@@ -1,4 +1,5 @@
-origlocals = locals()
+
+origlocals = locals()  # used for suff like __name__ etc (see below)
 backendlocals = {}
 
 import datastruct
@@ -18,6 +19,10 @@ import inspect
 # Backend
 
 def start_backend(data, save):
+    # this will modify the backendlocals to contain the actual backendlocals.
+    # it is used in create(T), to eval() stuff like 'data["kinepolis"]...'
+    global backendlocals
+    
     console = InteractiveConsole()
     
     backendlocals = {
@@ -65,6 +70,7 @@ def start_backend(data, save):
                 print(rgbtext('Error: %s'%e))
             
         console.resetbuffer()
+        backendlocals = console.locals  # again for create(T)
     
     #command = get_command()
 
@@ -116,6 +122,7 @@ def switchDataStructure(oldds, newT, newAttr=None, **kwargs):
 
 def create(T):
     # helper function to create new objects easily, without having to know how the code works.
+    
     paras = {}
     
     sig = inspect.signature(T.__init__)
