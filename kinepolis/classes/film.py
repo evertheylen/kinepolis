@@ -4,17 +4,8 @@ class Film:
         self.title = title
         self.rating = rating
     
-    def getID(self, ID):
-        return self.ID
+    def __str__(self):
+        return "Film: [{}] {} ({})".format(self.ID, self.title, self.rating)
     
-    def getTitle(self):
-        return self.title
-    
-    def getRating(self):
-        return self.rating
-        
-    def setRating(self, rating):
-        self.rating = rating
-    
-    def setTitle(self, title):
-        self.title = title
+    def __repr__(self):
+        return self.__str__()

@@ -10,31 +10,10 @@ class Reservation:
         self.show = show
         self.places = places
     
-       
-       
-    def getID(self):
-        return self.ID
     
-    def getUser(self):
-        return self.user
+    def __str__(self):
+        return "Reservation: [{}] by {}, made on {}, {} places for show:\n  {}".format(self.ID, self.user.mail, self.timeStamp, self.places, self.show)
     
-    def getTimeStamp(self):
-        return self.timeStamp
-    
-    def getShow(self):
-        return self.show
-    
-    def getPlaces(self):
-        return self.places
-    
-    def setUser(self, user):
-        self.user = user
-    
-    def setTimeStamp(self, ts):
-        self.timeStamp = ts
-    
-    def setShow(self, show):
-        self.show = show
-    
-    def setPlaces(self, pl):
-        self.places = pl
+    def __repr__(self):
+        return self.__str__()
+

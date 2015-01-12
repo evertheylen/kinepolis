@@ -22,11 +22,19 @@ def testClasses():
     print(type(cin))
     print(type(cin.tickets))
 
+tests = 0
+failures = 0
+
+PRINTSUCCES = False
 
 def test(name, t, oracle=True):
+    global tests
+    global failures
+    tests += 1
     if t != oracle:
         print(rgbtext("test {} went wrong!\nExpected {}, but got {}.".format(name, oracle, t)))
-    else:
+        failures += 1
+    elif PRINTSUCCES:
         print("test {}: succes! got: {}".format(name, t))
 
 
@@ -66,7 +74,7 @@ usersarr = [
 
 def testDataStruct(name, **kwargs):
     try:
-        print("\n\n---------- starting test for datastruct:",name)
+        print("\n---------- starting test for datastruct:",name)
         ds = createDataStructure(name, "ID", **kwargs)
         
         test("ds empty", ds.isEmpty(), True)
@@ -125,10 +133,10 @@ def testDataStruct(name, **kwargs):
         test("ds attribute", ds.attribute(), "ID")
         
         
-        print("-------------\n\n")
+        print("-------------\n")
         
     except Exception as e:
-        print(rgb(255,0,0))
+        print(rgb(red))
         traceback.print_exc()
         print(endc)
 
@@ -168,4 +176,5 @@ if __name__=='__main__':
         print("\ntesting",algoname)
         testSortingAlgo(sorting.__dict__[algoname])
     
+    print("\n{}{} tests\n{}{} failures\n{}{} successes{}\n".format(rgb(cyan), tests, rgb(red), failures, rgb(green), tests-failures, endc))
     

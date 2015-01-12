@@ -25,7 +25,7 @@ def example_cinema(name):
     
     print('\nTheaters of this cinema:')
     for i in result.theaters.inorder():
-        print('ID: ',i.ID, '   Number of seats: ', i.places)
+        print(i)
     
     # ----- Timeslots -----
     # NOTE Timeslots is simply a python list, the only thing we ever need to do is know 
@@ -52,7 +52,7 @@ def example_cinema(name):
     
     print('\nFilms of this cinema:')
     for f in result.films.inorder():
-        print(f.title)
+        print(f)
     
     # ----- Shows -----
     result.shows = createDataStructure("SLinkedChain", "ID")
@@ -76,9 +76,9 @@ def example_cinema(name):
             result.films.retrieve(4),
             ))
     
-    print('\nSecond show of this cinema:  ')
-    a = result.shows.retrieve(1)
-    print(a)
+    print('\nShows of this cinema:')
+    for s in result.shows.inorder():
+        print(s)
     
     
     # ----- Users -----
@@ -92,7 +92,11 @@ def example_cinema(name):
         User(4,'Pieter', 'Coeck', 'p@coeck'),
         User(5,'Dummy', 'Tester', 'dum')]:
         
-        result.users.insert(u)        
+        result.users.insert(u)
+    
+    print("\nUsers of this cinema")
+    for u in result.users.inorder():
+        print(u)
     
     # ----- Reservations -----
     #   Reservation(ID, 

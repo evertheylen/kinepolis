@@ -10,4 +10,9 @@ class Theater():
 
     def getPlaces(self):
         return self.places
-        
+    
+    def __str__(self):
+        return "Theater: [{}] places: {}".format(self.ID, self.places)
+    
+    def __repr__(self):
+        return self.__str__()

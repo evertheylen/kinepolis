@@ -107,14 +107,14 @@ def log(s="****ERROR****"):
     log_string += s + "\n"
 
 
-def start_frontend(data):
-    cin_name = ""
-    while True:
-        cin_name = input("Cinema name? [kinepolis]\n"+rgbtext("> ", green))
-        if cin_name == "": cin_name = "kinepolis"
-        if cin_name in data and type(data[cin_name]) == Cinema:
-            break
-        print(rgbtext("404: Cinema not found.", red))
+def start_frontend(data, cin_name=""):  # used when initializing, so the user doesn't need to type the name twice
+    if cin_name == "":
+        while True:
+            cin_name = input("Cinema name? [kinepolis]\n"+rgbtext("> ", green))
+            if cin_name == "": cin_name = "kinepolis"
+            if cin_name in data and type(data[cin_name]) == Cinema:
+                break
+            print(rgbtext("404: Cinema not found.", red))
     
     print(rgbtext("Loading cinema {}".format(cin_name), green))
     cin = data[cin_name]

@@ -13,7 +13,7 @@ class User:
         # send a mail, but not really :)
     
     def __str__(self):
-        return "{}: {} {} ({})".format(self.ID, self.firstname, self.lastname, self.mail)
+        return "User: [{}] {} {} ({})".format(self.ID, self.firstname, self.lastname, self.mail)
     
     def __repr__(self):
         return self.__str__()

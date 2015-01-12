@@ -70,6 +70,8 @@ def main():
     # all data that needs to be saved should go in here
     data = {}
     
+    name = ''
+    
     # Initialize variables if needed.
     if "--init" in sys.argv:
         
@@ -103,7 +105,8 @@ def main():
     if "-b" in sys.argv:
         start_backend(data, save)
     else:
-        start_frontend(data)
+        start_frontend(data, name)  # name is passed on, possibly modified by --init
+                                    # so we don't ask twice for the name.
     
     
     # save data again
