@@ -1,10 +1,11 @@
 import sorting
 
 class Node:
-    def __init__(self, attribute, item = None, leftpointer = None, rightpointer = None, leftchild = None, rightchild = None, parent = None):
+    def __init__(self, attribute, item = None, precede = None, leftpointer = None, rightpointer = None, leftchild = None, rightchild = None, parent = None):
         '''The standard python initializer. With all the aspects of a redblack node.'''    
         self.item = item
-        self.leftpointer = leftpointer                      # Left- and rightpointer are strings, possible values are 'red', 'black', 'blackblack' and None.
+        self.precede = precede  # redundant
+        self.leftpointer = leftpointer # color! == str
         self.rightpointer = rightpointer
         self.leftchild = leftchild
         self.rightchild = rightchild
@@ -92,19 +93,23 @@ class Node:
                         return self.rightchild.insert(attribute, newItem, tree)
                                 
         
-    def inorderTraversal(self):
-        '''The inorderTraversal is just a recursive algorithm. It prints out the left most subtree of a tree, then the root and then the rightmost subtree. If we do that. The tree is printed out in order.'''
+    def inorderTraversal(self, visit):  # TODO remove visit
+        '''The inorderTraversal is just a recursive algorithm. It #prints out the left most subtree of a tree, then the root and then the rightmost subtree. If we do that. The tree is #printed out in order.'''
         if self.searchkey != None and self.leftchild == None and self.rightchild == None:
+            if visit != None:
+                visit()
             self.leftpointer = None                                         #Makes sure there are no pointers left over after some rotation.
             self.rightpointer = None
             yield self.item  
         else:
             if self.leftchild != None:
-                for i in self.leftchild.inorderTraversal():
+                for i in self.leftchild.inorderTraversal(visit):
                     yield i
+            if visit != None:
+                visit()
             yield self.item
             if self.rightchild != None:
-                for i in self.rightchild.inorderTraversal():                     # Then the rightsubtree.
+                for i in self.rightchild.inorderTraversal(visit):                     # Then the rightsubtree.
                     yield i
 
     def retrieve(self, searchKey):
@@ -134,16 +139,16 @@ class Node:
             else:
                 return self.rightchild.find_searchKey(searchKey)
                     
-    def all_items(self, successorlist):  # TODO linked stuff instead of arrays, if not, rename please
-        '''The method all_items returns the inorder succesorlist of the item. Its a list of all the items in the tree. In the deletealgorithm this list gets sorted and the inorder successor can be determined. It traverses the tree using an inorderTraversal.'''
+    def find_successor(self, successorlist):  # TODO linked stuff instead of arrays, if not, rename please
+        '''The method find_successor returns the inorder succesorlist of the item. Its a list of all the items in the tree. In the deletealgorithm this list gets sorted and the inorder successor can be determined. It traverses the tree using an inorderTraversal.'''
         if self.item != None and self.leftchild == None and self.rightchild == None:
             successorlist.append(self)
         else:
             if self.leftchild != None:
-                self.leftchild.all_items(successorlist)
+                self.leftchild.find_successor(successorlist)
             successorlist.append(self)
             if self.rightchild != None:
-                self.rightchild.all_items(successorlist)        
+                self.rightchild.find_successor(successorlist)        
     
     def fixdoubleblack(self, tree):
         '''Fix double black is a different way of looking at a delete. I have based myself on another way than in the course material but I found it easier to code. Basically it looks at the pointer of siblings and parents and it makes some of them a doubleblack pointer. This isn't allowed in the tree and this function gets rid of them by rotating and color changing.'''
@@ -226,7 +231,7 @@ class Node:
         if itemLocation == None:
             return False
         successorlist = []
-        self.all_items(successorlist)          #The inorder successor is the item : self < inordersuccessor and self >= everything which is < inorder successor                
+        self.find_successor(successorlist)          #The inorder successor is the item : self < inordersuccessor and self >= everything which is < inorder successor                
         successor = None
         for i in range(len(sorted(successorlist))-1):       #find the inorder successor of the item.
             if sorted(successorlist)[i].searchkey() == searchKey:
@@ -574,9 +579,9 @@ class RedBlackTree:
         return self.rootItem.insert(self._attribute, newItem, self) 
         
         
-    def inorder(self):
+    def inorder(self, visit = None):
         '''Inorder Traversal is also implemented in the Red_BlackNode.'''    
-        return self.rootItem.inorderTraversal()
+        return self.rootItem.inorderTraversal(visit)
 
     def sort(self, attribute, sortFunc = sorting.bubblesort):
         '''Returns a sorted list of the tree. This is done by generators and an inorderTraversal'''
