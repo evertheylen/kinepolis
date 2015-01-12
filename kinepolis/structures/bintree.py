@@ -91,6 +91,9 @@ class BinTree:
         
     
     def delete(self, key):
+        if self.isEmpty():
+            return False
+        
         tree, where = self._retrieve(key)
         #print('tree=',tree,'treepar=',tree.parent,'where=',where)
         
