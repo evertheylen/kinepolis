@@ -46,7 +46,7 @@ class Node():
         if self.values[0] == None and self.values[1] == None and self.values[2] == None:
             return None
         else:
-            return self.values.__dict__[self.attribute]
+            return self.values[:3].__dict__[self.attribute]
 
     def isLeaf(self):
         '''Determines is self is a leafNode'''
@@ -142,7 +142,7 @@ class Node():
                         self.values[0] = NewItem
                         return
                     else:
-                        if self.values[2] <= NewItem:
+                        if self.values[2] <= NewItem.__dict__[attribute]:
                             temp = self.values[2]
                             self.values[2] = NewItem
                             self.values[0] = temp
@@ -152,7 +152,7 @@ class Node():
                             return
                 if self.values[1] == None:
                     if self.values[2] == None:
-                        if self.values[0] <= NewItem:
+                        if self.values[0] <= NewItem.__dict__[attribute]:
                             self.values[1] = NewItem
                             return
                         else:
@@ -161,7 +161,7 @@ class Node():
                             self.values[1] = temp
                             return
                     else:
-                        if NewItem >= self.values[0]:
+                        if NewItem.__dict__[attribute] >= self.values[0]:
                             if self.values[2] <= NewItem:
                                 temp = self.values[2]
                                 self.values[2] = NewItem
@@ -178,7 +178,7 @@ class Node():
                             self.values[1] = temp
                             return
                 if self.values[2] == None:
-                    if self.values[1] <= NewItem:
+                    if self.values[1] <= NewItem.__dict__[attribute]:
                         self.values[2] = NewItem
                         self.split(attribute)
                         return
@@ -196,18 +196,18 @@ class Node():
                         return
         else:           #Het bevat kinderen
             if self.values[0] == None:
-                if NewItem <= self.values[1]:
+                if NewItem.__dict__[attribute] <= self.values[1]:
                     self.children[0].insert(attribute, NewItem)
-                if NewItem > self.values[1]:
+                if NewItem.__dict__[attribute] > self.values[1]:
                     self.children[2].insert(attribute, NewItem)
             else:
-                if NewItem < self.values[0]:
+                if NewItem.__dict__[attribute] < self.values[0]:
                     self.children[0].insert(attribute, NewItem)
                     return
-                if NewItem <= self.values[1] and NewItem >= self.values[0]:
+                if NewItem.__dict__[attribute] <= self.values[1] and NewItem >= self.values[0]:
                     self.children[1].insert(attribute, NewItem)
                     return
-                if NewItem > self.values[1]:
+                if NewItem.__dict__[attribute] > self.values[1]:
                     self.children[2].insert(attribute, NewItem)
                     return
 
@@ -437,16 +437,8 @@ class TwoThreeTree():
             return self.root.delete(searchkey, self)
 
 A = Node(1)
-A.insert(1, 5)
-A.insert(1, 6)
-A.delete(1,6)
-A.delete(1,5)
-A.insert(1,99)
-A.insert(1,991)
-A.insert(1,9)
-A.insert(1,91129)
-A.insert(1,10000)
-A.delete(1,10000)
+A.insert("values", 5)
+
 #A.retrieve(1,1)
 #print("inorder successor")
 #A.delete(1,7)
