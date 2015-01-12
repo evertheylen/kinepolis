@@ -63,7 +63,7 @@ class Deleted:
 
 
 class Hashmap:
-    def __init__(self, attr, length=21, hashFuncString=None, collisionSolution = USLinkedChain, toInt = int):
+    def __init__(self, attr, length=23, hashFuncString=None, collisionSolution = USLinkedChain, toInt = int):
         # attr is a string, length is an int, hashFuncString is a string, collisionSolution is either a class or a function, toInt is a function
         
         # For example, if you want to create a hashmap with quadraticProbing,

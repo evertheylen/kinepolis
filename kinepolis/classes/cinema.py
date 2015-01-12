@@ -34,7 +34,7 @@ class Cinema:
             if self.autoExecute: # automatically call executeReservations if set to True (default)
                 self.executeReservations(1)
             reservation.show.freeplaces -= reservation.places
-            self.reservationCounter += 1
+            self.reservationCounter += 1  # to determine a unique ID in the frontend
             return True
     
     def isEmptyReservations(self):
@@ -43,14 +43,18 @@ class Cinema:
     # 'transport' reservations to tickets Stack
     def executeReservations(self, count=-1):
         # when this function gets called, we should be sure that there are enough free places
-        i = 0
+        i = 1
         # count of -1 means we execute all reservations possible.
         while True:
             reservation = self.reservations.dequeue()
-            if (count != -1 and i>=count) or (reservation == None):
-                # Break if we are about to exceed the count, or if there are no more reservations left
-                break
-
+            
+            if reservation == None:
+                break;
+            
             for i in range(reservation.places):
                 #print("should push")
                 reservation.show.pushTicket(Ticket())
+
+            if (count != -1 and i>=count):
+                # Break if we are about to exceed the count, or if there are no more reservations left
+                break

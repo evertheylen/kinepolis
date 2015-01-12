@@ -1,4 +1,5 @@
 origlocals = locals()
+backendlocals = {}
 
 import datastruct
 import classes
@@ -79,10 +80,10 @@ def start_backend(data, save):
     #print("The initializer of {} takes these arguments:\n\t{}".format(T.__name__, args))
 
 
-def switchDataStructure(oldds, newT, newAttr=None):
+def switchDataStructure(oldds, newT, newAttr=None, **kwargs):
     if newAttr == None:
         newAttr = oldds.attribute()
-    newds = datastruct.createDataStructure(newT, newAttr)
+    newds = datastruct.createDataStructure(newT, newAttr, **kwargs)
     
     for element in oldds.inorder():
         newds.insert(element)
@@ -98,11 +99,11 @@ def create(T):
     for parname in sig.parameters:
         if parname != 'self':
             if sig.parameters[parname]._default == inspect._empty:
-                paras[parname] = eval(input("%s? "%parname))
+                paras[parname] = eval(input("%s? "%parname), backendlocals)
             else:
                 inp = input("{} [{}]? ".format(parname, sig.parameters[parname]._default))
                 if inp != '':
-                    paras[parname] = eval(inp)
+                    paras[parname] = eval(inp, backendlocals)
     
     return T(**paras)
 

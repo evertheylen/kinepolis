@@ -4,9 +4,9 @@ class Node:
     def __init__(self, attribute, item = None, next = None, precede = None, leftpointer = None, rightpointer = None, leftchild = None, rightchild = None, parent = None):
         '''The standard python initializer. With all the aspects of a redblack node.'''    
         self.item = item
-        self.next = next
-        self.precede = precede
-        self.leftpointer = leftpointer
+        self.next = next  # redundant
+        self.precede = precede  # redundant
+        self.leftpointer = leftpointer # color! == str
         self.rightpointer = rightpointer
         self.leftchild = leftchild
         self.rightchild = rightchild
@@ -97,7 +97,7 @@ class Node:
                         return self.rightchild.insert(attribute, newItem, tree)
                                 
         
-    def inorderTraversal(self, visit):
+    def inorderTraversal(self, visit):  # TODO remove visit
         '''The inorderTraversal is just a recursive algorithm. It #prints out the left most subtree of a tree, then the root and then the rightmost subtree. If we do that. The tree is #printed out in order.'''
         if self.searchkey != None and self.leftchild == None and self.rightchild == None:
             if visit != None:
@@ -143,7 +143,7 @@ class Node:
             else:
                 return self.rightchild.find_searchKey(searchKey)
                     
-    def find_successor(self, successorlist):   
+    def find_successor(self, successorlist):  # TODO linked stuff instead of arrays, if not, rename please
         '''The method find_successor returns the inorder succesorlist of the item. Its a list of all the items in the tree. In the deletealgorithm this list gets sorted and the inorder successor can be determined. It traverses the tree using an inorderTraversal.'''
         if self.item != None and self.leftchild == None and self.rightchild == None:
             successorlist.append(self)
@@ -227,6 +227,8 @@ class Node:
                     #self.parent.rightpointer = None
                     #self.parent.rightchild = None
                     self.parent.parent.leftpointer = 'black'
+                    
+                    
     def delete(self, searchKey, tree):
         '''The main delete function of the node. It finds the inorder successor and based on the location of the leaf that needs to be deleted it swaps it or not.'''
         itemLocation = self.find_searchKey(searchKey,1)     #Find the node n that contains the value to be deleted.
