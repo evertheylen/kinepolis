@@ -85,8 +85,31 @@ def switchDataStructure(oldds, newT, newAttr=None, **kwargs):
         newAttr = oldds.attribute()
     newds = datastruct.createDataStructure(newT, newAttr, **kwargs)
     
-    for element in oldds.inorder():
-        newds.insert(element)
+    
+    if type(newds) == datastruct.structures.BinTree:
+        # instead of adding inorder, we'll add all elements to a redblacktree, which
+        # is then converted to a binary tree. this will make the binary tree start
+        # as a balanced one, instead of largely imbalanced due to inorder adding.
+        
+        rb = None
+        if type(oldds) == datastruct.structures.RedBlackTree:
+            # of course, if the old datastructure was a RBT already, we don't need to
+            # convert it.
+            rb = oldds
+        else:
+            rb = createDataStructure(datastruct.structures.RedBlackTree, newAttr)
+            for element in oldds.inorder():
+                rb.insert(element)
+        
+        # at this point, rb is a RBT with all data in it. We'll now add elements from
+        # it in the Binary tree in preorder, so the binary tree will be balanced too.
+        
+        for element in rb.preorder():
+            newds.insert(element)
+    else:
+        # this is the default case. just add elements to the new datastructure.
+        for element in oldds.inorder():
+            newds.insert(element)
         
     return newds
 
