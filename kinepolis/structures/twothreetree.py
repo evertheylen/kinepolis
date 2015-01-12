@@ -49,6 +49,7 @@ class Node():
             return self.values.__dict__[self.attribute]
 
     def isLeaf(self):
+        '''Determines is self is a leafNode'''
         if self.children[0] == None and self.children[1] == None and self.children[2] == None and self.children[3] == None:
             return True
         else:
@@ -212,9 +213,9 @@ class Node():
 
     def fix(self, attribute):
         '''Fixes the node if necessary'''
-        print("fixing the node")
         if self.parent == None:         #Self is de wortel
             del self                    #Delete de wortel
+
         else:
             if self == self.parent.children[0]: #Herverdeling linkerkind
                 if parent.children[1] != None and self.parent.children[1].values[0] != None and self.parent.children[1].values[1] != None:
@@ -222,6 +223,12 @@ class Node():
                     self.parent.values[0] = self.parent.children[1].values[0]
                     self.parent.children[1].values[0] = None
                     self.values[1] = temp
+                if parent.children[2] != None and self.parent.children[2].values[0] != None and self.parent.children[2].values[1] != None:
+                    temp = self.parent.values[0]
+                    self.parent.values[0] = self.parent.children[2].values[0]
+                    self.parent.children[1].values[0] = None
+                    self.values[1] = temp
+
             if self == self.parent.children[1]: #Herverdeling middenste kind
                 if parent.children[0] != None and self.parent.children[0].values[0] != None and self.parent.children[0].values[1] != None:
                     temp = self.parent.values[1]
@@ -236,10 +243,16 @@ class Node():
 
             if self == self.parent.children[2]: #Herverdeling rechterkind
                 if parent.children[1] != None and self.parent.children[1].values[0] != None and self.parent.children[1].values[1] != None:
-                    temp = self.parent.values[1]
-                    self.parent.values[1] = self.parent.children[1].values[1]
+                    temp = self.parent.values[0]
+                    self.parent.values[0] = self.parent.children[1].values[1]
                     self.parent.children[1].values[1] = None
                     self.values[1] = temp
+                if parent.children[0] != None and self.parent.children[0].values[0] != None and self.parent.children[0].values[1] != None:
+                    temp = self.parent.values[0]
+                    self.parent.values[0] = self.parent.children[1].values[1]
+                    self.parent.children[0].values[1] = None
+                    self.values[1] = temp
+
             if self.children[0] != None or self.children[1] != None or self.children[2] != None: #self is interne knoop
                 #Verplaats het juiste kind van sibling naar self
                 if self == self.parent.children[0]:
@@ -277,18 +290,23 @@ class Node():
             print("Node is gevonden")
             if self.children[0] != None or self.children[1] != None or self.children[2] != None or self.children[3] != None: #Node is geen blad
                 print("Node is geen blad")
-                inorderSuccessor = self.inorderSuccessor(attribute, DeleteItem)
-                if self.values[0] == DeleteItem:
-                    self.values[0]  = inorderSuccessor
-                    print(inorderSuccessor)
+                self.inorderSuccessor(attribute)
+            if self.values[0] == DeleteItem:
+                self.values[0] = self.values[1]
+                self.values[1] = None
+            if self.values[1] == DeleteItem:
+                self.values[1] = None
             if self.values[0] == None and self.values[1] == None:   #leafNode heeft geen items
                 self.fix(attribute)                                 #fix self
                 success = True
                 return success
-        elif DeleteItem <= self.values[0] and self.children[0] != None:
+        elif DeleteItem <= self.values[1] and self.children[0] != None:
             self.children[0].delete(attribute, DeleteItem)
             return
-        if self.values[1] != None and self.values[0] != None:
+        elif self.values[1] != None and self.values[0] != None:
+            if DeleteItem < self.values[0] and self.children[0] != None:
+                self.children[0].delete(attribute, DeleteItem)
+                return
             if DeleteItem > self.values[0] and DeleteItem < self.values[1] and self.children[1] != None:
                 self.children[1].delete(attribute, DeleteItem)
                 return
@@ -299,20 +317,21 @@ class Node():
             success = False
             return success
 
-    def inorderSuccessor(self, attribute,current):
+    def inorderSuccessor(self, attribute):
         if self.children[0] == None and self.children[1] == None and self.children[2] == None and self.children[3] == None: #Node is een blad
-            if self.parent.values[0] != None:
-                temp = self.parent.values[0]
-                current = temp
-                self.parent.values[0] = None
-                return
-            elif self.values[1] != None:
+            if self.values[1] != None:
                 self.values[0] = self.values[1]
                 self.values[1] = None
+                return
+            if self.parent.values[0] != None:
+                temp = self.parent.values[0]
+                self.parent.values[0] = None
+                self.values[0] = temp
+                return
         elif self.children[2] != None:
-            self.children[2].inorderSuccessor(attribute,current)
+            self.children[2].inorderSuccessor(attribute)
         elif self.values[1] != None:
-            self.children[1].inorderSuccessor(attribute,current)
+            self.children[1].inorderSuccessor(attribute)
 
     def retrieve(self, attribute, Searchkey):
         '''Search the specific Searchkey in the tree, return True if Searchkey is found, otherwise return False'''
@@ -420,12 +439,16 @@ class TwoThreeTree():
 A = Node(1)
 A.insert(1, 5)
 A.insert(1, 6)
-A.insert(1, 7)
-A.insert(1, 4)
-A.insert(1, 3)
-A.insert(1, 2)
-A.insert(1, 1)
+A.delete(1,6)
+A.delete(1,5)
+A.insert(1,99)
+A.insert(1,991)
+A.insert(1,9)
+A.insert(1,91129)
+A.insert(1,10000)
+A.delete(1,10000)
 #A.retrieve(1,1)
-print("inorder successor")
-print(A.inorderSuccessor(1,A))
+#print("inorder successor")
+#A.delete(1,7)
+#print(A.children[0].inorderSuccessor(1))
 print(A)
