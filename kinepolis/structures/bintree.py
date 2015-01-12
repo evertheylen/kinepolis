@@ -70,6 +70,11 @@ class BinTree:
     def insert(self, item):
         tree, where = self._retrieve(self._key(item))
         
+        # first insert
+        if self.isEmpty():
+            self.root = item
+            return True
+        
         # we won't insert a tree in the root
         if where != 'root':
             if tree.parent == None:
@@ -79,7 +84,8 @@ class BinTree:
             b = BinTree(self.attribute(), item, parent)
             tree.__dict__[where] = b
         else:
-            tree.root = item
+            # returning False if the element is already in the datastructure
+            return False
         
         return True
         

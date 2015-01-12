@@ -142,7 +142,16 @@ class NoBullShitText(npyscreen.Pager):
         
         npyscreen.Pager.__init__(self, *args, **kwargs)
 
-        
+
+class IntegerTitleText(npyscreen.TitleText):
+    def on_leave(self):      
+        if self.value != '':
+            try:
+                i = int(self.value)
+            except:
+                npyscreen.notify_confirm("Not a valid integer, try again!")
+
+
 # this class is not a form, it's a widget that should be displayed in the form ViewShowsList
 class ViewShows(npyscreen.MultiLineAction):
     def __init__(self, *args, **kwargs):
@@ -184,14 +193,62 @@ class ViewShowsList(npyscreen.Form):
 
 class PickShowToEnter(ViewShowsList):
     def on_element_selected(self, selected_show, keypress):
-        selected_show.popTicket()
+        #selected_show.popTicket()
         if selected_show.isEmptyTickets():
             npyscreen.notify_confirm("The film can start!")
-            self.parentApp.switchForm("WATCHSTARWARS")
+            #self.parentApp.switchForm("WATCHSTARWARS")
         else:
-            npyscreen.notify_confirm("We still need "+str(selected_show.tickets.length)+" people "\
-                + "for the film \n   '" + selected_show.film.title+ "'.")
+            #npyscreen.notify_confirm("We still need "+str(selected_show.tickets.length)+" people "\
+                #+ "for the film \n   '" + selected_show.film.title+ "'.")
+            self.parentApp.getForm("CHOOSEAMOUNTOFPEOPLE").selected_show = selected_show
+            self.parentApp.switchForm("CHOOSEAMOUNTOFPEOPLE")
+
         self.update_list()
+
+
+class ChooseAmountOfPeople(npyscreen.ActionPopup):
+    def __init__(self, *args, **kwargs):
+        self.selected_show = None  # please overwrite me
+        super(ChooseAmountOfPeople, self).__init__(*args, **kwargs)
+        self.add_handlers({
+            "^X": self.exit
+        })
+    
+    def create(self):
+        self.Text = self.add(NoBullShitText, text="<overwrite me>\n\nHow many people are you with?\n")
+        self.Amount = self.add(IntegerTitleText, name="Amount")
+    
+    def beforeEditing(self):
+        self.Amount.value = ''
+        amount = self.selected_show.tickets.length
+        if amount == 1:
+            self.Text.values[0] = "We still need 1 person."
+        else:
+            self.Text.values[0] = "We still need %d people."%self.selected_show.tickets.length
+    
+    def on_ok(self):
+        amount = 0
+        try:
+            amount = int(self.Amount.value)
+            if not 0 < amount <= self.selected_show.tickets.length:
+                raise Exception()
+            
+            for _ in range(amount):
+                self.selected_show.popTicket()
+            
+            if self.selected_show.isEmptyTickets():
+                npyscreen.notify_confirm("The film can start!")
+                
+            self.parentApp.switchForm("PICKSHOWTOENTER")
+                
+        except:
+            npyscreen.notify_confirm("Not a valid amount, try again!")
+    
+    def on_cancel(self):
+        self.exit(None)
+    
+    def exit(self, whatever):
+        self.parentApp.switchForm("PICKSHOWTOENTER")
 
 # WatchStarWars -----------------------------------------------------------
 
@@ -270,15 +327,6 @@ class MagicalUserMail(npyscreen.TitleText):
             self.parent.wgUserLastname.value = user.lastname
 
 
-class IntegerTitleText(npyscreen.TitleText):
-    def on_leave(self):      
-        if self.value != '':
-            try:
-                i = int(self.value)
-            except:
-                npyscreen.notify_confirm("Not a valid integer, try again!")
-
-
 class MakeReservation(npyscreen.ActionForm):
     def __init__(self, *args, **kwargs):
         super(MakeReservation, self).__init__(*args, **kwargs)
@@ -348,7 +396,7 @@ class MakeReservation(npyscreen.ActionForm):
         # reservation init:
         # ID, user, timeStamp, show, places
         reservation = Reservation(
-            # determining the ID is *really* awkward
+            # determining the ID is *really* awkward again
             self.parentApp.cinema.reservationCounter,
             user,
             datetime.datetime.now(),
@@ -413,3 +461,4 @@ class MyCinemaApp(npyscreen.NPSAppManaged):
         self.addForm("PICKSHOWTOENTER", PickShowToEnter)
         self.addForm("MAKERESERVATION", MakeReservation)
         self.addForm("WATCHSTARWARS", WatchStarWars)
+        self.addForm("CHOOSEAMOUNTOFPEOPLE", ChooseAmountOfPeople)

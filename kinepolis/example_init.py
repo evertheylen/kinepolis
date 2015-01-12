@@ -77,7 +77,7 @@ def example_cinema(name):
             ))
     
     print('\nSecond show of this cinema:  ')
-    a = result.shows.retrieve(2)
+    a = result.shows.retrieve(1)
     print(a)
     
     

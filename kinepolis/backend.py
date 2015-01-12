@@ -1,3 +1,5 @@
+origlocals = locals()
+
 import datastruct
 import classes
 import sorting
@@ -28,8 +30,12 @@ def start_backend(data, save):
     backendlocals.update(classes.__dict__)  # add module classes to console
     backendlocals.update(datastruct.__dict__)  # add module datastruct to console
     backendlocals.update(sorting.__dict__)  # add module sorting to console
+    backendlocals.update(origlocals)  # reset the stuff that might otherwise be modifed by importing other modules (like __package__ and __name__)
     
     console.locals = backendlocals
+    
+    console.locals['credits'] = type(credits)("credits",
+        "\n\n"+fancytext("Anthony")+"\n\n"+fancytext("Pieter")+"\n\n"+fancytext("Stijn")+"\n\n"+fancytext("Evert"))
     
     # OMG Tab completion!!!
     readline.set_completer(rlcompleter.Completer(console.locals).complete)

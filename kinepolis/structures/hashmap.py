@@ -131,7 +131,7 @@ class Hashmap:
                 #   - the element is found
                 if self._array[location] == None \
                     or (type(self._array[location]) == Deleted and self._array[location].key == key) \
-                    or self._key(self._array[location]) == key:
+                    or (type(self._array[location]) != Deleted and self._key(self._array[location]) == key):
                     
                     reached = True
                     break
@@ -196,7 +196,7 @@ class Hashmap:
         #     the right element.
         # Therefore, we require all elements to have a method .__dict__[self._attribute]
         # which returns a UNIQUE searchkey of a type so that it:
-        #   - is convertible to an int (with int(el.__dict__[self._attribute]) )
+        #   - is convertible to an int (with self.toInt(el.__dict__[self._attribute]) )
         #   - has the operator '==' defined on it.
         # 
         # The argument 'key' for this function should be the UNIQUE key that would
@@ -213,7 +213,9 @@ class Hashmap:
             if location == -1:
                 return None
             else:
-                if type(self._array[location]
+                if type(self._array[location]) == Deleted:
+                    return None
+                # else...
                 return self._array[location]
         else:
             if self._array[location] == None:
