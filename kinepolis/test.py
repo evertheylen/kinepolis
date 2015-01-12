@@ -88,13 +88,15 @@ def testDataStruct(name, **kwargs):
         
         inorderList = list(ds.inorder())
         
-        test("ds inorder", inorderList[5].firstname, "ccccc")
+        test("ds inorder", set(inorderList), set(usersarr))
 
         ds.delete(104)  # Delete Evert
 
         inorderList = list(ds.inorder())
         
-        test("ds inorder after delete", inorderList[5].firstname, "ddddd")
+        copy_usersarr = usersarr[:]
+        copy_usersarr.pop(4)  # delete Evert
+        test("ds inorder after delete", set(inorderList), set(copy_usersarr))
         
         test("ds retrieve", ds.retrieve(307), usersarr[10])
         test("ds retrieve2", ds.retrieve(104), None)
@@ -118,7 +120,6 @@ def testDataStruct(name, **kwargs):
         test("ds empty3", ds.isEmpty(), True)
         
         test("ds delete after empty", ds.delete(321), False)
-        #Bij bintree gebeurt hier nog een error. Fixen die boel :p
         
         # Yes, this test is new :)
         test("ds attribute", ds.attribute(), "ID")
