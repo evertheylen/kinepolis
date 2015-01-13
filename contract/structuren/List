@@ -1,34 +1,35 @@
-Specification contract ADT List (Lijst van elementen van het type ListItemType):
+Specification contract ADT USLinkedChain (Lijst van elementen van het type ChainItemType):
 
-+createList()						// creëert een lege lijst
++attribute(out attribute)
+// Returned de attribute van de boom.
 precondities: geen
-postcondities: nieuwe lijst
-
-+destroyList()						// wist een lijst
-precondities: een lijst is aanwezig
-postcondities: de lijst is verwijderd
+postcondities: geen
 
 +isEmpty(): boolean 					// geeft aan of de lijst leeg is
 precondities: geen
 postcondities: geeft true als de lijst leeg is en false als de lijst niet leeg is.
 
-+getLength(): integer 					// returned het aantal elementen in de lijst.
++insert(in searchkey: KeyType, in newItem: ChainItemType, out success: boolean):
+// voegt een nieuw item toe aan het einde van de uslinkedchain 
 precondities: geen
-postcondities: geeft het aantal elementen in de lijst.
-
-+insert(in index: integer, in newItem: ListItemType, out success: boolean):
-// voegt een nieuw item toe aan lijst op positie index als 1<=index<=getLength+1. De items op positie >= index worden 1 naar rechts geshift 
-precondities: index moet tussen 1 en getLength() + 1 liggen, er moet een lijst zijn.
 postcondities: de lijst is vergroot met 1 en het element is toegevoegd.
 
-+delete(in index: integer, out success: boolean):
-// verwijdert het element op positie index, indien 1<= index <= getLength().
-// Elementen met index >= 1 worden 1 naar links geshift. success laat zien of het gelukt is.
-precondities: index moet tussen 1  en getLength() liggen.
++inorder(out generator)
+// De uslinkedchain wordt inorder doorlopen.
+precondities: geen
+postcondities: geen
+
++delete(in searchkey: KeyType, out success: boolean):
+// verwijdert het element mwr zoeksleutel searchkey
+precondities: geen
 postcondities: de lijst is met 1 verkleint en het item is verwijderd.
 
-+retrieve(in index: integer, out dataItem:ListItemType, out success: boolean): haalt een element op positie index op indien 1 <= index <= getLength() 
-// en stopt het in dataItem, success laat zien of het gelukt is.
-precondities: index moet tussen 1 en getLength() liggen.
++retrieve(in searchkey: KeyType, out dataItem:ChainItemType, out success: boolean):
+// Retrieve het element met zoeksleutel searchkey in de linked chain.
+precondities: geen
 postcondities: output naar dataItem met daarin het gezochte element.
 
++sort(in attribute: KeyType, in sortFunc: SortingType, out generator)
+// De functie wordt gesorteerd met sortFunc op attribute
+precondities: geen
+postcondities: geen
