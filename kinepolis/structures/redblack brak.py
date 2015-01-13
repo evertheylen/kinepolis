@@ -4,7 +4,7 @@ class Node:
     def __init__(self, attribute, item = None, leftpointer = None, rightpointer = None, leftchild = None, rightchild = None, parent = None):
         '''The standard python initializer. With all the aspects of a redblack node.'''    
         self.item = item
-        self.leftpointer = leftpointer # color! == str
+        self.leftpointer = leftpointer                      # Left- and rightpointer are strings, possible values are 'red', 'black', 'blackblack' and None.
         self.rightpointer = rightpointer
         self.leftchild = leftchild
         self.rightchild = rightchild
@@ -73,7 +73,7 @@ class Node:
                 self.rightchild = tempNode
                 self.rightpointer = 'red'
                 tempNode.parent = self
-                tree.rootItem.fix_rotation(tree)
+                tree.rootItem.fix_rotation(tree)          
                 return True  
                     
             else:
@@ -145,7 +145,7 @@ class Node:
             else:
                 return self.rightchild.find_searchKey(searchKey)
                     
-    def all_items(self, successorlist):  
+    def all_items(self, successorlist):
         '''The method all_items returns the inorder succesorlist of the item. Its a list of all the items in the tree. In the deletealgorithm this list gets sorted and the inorder successor can be determined. It traverses the tree using an inorderTraversal.'''
         if self.item != None and self.leftchild == None and self.rightchild == None:
             successorlist.append(self)
@@ -395,8 +395,8 @@ class Node:
         self.leftpointer = originalselfleft.rightpointer
         self.parent = originalselfleft
         self.parent.rightpointer = originalselflpoint
-        self.parent.rightchild = self
-        self.parent.parent = originalparent
+        originalselfleft.rightchild = self
+        originalselfleft.parent = originalparent
         if originalparent != None and originalself > originalparent:
             originalparent.rightchild = originalselfleft
         elif originalparent != None and originalself < originalparent:               
@@ -420,8 +420,6 @@ class Node:
         self.leftchild.parent = self
         originalselfleft.rightchild = self.leftchild.leftchild
         originalselfleft.rightpointer = self.leftchild.leftpointer
-        if self.leftchild.leftchild != None:
-                self.leftchild.leftchild.parent = originalselfleft
         self.leftchild.leftchild = originalselfleft
         self.leftchild.leftpointer = originalselflpoint
         self.leftchild.leftchild.parent = self.leftchild
@@ -442,8 +440,6 @@ class Node:
         self.rightchild.parent = self
         originalselfright.leftchild = self.rightchild.rightchild
         originalselfright.leftpointer = self.rightchild.rightpointer
-        if self.rightchild.rightchild != None:
-                self.rightchild.rightchild.parent = originalselfright
         self.rightchild.rightchild = originalselfright
         self.rightchild.rightpointer = originalselfrpoint
         self.rightchild.rightchild.parent = self.rightchild
@@ -451,8 +447,7 @@ class Node:
             
     def fix_rotation(self,tree):
         '''The method to reorder the tree entirely. Often used throughout the program. A combination of all the above forced rotations with checks to see if a rotation needs to be done or not.'''
-        if self.leftpointer == 'red' and self.rightpointer == 'red':  
-                          # A four node cannot stay in a Red-Black Tree
+        if self.leftpointer == 'red' and self.rightpointer == 'red':                    # A four node cannot stay in a Red-Black Tree
             self.leftpointer = 'black'
             self.rightpointer = 'black'
             if self.parent != None and self.searchkey() < self.parent.searchkey():      #Fixes the splitsing of a 2-node parent.
@@ -462,107 +457,24 @@ class Node:
                 
         if self.leftpointer == 'red' and self.leftchild.leftpointer == 'red':
     
-            #Forced rotate right
-            originalself = self
-            originalselfright = self.rightchild
-            originalselfleft = self.leftchild
-            originalselflpoint = self.leftpointer
-            originalselfrpoint = self.rightpointer
-            originalselfleftright = self.leftchild.rightchild
-            originalselfleftleft = self.leftchild.leftchild
-            originalparent = self.parent
-
-            self.leftchild = originalselfleftright
-            if originalselfleftright != None:
-                originalselfleftright.parent = self 
-            self.leftpointer = originalselfleft.rightpointer
-            self.parent = originalselfleft
-            self.parent.rightpointer = originalselflpoint
-            originalselfleft.rightchild = self
-            originalselfleft.parent = originalparent
-            if originalparent != None and originalself > originalparent:
-                originalparent.rightchild = originalselfleft
-            elif originalparent != None and originalself < originalparent:               
-                originalparent.leftchild = originalselfleft
-            if originalparent == None:
-                tree.rootItem = self.parent
-                
+            self.forcedrotateright(tree)
             self.parent.fix_rotation(tree)
             return 1
         elif self.rightpointer == 'red' and self.rightchild.rightpointer == 'red':
-            #Forced rotate left
-            
-            originalself = self
-            originalselfright = self.rightchild
-            originalselfleft = self.leftchild
-            originalselflpoint = self.leftpointer
-            originalselfrpoint = self.rightpointer
-            originalselfrightright = self.rightchild.rightchild
-            originalselfrightleft = self.rightchild.leftchild
-            originalparent = self.parent
-    
-            self.rightchild = originalselfrightleft
-            if originalselfrightleft != None:
-                originalselfrightleft.parent = self         
-            self.rightpointer = originalselfright.leftpointer
-            self.parent = originalselfright
-            self.parent.leftpointer = originalselfrpoint            
-            originalselfright.leftchild = self
-            originalselfright.parent = originalparent  
-            if originalparent != None and originalself > originalparent:
-                originalparent.rightchild = originalselfright
-            elif originalparent != None and originalself < originalparent:               
-                originalparent.leftchild = originalselfright                
-            if originalparent == None:
-                tree.rootItem = self.parent
-                          
+
+            self.forcedrotateleft(tree)
             self.parent.fix_rotation(tree)
             return 1
         if self.leftpointer == 'red' and self.leftchild.rightpointer == 'red':
-            #Forced rotate left 2, this rotation is the 'corner' shape that often happens at the third insert of an item in the redblacktree.
-                        
-            originalself = self
-            originalselfright = self.rightchild
-            originalselfleft = self.leftchild
-            originalselflpoint = self.leftpointer
-            originalselfrpoint = self.rightpointer
-            originalselfleftright = self.leftchild.rightchild
-            originalselfleftleft = self.leftchild.leftchild
-            originalparent = self.parent
             
-            self.leftchild = originalselfleftright
-            self.leftchild.parent = self
-            originalselfleft.rightchild = self.leftchild.leftchild
-            originalselfleft.rightpointer = self.leftchild.leftpointer
-            if self.leftchild.leftchild != None:
-                self.leftchild.leftchild.parent = originalselfleft
-            self.leftchild.leftchild = originalselfleft
-            self.leftchild.leftpointer = originalselflpoint
-            self.leftchild.leftchild.parent = self.leftchild
+            #this rotation is the 'corner' shape that often happens at the third insert of an item in the redblacktree.
             
+            self.forcedrotateleft2(tree)
             self.fix_rotation(tree)
             
         if self.rightpointer == 'red' and self.rightchild.leftpointer == 'red':
-            #Forced rotate right 2, this rotation is the 'corner' shape that often happens at the third insert of an item in the redblacktree.
-            
-            originalself = self
-            originalselfright = self.rightchild
-            originalselfleft = self.leftchild
-            originalselflpoint = self.leftpointer
-            originalselfrpoint = self.rightpointer
-            originalselfrightright = self.rightchild.rightchild
-            originalselfrightleft = self.rightchild.leftchild
-            originalparent = self.parent
-            
-            self.rightchild = originalselfrightleft
-            self.rightchild.parent = self
-            originalselfright.leftchild = self.rightchild.rightchild
-            originalselfright.leftpointer = self.rightchild.rightpointer
-            if self.rightchild.rightchild != None:
-                self.rightchild.rightchild.parent = originalselfright
-            self.rightchild.rightchild = originalselfright
-            self.rightchild.rightpointer = originalselfrpoint
-            self.rightchild.rightchild.parent = self.rightchild
+        
+            self.forcedrotateright2(tree)
             self.fix_rotation(tree)
                         
         return 0, None
@@ -596,7 +508,7 @@ class RedBlackTree:
         
     def preorder(self):
         '''Preorder Traversal is also implemented in the Red_BlackNode. It wasn't obliged to implement this function, but if we want to change a datastructure from redblack to binary, and  we insert it in the order of a preorder traversal, the binary tree will be as balanced as possible. If we do it through an inorder, the binary tree will be super unbalanced.'''
-        return self.rootItem.preorderTraversal() 
+        return self.rootItem.preorderTraversal()        
 
     def sort(self, attribute, sortFunc = sorting.bubblesort):
         '''Returns a sorted list of the tree. This is done by generators and an inorderTraversal'''
@@ -616,32 +528,31 @@ class RedBlackTree:
             return False
         return self.rootItem.delete(searchKey, self)
         
-'''boom = RedBlackTree()
+'''boom = Red_BlackTree()
 boom.insert(10)
 boom.insert(100)
 boom.insert(30)
 boom.insert(80)
 boom.insert(50)
 print(boom.rootItem)
-boom.inorder()
+boom.inorderTraversal()
 boom.delete(10)
 print(boom.rootItem)
 boom.insert(60)
 print(boom.rootItem)
-boom.inorder()
+boom.inorderTraversal()
 boom.insert(70)
-boom.inorder()
+boom.inorderTraversal()
 boom.insert(40)
-boom.inorder()
+boom.inorderTraversal()
 boom.delete(80)
-boom.inorder()
+boom.inorderTraversal()
 boom.insert(90)
 boom.insert(20)
-boom.inorder()
+boom.inorderTraversal()
 boom.delete(30)
-boom.inorder()
+boom.inorderTraversal()
 boom.delete(70)
-for i in boom.inorder():
-    print(i)'''
+boom.inorderTraversal()'''
 
 
