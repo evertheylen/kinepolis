@@ -1,0 +1,38 @@
+// Implementatie door Stijn
+// Testen door iedereen.
+
+// Cinema type, bevat al de rest
+
+// string name
+// []Theater Theaters
+// []Timeslot Timeslots
+// []Show Shows
+// []Reservation Reservations
+// []User Users
+// []Ticket Tickets
+// reservationcounter
+// autoexecute
+
++getName():
+pre-condities: cinema moet bestaan
+post-condities: geeft naam van de cinema terug
+
++setName():
+pre-condities: geen
+post-condities: geeft cinema een naam
+
++createCinema(): Cinema
+pre-condities: geen
+post-condities: een nieuwe Cinema is gemaakt
+
++addReservation(in reservation:Reservation): bool
+pre-condities: reservatie is een geldige reservatie
+post-condities: geeft weer of het gelukt is
+
++isEmptyReservations(): bool
+pre-condities: reservatie is een geldige reservatie
+post-condities: true als er geen reservatie is, anders false
+
++executeReservations():
+pre-condities: er zijn reservaties
+post-condities: alle reservaties zijn uitgevoerd

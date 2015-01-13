@@ -1,0 +1,17 @@
+// Implementatie door Anthony.
+// Testen door iedereen.
+
+// theater type
+// ID int
+// places int
+
++createTheater():
+pre-condities: geen
+post-condities: er is een theater aangemaakt
++getID(): int
+precondities: geen
+postcondities: geeft een ID terug
+
++getPlaces(): int
+precondities: geen
+postcondities: geeft het aantal plaatsen

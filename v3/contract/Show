@@ -1,0 +1,24 @@
+// Implementatie door Anthony.
+// Testen door iedereen.
+
+// showID
+// fulldate datetime.datetime
+// film
+// theater
+// Timeslot timeslot
+// Date date
+// int freeplaces
+//[]Ticket tickets // als Stack
+
++createShow():
+pre-condities: geen
+post-condities: er is een show aangemaakt
+
++pushTicket(): bool
+
++popTicket(): Ticket
+
++isEmptyTickets(): bool
+pre-condities: Geen
+postcondities: return true als stack met tickets leeg is, anders return false
+

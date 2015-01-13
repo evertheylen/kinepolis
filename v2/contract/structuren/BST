@@ -1,0 +1,37 @@
+Specification contract ADT Binary Search Tree (BSTItemType is het type van elementen die in de zoekboom worden opgeslagen, KeyType is het type van de zoeksleutels = attribute):
+// Implementatie door Evert en Pieter.
+
++attribute(out attribute)
+// Returned de attribute van de boom.
+precondities: geen
+postcondities: geen
+
++isEmpty(): boolean
+// bepaalt of de binaire zoekboom leeg is
+precondities: geen
+postcondities: returned true als de binaire zoekboom leeg is en false als deze elementen bevat.
+
++insert(in newItem: BSTItemType, out success: boolean)
+// voegt een item toe aan de binaire zoekboom, success duidt aan of het gelukt is.
+precondities: alle items van de binaire zoekboom moeten een verschillende zoeksleutelwaarde hebben.
+postcondities: indien success true is, is het gelukt en is het item toegevoegd op de juiste locatie in de binaire zoekboom.
+
++delete(in searchKey: KeyType, out success: boolean)
+// de binaire zoekboom wordt doorzocht naar het element met zoeksleutel searchKey, indien dit wordt gevonden, wordt het element verwijderd.
+precondities: geen
+postcondities: indien er een element met deze zoeksleutel wordt gevonden --> success = true, het element wordt verwijderd.
+
++retrieve(in searchKey: KeyType, out BSTItem: BSTItemType, out succes: boolean)
+// de binaire zoekboom wordt doorzocht naar het element met zoeksleutel searchKey, indien dit wordt gevonden, wordt het element toegekend aan BSTItem, de binaire zoekboom blijft onveranderd.
+precondities: geen
+postcondities: indien het element is gevonden, success is true en BSTItem bevat dit element.
+
++inorder(out generator)
+// De binaire zoekboom wordt inorder doorlopen.
+precondities: geen
+postcondities: geen
+
++sort(in attribute: KeyType, in sortFunc: SortingType, out generator)
+// De functie wordt gesorteerd met sortFunc op attribute
+precondities: geen
+postcondities: geen

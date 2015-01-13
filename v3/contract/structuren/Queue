@@ -1,0 +1,33 @@
+Specification contract ADT Queue (Rij van elementen van het type QueueItemType):
+//Implementatie door Evert en Pieter.
+
++length(out int)
+// geeft de lengte van de queue.
+precondities: geen
+postcondities: geen
+
++isEmpty(): Boolean
+// Kijkt of een queue leeg is.
+precondities: geen
+postcondities: geeft true als de queue leeg is en false als dit niet zo is.
+
++enqueue(in newItem: QueueItemType, out success: boolean)
+// Voegt een nieuw item vanachter toe aan de rij.
+precondities: geen
+postcondities: success is true als het gelukt is en false als dit niet het geval is. Indien true: een item is toegevoegd achteraan
+de queue, de queue is met 1 verlengd.
+
++dequeue(out success: boolean)
+// verwijdert het eerste element van de queue, indien queue niet leeg is.
+precondities: geen
+postcondities: success duidt aan of het gelukt is (true or false) indien true: het eerste item is verwijderd en de queue is 1 korter geworden.
+
++getFront(out success: boolean, out dataItem: QueueItemType)
+// Haalt het eerste element van de queue op zonder dit te verwijderen.
+precondities: geen
+postcondities: success duidt aan of het gelukt is, indien true: het gezochte element bevindt zich in dataItem, queue is onveranderd gebleven.
+
++inorder(out generator)
+// De queue wordt doorlopen.
+precondities: geen
+postcondities: geen

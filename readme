@@ -1,0 +1,29 @@
+
+Testen:
+  - testen van datastructuren en sorteringsalgoritmen:
+    python3 ./kinepolis/test.py
+    
+  - testen van frontend
+    python3 ./kinepolis/main.py
+    
+  - testen van backend
+    python3 ./kinepolis/main.py -b
+    In de backend zelf kan men ook andere zaken testen, bijvoorbeeld de Stack en Queue.
+
+
+Contracten:
+  zie map ./contracten
+
+
+Documentatie:
+  Er staat wat documentatie in ./kinepolis/readme.md (MarkDown formaat, Github-flavoured).
+  Men kan ook het volgende uitvoeren:
+    python3 ./kinepolis/main.py -h
+  om de helptext op te roepen.
+
+
+Noot:
+  De 2-3-4-boom wordt niet gebruikt, omdat deze niet werkt.
+  De 2-3-boom door Anthony wordt ook niet gebruikt, omdat deze ook niet werkt.
+  Voor de 2-3-boom is er wel een alternatief, voor meer info bekijk je best het bestand ./kinepolis/twothreetree.py .
+

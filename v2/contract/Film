@@ -1,0 +1,8 @@
+// Implementatie door Stijn
+// Testen door iedereen.
+
+// Film type.
+
++createFilm(): Film
+precondities: geen
+postcondities: een nieuwe Film is gemaakt

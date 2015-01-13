@@ -1,0 +1,12 @@
+// type Reservatie
+// door Pieter
+
+// int ID
+// int userID
+// DateTime TimeStamp
+// int showID
+// int places
+
++createReservation():
+pre-condities: geen
+post-condities: er is een reservatie aangemaakt

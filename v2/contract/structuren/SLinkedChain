@@ -1,0 +1,35 @@
+Specification contract ADT SLinkedChain (Lijst van elementen van het type ChainItemType):
+
++attribute(out attribute)
+// Returned de attribute van de boom.
+precondities: geen
+postcondities: geen
+
++isEmpty(): boolean 					// geeft aan of de lijst leeg is
+precondities: geen
+postcondities: geeft true als de lijst leeg is en false als de lijst niet leeg is.
+
++insert(in searchkey: KeyType, in newItem: ChainItemType, out success: boolean):
+// voegt een nieuw item toe op de juiste locatie in de slinkedchain 
+precondities: geen
+postcondities: de lijst is vergroot met 1 en het element is toegevoegd.
+
++inorder(out generator)
+// De slinkedchain wordt inorder doorlopen.
+precondities: geen
+postcondities: geen
+
++delete(in searchkey: KeyType, out success: boolean):
+// verwijdert het element mwr zoeksleutel searchkey
+precondities: geen
+postcondities: de lijst is met 1 verkleint en het item is verwijderd.
+
++retrieve(in searchkey: KeyType, out dataItem:ChainItemType, out success: boolean):
+// Retrieve het element met zoeksleutel searchkey in de linked chain.
+precondities: geen
+postcondities: output naar dataItem met daarin het gezochte element.
+
++sort(in attribute: KeyType, in sortFunc: SortingType, out generator)
+// De functie wordt gesorteerd met sortFunc op attribute. Deze functie is nodig als men niet wil sorteren op de attribute die is gedefinieerd in de init
+precondities: geen
+postcondities: geen

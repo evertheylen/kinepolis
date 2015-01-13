@@ -1,0 +1,14 @@
+// type Gebruiker
+// door Pieter
+
+// int ID
+// string Firstname
+// string Lastname
+// string Mailaddress
+
++createUser():
+pre-condities: Geen
+post-condities: geeft user terug
+
++sendMail(in mail:string):
+pass
