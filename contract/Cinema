@@ -10,53 +10,29 @@
 // []Reservation Reservations
 // []User Users
 // []Ticket Tickets
+// reservationcounter
+// autoexecute
 
++getName():
+pre-condities: cinema moet bestaan
+post-condities: geeft naam van de cinema terug
+
++setName():
+pre-condities: geen
+post-condities: geeft cinema een naam
 
 +createCinema(): Cinema
 pre-condities: geen
 post-condities: een nieuwe Cinema is gemaakt
 
-+addTheater(in theater:Theater): bool
-pre-condities: zaal is een geldige zaal
-post-condities: geeft weer of het gelukt is
-
-+addTimeslot(in timeslot:Timeslot): bool
-pre-condities: tjdslot is een geldig tijdslot
-post-condities: geeft weer of het gelukt is
-
 +addReservation(in reservation:Reservation): bool
 pre-condities: reservatie is een geldige reservatie
 post-condities: geeft weer of het gelukt is
 
-+addUser(in user:User): bool
-pre-condities: gebruiker is een geldige gebruiker
-post-condities: geeft weer of het gelukt is
-
-+addTicket(in ticket:Ticket): bool
-pre-condities: zaal is een geldige zaal
-post-condities: geeft weer of het gelukt is
-
-
-+destroyCinema(in cinema:Cinema): bool
-pre-condities: cinema is een geldige bestaande cinema
-post-condities: de cinema wordt verwijderd
-
-+removeTheater(in theater:Theater): bool
-pre-condities: zaal is een geldige zaal
-post-condities: geeft weer of het gelukt is
-
-+removeTimeslot(in timeslot:Timeslot): bool
-pre-condities: tjdslot is een geldig tijdslot
-post-condities: geeft weer of het gelukt is
-
-+removeReservation(in reservation:Reservation): bool
++isEmptyReservations(): bool
 pre-condities: reservatie is een geldige reservatie
-post-condities: geeft weer of het gelukt is
+post-condities: true als er geen reservatie is, anders false
 
-+removeUser(in user:User): bool
-pre-condities: gebruiker is een geldige gebruiker
-post-condities: geeft weer of het gelukt is
-
-+removeTicket(in ticket:Ticket): bool
-pre-condities: zaal is een geldige zaal
-post-condities: geeft weer of het gelukt is
++executeReservations():
+pre-condities: er zijn reservaties
+post-condities: alle reservaties zijn uitgevoerd
