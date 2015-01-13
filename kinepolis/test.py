@@ -25,7 +25,7 @@ def testClasses():
 tests = 0
 failures = 0
 
-PRINTSUCCES = False
+PRINTSUCCES = True
 
 def test(name, t, oracle=True):
     global tests
@@ -159,8 +159,8 @@ if __name__=='__main__':
     # watch out with using a non-chaining method, the hashmap may get filled up
     
     #testDataStruct("BinTree")
-    testDataStruct("RedBlackTree")
-    #testDataStruct("TwoThreeTree")
+    #testDataStruct("RedBlackTree")
+    testDataStruct("TwoThreeTree")
     
     """
     # ------- Sorting methods
