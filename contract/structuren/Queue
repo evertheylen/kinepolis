@@ -1,15 +1,10 @@
 Specification contract ADT Queue (Rij van elementen van het type QueueItemType):
 //Implementatie door Evert en Pieter.
 
-+createQueue()
-// creëert een lege queue.
++length(out int)
+// geeft de lengte van de queue.
 precondities: geen
-postcondities: een nieuwe queue is gemaakt.
-
-+destroyQueue()
-// wist een queue.
-precondities: geen
-postcondities: de queue is niet meer aanwezig.
+postcondities: geen
 
 +isEmpty(): Boolean
 // Kijkt of een queue leeg is.
@@ -31,3 +26,8 @@ postcondities: success duidt aan of het gelukt is (true or false) indien true: h
 // Haalt het eerste element van de queue op zonder dit te verwijderen.
 precondities: geen
 postcondities: success duidt aan of het gelukt is, indien true: het gezochte element bevindt zich in dataItem, queue is onveranderd gebleven.
+
++inorder(out generator)
+// De queue wordt doorlopen.
+precondities: geen
+postcondities: geen
