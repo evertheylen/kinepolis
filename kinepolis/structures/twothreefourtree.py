@@ -239,6 +239,9 @@ class Node:
                     return
 
     def insert(self,newInfo):
+        if newInfo in [self.info1,self.info2,self.info3]:
+            return False
+
         if self.getLength() == 0:
             self.info1 = newInfo
             return True
@@ -409,6 +412,7 @@ class Node:
         return False
                     
     def delete(self, data):
+        # if the root has 2 children that are also 2-nodes, make a 4-node
         if self.hasParent() == False:   # if self is the root
             if self.getLength() == 1:   # if the root is a 2-node
                 if self.child1 != None: # if the root has children
@@ -429,35 +433,135 @@ class Node:
                             # merge complete
                             self.delete(data)
 
-            if self.hasParent() == True:    #if it's not the root, if anything changes, you have to call delete again
-                if self.getLength() == 1:
-                    if self.parent.child1 == self:
-                        if self.parent.child2.getLength() > 1:
-                            pass
-                            # take from child2: get info1 from child2 and shift the info's to the left by 1
-                    elif self.parent.child2 == self:
-                        if self.parent.child1.getLength() > 1:
-                            pass
-                            # take from child1: get the most right info from child1
-                        elif self.parent.child3 != None:
-                            if self.parent.child3.getLength() > 1:
-                                pass
-                               # take from child3: get the first info from child2 and shift its info's to the left by 1
-                    elif self.parent.child3 == self:
-                        if self.parent.child2.getLength() > 1:
-                            pass
-                            # take from child2: take the most right info
-                        elif self.parent.child4 != None:
-                            if self.parent.child4.getLength() > 1:
-                                pass
-                                # take from child4: get the first info from child4 and shift its info's to the left by 1
-                    elif self.parent.child4 == self:
+
+        if self.hasParent() == True:    
+            if self.getLength() == 1: # if you encounter a 2-node: check for the adjacent siblings...
+                                      # if one of the siblings has a node on overshot, make it the parent and get the parents info
+                if self.parent.child1 == self:
+                    if self.parent.child2.getLength() > 1:# take from child2
+                        self.info2 = self.parent.info1
+                        self.parent.info1 = self.parent.child2.info1
+                        self.parent.child2.info1 = self.parent.child2.info2
+                        self.parent.child2.info2 = self.parent.child2.info3
+                        self.parent.child2.info3 = None
+                        self.delete(data)
+                        
+                if self.parent.child2 == self:
+                    if self.parent.child1.getLength() > 1:# take from child1
+                        self.info2 = self.parent.info1
+                        if self.parent.child1.info3 != None:
+                            self.parent.info1 = self.parent.child1.info3
+                            self.parent.child1.info3 = None
+                        elif self.parent.child1.info2 != None:
+                            self.parent.info1 = self.parent.child1.info2
+                            self.parent.child1.info2 = None
+                        self.delete(data)
+                        
+                    elif self.parent.child3 != None:# take from child3
                         if self.parent.child3.getLength() > 1:
-                            pass
-                            # take from child3: the most right info
-                    else:
-                        pass
-                        # take from the parent
+                            self.info2 = self.parent.info2
+                            self.parent.info2 = self.parent.child3.info1
+                            self.parent.child3.info1 = self.parent.child3.info2
+                            self.parent.child3.info2 = self.parent.child3.info3
+                            self.parent.child3.info3 = None
+                        self.delete(data)
+
+                if self.parent.child3 == self:
+                    if self.parent.child2.getLength() > 1:#take from child2
+                        self.info2 = self.info1
+                        self.info1 = self.parent.info2
+                        if self.parent.child2.info3 != None:
+                            self.parent.info2 = self.parent.child2.info3
+                            self.parent.child2.info3 = None
+                        elif self.parent.child2.info2 != None:
+                            self.parent.info2 = self.parent.child2.info2
+                            self.parent.child2.info2 = None
+                        self.delete(data)
+
+                    elif self.parent.child4 != None:
+                        if self.parent.child4.getLength() > 1:
+                            self.info2 = self.parent.info2
+                            self.parent.info2 = self.parent.child4.info1
+                            self.parent.child4.info1 = self.parent.child4.info2
+                            self.parent.child4.info2 = self.parent.child4.info3
+                            self.parent.child4.info3 = None
+                            self.delete(data)
+                            # take from child4: get the first info from child4 and shift its info's to the left by 1
+                if self.parent.child4 == self:#take from child4
+                    if self.parent.child3.getLength() > 1:
+                        self.info2 = self.info1
+                        self.info1 = self.parent.info3
+                        if self.parent.child3.info3 != None:
+                            self.parent.info3 = self.parent.child3.info3
+                            self.parent.child3.info3 = None
+                        elif self.parent.child3.info2 != None:
+                            self.parent.info3 = self.parent.child3.info2
+                            self.parent.child3.info2 = None
+                        self.delete(data)
+                
+                else:   # no adjacent sibling can miss an info, take info from the parent and adjust the children
+                    if self.parent.getLength() == 2:
+                        if (self.parent.child1 == self) or (self.parent.child2 == self):
+                            self.info2 = self.parent.info1
+                            self.parent.info1 = self.parent.info2
+                            self.parent.info2 = None
+                        else:
+                            self.info2 = self.parent.info2
+                            self.parent.info2 = None
+                        self.delete(data)
+                    elif self.parent.getLength() == 3:
+                        if self.parent.child1 == self:
+                            self.info2 = self.parent.info1
+                            self.parent.info1 = self.parent.info2
+                            self.parent.info2 = self.parent.info3
+                            self.parent.info3 = None
+
+                            self.child3 = self.parent.child2
+                            self.child3.parent = self
+                            self.parent.child2 = self.parent.child3
+                            self.parent.child3 = self.parent.child4
+                            self.parent.child4 = None
+                            self.delete(data)
+
+                        elif self.parent.child2 == self:
+                            self.info2 = self.parent.info2
+                            self.parent.info2 = self.parent.info3
+                            self.parent.info3 = None
+
+                            self.child3 = self.parent.child3
+                            self.child3.parent = self
+                            self.parent.child3 = self.parent.child4
+                            self.parent.child4 = None
+                            self.delete(data)
+
+                        elif self.parent.child3 == self:
+                            self.info2 = self.parent.info2
+                            self.parent.info2 = self.parent.info3
+                            self.parent.info3 = None
+
+
+                            self.child2 = self.child1
+                            self.child3 = self.child2
+                            self.child1 = self.parent.child2
+                            self.child3.parent = self
+                            self.parent.child2 = self
+                            self.parent.child3 = self.parent.child4
+                            self.parent.child4 = None
+                            self.delete(data)
+
+                        elif self.parent.child4 == self:
+                            self.info2 = self.parent.info3
+                            self.parent.info3 = None
+
+                            self.child2 = self.child1
+                            self.child3 = self.child2
+                            self.child1 = self.parent.child3
+                            self.child1.parent = self
+                            self.parent.child3 = self
+                            self.parent.child4 = None
+                            self.delete(data)
+
+                        
 
 
 class twoThreeFourTree:
@@ -465,7 +569,7 @@ class twoThreeFourTree:
         self.root = Node()
 
     def __repr__(self):
-        return str(self.inorder())
+        return str(list(self.inorder()))
 
     def insert(self,newInfo):
         return self.root.insert(newInfo)
