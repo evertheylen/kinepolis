@@ -1,15 +1,10 @@
-Specification contract ADT Binary Search Tree (BSTItemType is het type van elementen die in de zoekboom worden opgeslagen, KeyType is het type van de zoeksleutels):
+Specification contract ADT Binary Search Tree (BSTItemType is het type van elementen die in de zoekboom worden opgeslagen, KeyType is het type van de zoeksleutels = attribute):
 // Implementatie door Evert en Pieter.
 
-+createBST()
-// creeert een lege binaire zoekboom
++attribute(out attribute)
+// Returned de attribute van de boom.
 precondities: geen
-postcondities: een nieuwe binaire zoekboom is gemaakt
-
-+destroyBST()
-// verwijdert een binaire zoekboom
-precondities: geen
-postcondities: de binaire zoekboom is verwijderd.
+postcondities: geen
 
 +isEmpty(): boolean
 // bepaalt of de binaire zoekboom leeg is
@@ -31,7 +26,12 @@ postcondities: indien er een element met deze zoeksleutel wordt gevonden --> suc
 precondities: geen
 postcondities: indien het element is gevonden, success is true en BSTItem bevat dit element.
 
-+inorder(in visit: FunctionType)
-// De binaire zoekboom wordt doorlopen en bij elk element wordt de functie visit uitgevoerd.
++inorder(out generator)
+// De binaire zoekboom wordt inorder doorlopen.
+precondities: geen
+postcondities: geen
+
++sort(in attribute: KeyType, in sortFunc: SortingType, out generator)
+// De functie wordt gesorteerd met sortFunc op attribute
 precondities: geen
 postcondities: geen
