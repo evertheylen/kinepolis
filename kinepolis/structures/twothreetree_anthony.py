@@ -73,7 +73,7 @@ class Node():
             self.values[2] = None
             return
         else:                           #Self is geen root
-            if self.parent.values[0] == None and self.parent.values[1] == None:                      #Parent node is niet vol
+            if self.parent.values[0] == None or self.parent.values[1] == None:                      #Parent node is niet vol
                 if self.values[0] != None and self.values[1] != None and self.values[2] != None:    #Self node is vol
                     if self._key(self.values[1]) <= self._key(self.parent.values[1]):                                     #De middenste value is kleiner dan middenste value van de parent
                         self.parent.values[0] = self.values[1]                                      #Eerste value van parent is gelijk aan middenste value van self
@@ -89,7 +89,7 @@ class Node():
                         self.values[1] = None
                         return
             else:                                                                                   #De parent bevat nu 3 waarden
-                if self.parent.values[0] == None and self.parent.values[1] == None:                  #De parent is niet vol
+                if self.parent.values[0] == None or self.parent.values[1] == None:                  #De parent is niet vol
                     if self._key(self.values[1]) <= self._key(self.parent.values[0]):                                     #Als de middenste value van self is kleiner dan de parent value
                         temp = self.parent.values[0]                                                #De values van de parent worden gerangschikt
                         self.parent.values[2] = self.parent.values[1]
