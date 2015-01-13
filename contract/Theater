@@ -9,6 +9,6 @@
 precondities: geen
 postcondities: geeft een ID terug
 
-+getSeats(): int
++getPlaces(): int
 precondities: geen
 postcondities: geeft het aantal plaatsen
