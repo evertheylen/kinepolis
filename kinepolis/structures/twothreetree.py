@@ -46,8 +46,8 @@ class Node():
 
     def _key(self, el):
         return el.__dict__[self._attribute]
-    
-    
+
+
     def searchkey(self):
         '''Return the searchkey of an item. This is the attribute of the item that is defined as the searchkey'''
         if self.values[0] == None and self.values[1] == None and self.values[2] == None:
@@ -73,7 +73,7 @@ class Node():
             self.values[2] = None
             return
         else:                           #Self is geen root
-            if self.parent.values[0] == None or self.parent.values[1] == None:                      #Parent node is niet vol
+            if self.parent.values[0] == None and self.parent.values[1] == None:                      #Parent node is niet vol
                 if self.values[0] != None and self.values[1] != None and self.values[2] != None:    #Self node is vol
                     if self._key(self.values[1]) <= self._key(self.parent.values[1]):                                     #De middenste value is kleiner dan middenste value van de parent
                         self.parent.values[0] = self.values[1]                                      #Eerste value van parent is gelijk aan middenste value van self
@@ -89,7 +89,7 @@ class Node():
                         self.values[1] = None
                         return
             else:                                                                                   #De parent bevat nu 3 waarden
-                if self.parent.values[0] == None or self.parent.values[1] == None:                  #De parent is niet vol
+                if self.parent.values[0] == None and self.parent.values[1] == None:                  #De parent is niet vol
                     if self._key(self.values[1]) <= self._key(self.parent.values[0]):                                     #Als de middenste value van self is kleiner dan de parent value
                         temp = self.parent.values[0]                                                #De values van de parent worden gerangschikt
                         self.parent.values[2] = self.parent.values[1]
@@ -99,7 +99,7 @@ class Node():
                         return
                     elif self._key(self.values[1]) > self._key(self.parent.values[0])\
                         and self._key(self.values[1]) <= self._key(self.parent.values[1]):    #self is het middenste kind en de mid value wordt de mid value van de parent
-                        
+
                         self.parent.values[2] = self.parent.values[1]
                         self.parent.values[1] = self.values[1]
                         self.values[1] = None
@@ -122,7 +122,7 @@ class Node():
                         return
                     if self._key(self.values[1]) > self._key(self.parent.values[0])\
                         and self._key(self.values[1]) <= self._key(self.parent.values[1]):   #self is het middenste kind
-                            
+
                         self.parent.values[2] = self.parent.values[1]
                         self.parent.values[1] = self.values[1]
                         self.values[1] = None
@@ -430,9 +430,9 @@ class TwoThreeTree():
 
     def sort(self, attr, sortFunc = sortingbubblesort):
         '''Returns a sorted list of the tree. This is done by generators and an inorderTraversal'''
-        
+
         # TODO if attr == self._attribute you can yield from self.inorder()
-        
+
         treeArray = list(self.inorder())
         treeArray = sortFunc(treeArray, attribute)
         for i in treeArray:
