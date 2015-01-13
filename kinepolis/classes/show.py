@@ -8,14 +8,14 @@ from .ticket import Ticket
 import datetime
 
 class Show:
-    def __init__(self, ID, date, timeslot, theater, film, freeplaces=-1, tickets = None):
+    def __init__(self, ID, date, timeslot, theater, film, freeplaces=None, tickets = None):
         self.ID = ID
         self.date = date
         self.timeslot = timeslot
         self.fulldate = datetime.datetime(date.year, date.month, date.day, timeslot.hour, timeslot.minute)
         self.theater = theater
         self.film = film
-        if freeplaces == -1:
+        if freeplaces == None:
             freeplaces = theater.places
         self.freeplaces = freeplaces
         # this number is managed by the 'parent' cinema

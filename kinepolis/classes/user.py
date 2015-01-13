@@ -8,10 +8,6 @@ class User:
         self.lastname = lastname
         self.mail = mail
     
-    def sendMail(self, message):
-        pass
-        # send a mail, but not really :)
-    
     def __str__(self):
         return "User: [{}] {} {} ({})".format(self.ID, self.firstname, self.lastname, self.mail)
     
