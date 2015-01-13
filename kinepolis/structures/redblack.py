@@ -461,109 +461,24 @@ class Node:
                 self.parent.rightpointer = 'red'
                 
         if self.leftpointer == 'red' and self.leftchild.leftpointer == 'red':
-    
             #Forced rotate right
-            originalself = self
-            originalselfright = self.rightchild
-            originalselfleft = self.leftchild
-            originalselflpoint = self.leftpointer
-            originalselfrpoint = self.rightpointer
-            originalselfleftright = self.leftchild.rightchild
-            originalselfleftleft = self.leftchild.leftchild
-            originalparent = self.parent
-
-            self.leftchild = originalselfleftright
-            if originalselfleftright != None:
-                originalselfleftright.parent = self 
-            self.leftpointer = originalselfleft.rightpointer
-            self.parent = originalselfleft
-            self.parent.rightpointer = originalselflpoint
-            originalselfleft.rightchild = self
-            originalselfleft.parent = originalparent
-            if originalparent != None and originalself > originalparent:
-                originalparent.rightchild = originalselfleft
-            elif originalparent != None and originalself < originalparent:               
-                originalparent.leftchild = originalselfleft
-            if originalparent == None:
-                tree.rootItem = self.parent
-                
+            self.forcedrotateright(tree)
             self.parent.fix_rotation(tree)
             return 1
+            
         elif self.rightpointer == 'red' and self.rightchild.rightpointer == 'red':
             #Forced rotate left
-            
-            originalself = self
-            originalselfright = self.rightchild
-            originalselfleft = self.leftchild
-            originalselflpoint = self.leftpointer
-            originalselfrpoint = self.rightpointer
-            originalselfrightright = self.rightchild.rightchild
-            originalselfrightleft = self.rightchild.leftchild
-            originalparent = self.parent
-    
-            self.rightchild = originalselfrightleft
-            if originalselfrightleft != None:
-                originalselfrightleft.parent = self         
-            self.rightpointer = originalselfright.leftpointer
-            self.parent = originalselfright
-            self.parent.leftpointer = originalselfrpoint            
-            originalselfright.leftchild = self
-            originalselfright.parent = originalparent  
-            if originalparent != None and originalself > originalparent:
-                originalparent.rightchild = originalselfright
-            elif originalparent != None and originalself < originalparent:               
-                originalparent.leftchild = originalselfright                
-            if originalparent == None:
-                tree.rootItem = self.parent
-                          
+            self.forcedrotateleft(tree)
             self.parent.fix_rotation(tree)
             return 1
+            
         if self.leftpointer == 'red' and self.leftchild.rightpointer == 'red':
             #Forced rotate left 2, this rotation is the 'corner' shape that often happens at the third insert of an item in the redblacktree.
-                        
-            originalself = self
-            originalselfright = self.rightchild
-            originalselfleft = self.leftchild
-            originalselflpoint = self.leftpointer
-            originalselfrpoint = self.rightpointer
-            originalselfleftright = self.leftchild.rightchild
-            originalselfleftleft = self.leftchild.leftchild
-            originalparent = self.parent
-            
-            self.leftchild = originalselfleftright
-            self.leftchild.parent = self
-            originalselfleft.rightchild = self.leftchild.leftchild
-            originalselfleft.rightpointer = self.leftchild.leftpointer
-            if self.leftchild.leftchild != None:
-                self.leftchild.leftchild.parent = originalselfleft
-            self.leftchild.leftchild = originalselfleft
-            self.leftchild.leftpointer = originalselflpoint
-            self.leftchild.leftchild.parent = self.leftchild
-            
-            self.fix_rotation(tree)
+            self.forcedrotateleft2(tree)
             
         if self.rightpointer == 'red' and self.rightchild.leftpointer == 'red':
             #Forced rotate right 2, this rotation is the 'corner' shape that often happens at the third insert of an item in the redblacktree.
-            
-            originalself = self
-            originalselfright = self.rightchild
-            originalselfleft = self.leftchild
-            originalselflpoint = self.leftpointer
-            originalselfrpoint = self.rightpointer
-            originalselfrightright = self.rightchild.rightchild
-            originalselfrightleft = self.rightchild.leftchild
-            originalparent = self.parent
-            
-            self.rightchild = originalselfrightleft
-            self.rightchild.parent = self
-            originalselfright.leftchild = self.rightchild.rightchild
-            originalselfright.leftpointer = self.rightchild.rightpointer
-            if self.rightchild.rightchild != None:
-                self.rightchild.rightchild.parent = originalselfright
-            self.rightchild.rightchild = originalselfright
-            self.rightchild.rightpointer = originalselfrpoint
-            self.rightchild.rightchild.parent = self.rightchild
-            self.fix_rotation(tree)
+            self.forcedrotateright2(tree)
                         
         return 0, None
         
