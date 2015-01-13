@@ -10,6 +10,10 @@
 // int freeplaces
 //[]Ticket tickets // als Stack
 
++createShow():
+pre-condities: geen
+post-condities: er is een show aangemaakt
+
 +pushTicket(): bool
 
 +popTicket(): Ticket
