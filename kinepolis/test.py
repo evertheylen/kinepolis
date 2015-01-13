@@ -159,8 +159,8 @@ if __name__=='__main__':
     # watch out with using a non-chaining method, the hashmap may get filled up
     
     #testDataStruct("BinTree")
-    #testDataStruct("RedBlackTree")
-    testDataStruct("TwoThreeTree")
+    testDataStruct("RedBlackTree")
+    #testDataStruct("TwoThreeTree")
     
     """
     # ------- Sorting methods

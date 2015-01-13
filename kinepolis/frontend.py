@@ -179,7 +179,7 @@ class ViewShowsList(npyscreen.Form):
         self.update_list()
     
     def update_list(self):
-        self.wgShows.values = list(self.parentApp.cinema.shows.sort("ID"))
+        self.wgShows.values = list(self.parentApp.cinema.shows.sort("fulldate"))
         #self.wMain.values = [1, 2, 3]
         self.wgShows.display()
     
@@ -194,7 +194,7 @@ class PickShowToEnter(ViewShowsList):
     def on_element_selected(self, selected_show, keypress):
         #selected_show.popTicket()
         if selected_show.isEmptyTickets():
-            if npyscreen.notify_yes_no("The show can start!\n\nDelete this show?"):
+            if selected_show.freeplaces < selected_show.theater.places and npyscreen.notify_yes_no("The show can start!\n\nDelete this show?"):
                     # delete show
                     self.parentApp.cinema.shows.delete(selected_show.ID)
             #self.parentApp.switchForm("WATCHSTARWARS")
@@ -237,7 +237,7 @@ class ChooseAmountOfPeople(npyscreen.ActionPopup):
             for _ in range(amount):
                 self.selected_show.popTicket()
             
-            if self.selected_show.isEmptyTickets():
+            if self.selected_show.isEmptyTickets() and self.selected_show.freeplaces < self.selected_show.theater.places:
                 if npyscreen.notify_yes_no("The show can start!\n\nDelete this show?"):
                     # delete show
                     self.parentApp.cinema.shows.delete(self.selected_show.ID)

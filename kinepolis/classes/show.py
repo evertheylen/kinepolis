@@ -5,11 +5,14 @@ from structures.queue import Queue
 
 from .ticket import Ticket
 
+import datetime
+
 class Show:
     def __init__(self, ID, date, timeslot, theater, film, freeplaces=-1, tickets = None):
         self.ID = ID
         self.date = date
         self.timeslot = timeslot
+        self.fulldate = datetime.datetime(date.year, date.month, date.day, timeslot.hour, timeslot.minute)
         self.theater = theater
         self.film = film
         if freeplaces == -1:

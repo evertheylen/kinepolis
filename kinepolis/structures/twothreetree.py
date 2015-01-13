@@ -363,19 +363,19 @@ class Node():
                         return self.children[1].retrieve(Searchkey)
                     else:
                         return False
-                else:                                                       #ALs het gezochte item groter is dan het tweede data item van self ==> zoek verder in rechterkind
+                else:                                                       # Als het gezochte item groter is dan het tweede data item van self ==> zoek verder in rechterkind
                     if self.children[2] != None:
                         return self.children[2].retrieve(Searchkey)
                     else:
                         return False
-            elif self.values[0] != None:                                #Als self 1 data item bevat:
+            elif self.values[0] != None:                                # Als self 1 data item bevat:
                 if Searchkey < self._key(self.values[0]):                              #Als het gezochte item kleiner is dan het data item van self ==> zoek verder in linkerkind
                     if self.children[0] != None:
                         return self.children[0].retrieve(Searchkey)
                     else:
                         return False
                 else:
-                    if self.children[2] != None:                            #Als het gezochte item groter is dan het data item van self ==> zoek verder in rechterkind
+                    if self.children[2] != None:                            # Als het gezochte item groter is dan het data item van self ==> zoek verder in rechterkind
                         return self.children[2].retrieve(Searchkey)
                     else:
                         return False
