@@ -1,17 +1,7 @@
 // Implementatie door Evert.
 // Testen door Stijn.
 
-Specification contract ADT Hashmap (HashItemType is het type van elementen die in de hashmap worden opgeslagen, KeyType is het type van de zoeksleutels, addressType is een manier om open addressing te doen):
-
-+createHashMap()
-// Maakt een hashmap aan.
-Precondities:Geen
-Postcondities:Een nieuwe hashmap is aangemaakt.
-
-+destroyHashMap()
-// Verwijdert een bestaande hashmap .
-Precondities: Geen
-Postcondities: De hashmap is verwijderd.
+Specification contract ADT Hashmap (HashItemType is het type van elementen die in de hashmap worden opgeslagen, KeyType is het type van de zoeksleutels = attribute, addressType is een manier om open addressing te doen):
 
 +isEmpty: boolean {query}
 // Gaat na of de hashmap leeg is.
@@ -37,8 +27,8 @@ Postcondities: Success geeft weer of het verwijderen gelukt is.
 Precondities: Geef een zoeksleutel in die je wilt terugvinden.
 Postcondities: Success geeft weer of het opzoeken gelukt is.
 
-+inorder(in visit: FunctionType) { query }
-// Doorloopt de hashmap.
++inorder(out generator) { query }
+// Doorloopt de hashmap, dit kan niet inorder aangezien de hashmap geen duidelijke volgorde hanteert.
 Precondities: Geen
 Postcondities: Geeft de items van de hashmap weer.
 
@@ -46,3 +36,8 @@ Postcondities: Geeft de items van de hashmap weer.
 // De manier van openaddressing van de Hashmap verandert.
 // Precondities: originele manier van openaddressing
 // Postcondities: andere manier van openaddressing.
+
++sort(in attribute: KeyType, in sortFunc: SortingType, out generator)
+// De functie wordt gesorteerd met sortFunc op attribute
+precondities: geen
+postcondities: geen
