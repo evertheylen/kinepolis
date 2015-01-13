@@ -1,7 +1,7 @@
 // Implementatie door Anthony.
 // Testen door iedereen.
 
-+createSlot(out success: boolean)
++createTimeslot(out success: boolean)
 //Maakt een tijdslot aan.
 // slot is van de vorm datetime.time
 Precondities: Geen.
