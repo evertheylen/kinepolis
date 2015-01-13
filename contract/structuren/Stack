@@ -1,16 +1,6 @@
 Specification contract ADT Stack (Stack van elementen van het type StackItemType):
 //Implementatie door Stijn en Anthony.
 
-+createStack()
-// creëert een lege Stack
-precondities: geen
-postcondities: een nieuwe stack is gemaakt.
-
-+destroyStack()
-// wist een stack
-precondities: geen
-postcondities: de stack is verwijderd.
-
 +isEmpty(): boolean
 // gaat na of de stack leeg is.
 precondities: geen
