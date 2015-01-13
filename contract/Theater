@@ -3,7 +3,7 @@
 
 // theater type
 // ID int
-// seats int
+// places int
 
 +getID(): int
 precondities: geen
