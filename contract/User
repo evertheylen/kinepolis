@@ -6,16 +6,9 @@
 // string Lastname
 // string Mailaddress
 
-+getID(): int
++createUser():
+pre-condities: Geen
+post-condities: geeft user terug
 
-+getFirstname(): string
-
-+getLastname(): string
-
-+getMailaddress(): string
-
-+setFirstname(in firstname:string)
-
-+setLastname(in lastname:string)
-
-+setMailaddress(in mail:string)
++sendMail(in mail:string):
+pass
