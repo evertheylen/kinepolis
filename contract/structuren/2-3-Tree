@@ -23,12 +23,12 @@ postcondities: indien er een element met deze zoeksleutel wordt gevonden --> suc
 precondities: geen
 postcondities: indien het element is gevonden, success is true en TreeItem bevat dit element.
 
-+inorder()
++inorder(out generator)
 // De 2-3-boom wordt inorder doorlopen.
 precondities: geen
 postcondities: geen
 
-+sort(in attribute: KeyType, in sortFunc: SortingType)
++sort(in attribute: KeyType, in sortFunc: SortingType, out generator)
 // De functie wordt gesorteerd met sortFunc op attribute
 precondities: geen
 postcondities: geen
