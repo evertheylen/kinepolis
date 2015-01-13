@@ -1,36 +1,20 @@
 // Implementatie door Anthony.
 // Testen door iedereen.
 
-// int theaternumber
+// showID
+// fulldate datetime.datetime
+// film
+// theater
 // Timeslot timeslot
 // Date date
-// int freeseats
+// int freeplaces
 //[]Ticket tickets // als Stack
-//[]Reservation reservations // als Queue
-//+canStart(): bool
-	
-+getID(): int
 
-+getTheaterNumber(): int
-
-+getTimeslot(): Timeslot
-
-+getDate(): Date
-
-+getFreeSeats(): int
-
-+setTheaterNumber(in theaternumber:int): bool // succes
-
-+setTimeslot(in timeslot:Timeslot): bool
-
-+setDate(in date:Date): bool
-
-+setFreeSeats(in freeseats:int): bool
-
-+addTicket(): bool
++pushTicket(): bool
 
 +popTicket(): Ticket
-	
-+isEmptyTickets(): bool
 
-+isEmptyReservations(): bool
++isEmptyTickets(): bool
+pre-condities: Geen
+postcondities: return true als stack met tickets leeg is, anders return false
+
