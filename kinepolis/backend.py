@@ -108,7 +108,7 @@ def switchDataStructure(oldds, newT, newAttr=None, **kwargs):
             # convert it.
             rb = oldds
         else:
-            rb = createDataStructure(datastruct.structures.RedBlackTree, newAttr)
+            rb = datastruct.createDataStructure(datastruct.structures.RedBlackTree, newAttr)
             for element in oldds.inorder():
                 rb.insert(element)
         
