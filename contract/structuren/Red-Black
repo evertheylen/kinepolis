@@ -1,17 +1,12 @@
 // Implementatie door Stijn.
 // Testen door Pieter.
 
-Specification contract ADT Red-BlackTree (TreeItemType is het type van elementen die in de Red-BlackTree worden opgeslagen, KeyType is het type van de zoeksleutels):
+Specification contract ADT Red-BlackTree (TreeItemType is het type van elementen die in de Red-BlackTree worden opgeslagen, KeyType is het type van de zoeksleutels = attribute):
 
-+createRed-BlackTree()
-// creëert een lege rood-zwart boom
++attribute(out attribute)
+// Returned de attribute van de boom.
 precondities: geen
-postcondities: een nieuwe rood-zwart boom is gemaakt
-
-+destroyRed-BlackTree()
-// verwijdert een rood-zwart boom
-precondities: geen
-postcondities: de rood-zwart boom is verwijderd.
+postcondities: geen
 
 +isEmpty(): boolean
 // bepaalt of de rood-zwart boom leeg is
@@ -33,7 +28,12 @@ postcondities: indien er een element met deze zoeksleutel wordt gevonden --> suc
 precondities: geen
 postcondities: indien het element is gevonden, success is true en TreeItem bevat dit element.
 
-+inorder(in visit: FunctionType)
-// De rood-zwart boom wordt doorlopen en bij elk element wordt de functie visit uitgevoerd.
++inorder(out generator)
+// De binaire zoekboom wordt inorder doorlopen.
+precondities: geen
+postcondities: geen
+
++sort(in attribute: KeyType, in sortFunc: SortingType, out generator)
+// De functie wordt gesorteerd met sortFunc op attribute
 precondities: geen
 postcondities: geen
