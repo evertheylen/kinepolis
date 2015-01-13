@@ -40,7 +40,14 @@ class Node():
             output.append(self.children[2])
         return str(output)
 
+    def attribute(self):
+        return self._attribute
 
+
+    def _key(self, el):
+        return el.__dict__[self._attribute]
+    
+    
     def searchkey(self):
         '''Return the searchkey of an item. This is the attribute of the item that is defined as the searchkey'''
         if self.values[0] == None and self.values[1] == None and self.values[2] == None:
@@ -55,85 +62,89 @@ class Node():
         else:
             return False
 
-    def split(self, attribute):
+    def split(self):
         '''Splits the node if necessary'''
         if self.parent == None:         #Self is root
-            self.children[0] = Node(attribute, [self.values[0],None,None], self, [self.children[0], None, self.children[1], None])  #Linkerkind
-            self.children[1] = Node(attribute, [None,None,None], self, [None,None, None, None])                                     #Middenste kind
-            self.children[2] = Node(attribute, [self.values[2],None,None], self, [self.children[2], None, self.children[3], None])  #Rechterkind
-            self.children[3] = Node(attribute, [None,None,None], self, [None,None, None, None])                                     #4de Kind, handig voor insert
+            self.children[0] = Node(self._attribute, [self.values[0],None,None], self, [self.children[0], None, self.children[1], None])  #Linkerkind
+            self.children[1] = Node(self._attribute, [None,None,None], self, [None,None, None, None])                                     #Middenste kind
+            self.children[2] = Node(self._attribute, [self.values[2],None,None], self, [self.children[2], None, self.children[3], None])  #Rechterkind
+            self.children[3] = Node(self._attribute, [None,None,None], self, [None,None, None, None])                                     #4de Kind, handig voor insert
             self.values[0] = None       #self behoudt enkel de middenste value
             self.values[2] = None
             return
         else:                           #Self is geen root
             if self.parent.values[0] == None or self.parent.values[1] == None:                      #Parent node is niet vol
                 if self.values[0] != None and self.values[1] != None and self.values[2] != None:    #Self node is vol
-                    if self.values[1] <= self.parent.values[1]:                                     #De middenste value is kleiner dan middenste value van de parent
+                    if self._key(self.values[1]) <= self._key(self.parent.values[1]):                                     #De middenste value is kleiner dan middenste value van de parent
                         self.parent.values[0] = self.values[1]                                      #Eerste value van parent is gelijk aan middenste value van self
-                        self.parent.children[1].insert(attribute, self.values[2])                   #Derde value van self wordt in middenste kind geplaatst
+                        self.parent.children[1].insert(self.values[2])                   #Derde value van self wordt in middenste kind geplaatst
                         self.values[2] = None                                                       #Overige waarden van self worden terug op None gezet
                         self.values[1] = None
                         return
-                    if self.values[1] > self.parent.values[1]:                                      #De middenste value van self is groter dan de value in parent
+                    if self._key(self.values[1]) > self._key(self.parent.values[1]):                                      #De middenste value van self is groter dan de value in parent
                         self.parent.values[0] = self.parent.values[1]                               #De values in parent worden terug gerangschikt
                         self.parent.values[1] = self.values[1]
-                        self.parent.children[1].insert(attribute, self.values[0])                   #De eerste value van rechterkind worden in het middenste kind geplaatst
+                        self.parent.children[1].insert(self.values[0])                   #De eerste value van rechterkind worden in het middenste kind geplaatst
                         self.values[0] = None                                                       #Overige waarden van self worden terug op None gezet
                         self.values[1] = None
                         return
             else:                                                                                   #De parent bevat nu 3 waarden
                 if self.parent.values[0] == None or self.parent.values[1] == None:                  #De parent is niet vol
-                    if self.values[1] <= self.parent.values[0]:                                     #Als de middenste value van self is kleiner dan de parent value
+                    if self._key(self.values[1]) <= self._key(self.parent.values[0]):                                     #Als de middenste value van self is kleiner dan de parent value
                         temp = self.parent.values[0]                                                #De values van de parent worden gerangschikt
                         self.parent.values[2] = self.parent.values[1]
                         self.parent.values[1] = temp
                         self.parent.values[0] = self.values[1]                                      #Mid value wordt in de parent geplaatst
                         self.values[1] = None                                                       #Mid value is nu terug None
                         return
-                    elif self.values[1] > self.parent.values[0] and self.values[1] <= self.parent.values[1]:    #self is het middenste kind en de mid value wordt de mid value van de parent
+                    elif self._key(self.values[1]) > self._key(self.parent.values[0])\
+                        and self._key(self.values[1]) <= self._key(self.parent.values[1]):    #self is het middenste kind en de mid value wordt de mid value van de parent
+                        
                         self.parent.values[2] = self.parent.values[1]
                         self.parent.values[1] = self.values[1]
                         self.values[1] = None
                         return
-                    elif self.values[1] > self.parent.values[1]:                                    #Self is het rechterkind
+                    elif self._key(self.values[1]) > self._key(self.parent.values[1]):                                    #Self is het rechterkind
                         self.parent.values[2] = self.values[1]
                         self.values[1] = None
                         return
                 if self.parent.values[2] == None and self.parent.values[0] != None and self.parent.values[1] != None:   #Parent heeft 2 values
-                    if self.values[1] < self.parent.values[0]:          #self is het linkerkind
+                    if self._key(self.values[1]) < self._key(self.parent.values[0]):          #self is het linkerkind
                         self.parent.values[2] = self.parent.values[1]
                         self.parent.values[1] = self.parent.values[0]
                         self.parent.values[0] = self.values[1]
                         self.values[1] = None
                         self.parent.children[3] = self.parent.children[2]
                         self.parent.children[2] = self.parent.children[1]
-                        self.parent.children[0] = Node(attribute, [self.values[0],None,None], self.parent, [self.children[0], None, self.children[1], None])
-                        self.parent.children[1] = Node(attribute, [self.values[2],None,None], self.parent, [self.children[2], None, self.children[3], None])
-                        self.parent.split(attribute)                #Parent wordt gesplitst want bevat 3 waarden
+                        self.parent.children[0] = Node(self._attribute, [self.values[0],None,None], self.parent, [self.children[0], None, self.children[1], None])
+                        self.parent.children[1] = Node(self._attribute, [self.values[2],None,None], self.parent, [self.children[2], None, self.children[3], None])
+                        self.parent.split()                #Parent wordt gesplitst want bevat 3 waarden
                         return
-                    if self.values[1] > self.parent.values[0] and self.values[1]<= self.parent.values[1]:   #self is het middenste kind
+                    if self._key(self.values[1]) > self._key(self.parent.values[0])\
+                        and self._key(self.values[1]) <= self._key(self.parent.values[1]):   #self is het middenste kind
+                            
                         self.parent.values[2] = self.parent.values[1]
                         self.parent.values[1] = self.values[1]
                         self.values[1] = None
                         self.parent.children[3] = self.parent.children[2]
-                        self.parent.children[2] = Node(attribute, [self.values[2],None,None], self.parent, [self.children[2], None, self.children[3], None])
-                        self.parent.children[1] = Node(attribute, [self.values[0],None,None], self.parent, [self.children[0], None, self.children[1], None])
+                        self.parent.children[2] = Node(self._attribute, [self.values[2],None,None], self.parent, [self.children[2], None, self.children[3], None])
+                        self.parent.children[1] = Node(self._attribute, [self.values[0],None,None], self.parent, [self.children[0], None, self.children[1], None])
                         self.parent.children[0] = self.parent.children[0]
-                        self.parent.split(attribute)                #Parent wordt gesplitst want bevat 3 waarden
+                        self.parent.split()                #Parent wordt gesplitst want bevat 3 waarden
                         return
-                    if self.values[1] > self.parent.values[1]:      #self is het rechterkind
+                    if self._key(self.values[1]) > self._key(self.parent.values[1]):      #self is het rechterkind
                         self.parent.values[2] = self.values[1]
                         self.values[1] = None
-                        self.parent.children[3] = Node(attribute, [self.values[2],None,None], self.parent, [self.children[2], None, self.children[3], None])
-                        self.parent.children[2] = Node(attribute, [self.values[0],None,None], self.parent, [self.children[0], None, self.children[1], None])
+                        self.parent.children[3] = Node(self._attribute, [self.values[2],None,None], self.parent, [self.children[2], None, self.children[3], None])
+                        self.parent.children[2] = Node(self._attribute, [self.values[0],None,None], self.parent, [self.children[0], None, self.children[1], None])
                         self.parent.children[1] = self.parent.children[1]
                         self.parent.children[0] = self.parent.children[0]
-                        self.parent.split(attribute)               #Parent wordt gesplitst want bevat 3 waarden
+                        self.parent.split()               #Parent wordt gesplitst want bevat 3 waarden
                         return
 
 
 
-    def insert(self, attribute, NewItem):
+    def insert(self, NewItem):
         '''Inserts a value in the TwoThreeTreeNode'''
         if self.children[0] == None and self.children[1] == None and self.children[2] == None and self.children[3] == None:     #isLeaf methode uit cursus
             if self.values[0] == None or self.values[1] == None or self.values[2] == None:
@@ -142,7 +153,7 @@ class Node():
                         self.values[0] = NewItem
                         return
                     else:
-                        if self.values[2] <= NewItem.__dict__[attribute]:
+                        if self._key(self.values[2]) <= self._key(NewItem):
                             temp = self.values[2]
                             self.values[2] = NewItem
                             self.values[0] = temp
@@ -152,7 +163,7 @@ class Node():
                             return
                 if self.values[1] == None:
                     if self.values[2] == None:
-                        if self.values[0] <= NewItem.__dict__[attribute]:
+                        if self._key(self.values[0]) <= self._key(NewItem):
                             self.values[1] = NewItem
                             return
                         else:
@@ -161,13 +172,13 @@ class Node():
                             self.values[1] = temp
                             return
                     else:
-                        if NewItem.__dict__[attribute] >= self.values[0]:
-                            if self.values[2] <= NewItem:
+                        if self._key(NewItem) >= self._key(self.values[0]):
+                            if self._key(self.values[2]) <= self._key(NewItem):
                                 temp = self.values[2]
                                 self.values[2] = NewItem
                                 self.values[1] = temp
                                 if self.values[0] != None and self.values[1] != None and self.values[2] != None:
-                                    self.split(attribute)
+                                    self.split()
                                 return
                             else:
                                 self.values[1] = NewItem
@@ -178,40 +189,40 @@ class Node():
                             self.values[1] = temp
                             return
                 if self.values[2] == None:
-                    if self.values[1] <= NewItem.__dict__[attribute]:
+                    if self._key(self.values[1]) <= self._key(NewItem):
                         self.values[2] = NewItem
-                        self.split(attribute)
+                        self.split()
                         return
                     else:
-                        if self.values[1] >= NewItem:
+                        if self._key(self.values[1]) >= self._key(NewItem):
                             temp = self.values[1]
                             self.values[1] = NewItem
                             self.values[2] = temp
 
-                            if self.values[0] >= self.values[1]:
+                            if self._key(self.values[0]) >= self._key(self.values[1]):
                                 temp = self.values[0]
                                 self.values[0] = self.values[1]
                                 self.values[1] = temp
-                        self.split(attribute)
+                        self.split()
                         return
         else:           #Het bevat kinderen
             if self.values[0] == None:
-                if NewItem.__dict__[attribute] <= self.values[1]:
-                    self.children[0].insert(attribute, NewItem)
-                if NewItem.__dict__[attribute] > self.values[1]:
-                    self.children[2].insert(attribute, NewItem)
+                if self._key(NewItem) <= self._key(self.values[1]):
+                    self.children[0].insert(NewItem)
+                if self._key(NewItem) > self._key(self.values[1]):
+                    self.children[2].insert(NewItem)
             else:
-                if NewItem.__dict__[attribute] < self.values[0]:
-                    self.children[0].insert(attribute, NewItem)
+                if self._key(NewItem) < self._key(self.values[0]):
+                    self.children[0].insert(NewItem)
                     return
-                if NewItem.__dict__[attribute] <= self.values[1] and NewItem >= self.values[0]:
-                    self.children[1].insert(attribute, NewItem)
+                if self._key(NewItem) <= self._key(self.values[1]) and self._key(NewItem) >= self._key(self.values[0]):
+                    self.children[1].insert(NewItem)
                     return
-                if NewItem.__dict__[attribute] > self.values[1]:
-                    self.children[2].insert(attribute, NewItem)
+                if self._key(NewItem) > self._key(self.values[1]):
+                    self.children[2].insert(NewItem)
                     return
 
-    def fix(self, attribute):
+    def fix(self):
         '''Fixes the node if necessary'''
         if self.parent == None:         #Self is de wortel
             del self                    #Delete de wortel
@@ -282,42 +293,42 @@ class Node():
                             self.parent.children[0] = self
                 del self
                 if self.parent == None:
-                    self.parent.fix(attribute)
+                    self.parent.fix(self._attribute)
 
-    def delete(self, attribute, DeleteItem):
-        '''Delete a the specific DeleteItem from the tree'''
-        if DeleteItem == self.values[0] or DeleteItem == self.values[1]:
+    def delete(self, key):
+        '''Delete a the specific key from the tree'''
+        if key == self._key(self.values[0]) or key == self._key(self.values[1]):
             print("Node is gevonden")
             if self.children[0] != None or self.children[1] != None or self.children[2] != None or self.children[3] != None: #Node is geen blad
                 print("Node is geen blad")
-                self.inorderSuccessor(attribute)
-            if self.values[0] == DeleteItem:
+                self.inorderSuccessor() # wtf
+            if self._key(self.values[0]) == key:
                 self.values[0] = self.values[1]
                 self.values[1] = None
-            if self.values[1] == DeleteItem:
+            if self._key(self.values[1]) == key:
                 self.values[1] = None
             if self.values[0] == None and self.values[1] == None:   #leafNode heeft geen items
                 self.fix(attribute)                                 #fix self
                 success = True
                 return success
-        elif DeleteItem <= self.values[1] and self.children[0] != None:
-            self.children[0].delete(attribute, DeleteItem)
+        elif key <= self._key(self.values[1]) and self.children[0] != None:
+            self.children[0].delete(key)
             return
         elif self.values[1] != None and self.values[0] != None:
-            if DeleteItem < self.values[0] and self.children[0] != None:
-                self.children[0].delete(attribute, DeleteItem)
+            if key < self._key(self.values[0]) and self.children[0] != None:
+                self.children[0].delete(key)
                 return
-            if DeleteItem > self.values[0] and DeleteItem < self.values[1] and self.children[1] != None:
-                self.children[1].delete(attribute, DeleteItem)
+            if key > self._key(self.values[0]) and key < self._key(self.values[1]) and self.children[1] != None:
+                self.children[1].delete(key)
                 return
-            if DeleteItem > self.values[1] and self.children[2] != None:
-                self.children[2].delete(attribute, DeleteItem)
+            if key > self._key(self.values[1]) and self.children[2] != None:
+                self.children[2].delete(key)
                 return
         else:
             success = False
             return success
 
-    def inorderSuccessor(self, attribute):
+    def inorderSuccessor(self):
         if self.children[0] == None and self.children[1] == None and self.children[2] == None and self.children[3] == None: #Node is een blad
             if self.values[1] != None:
                 self.values[0] = self.values[1]
@@ -329,48 +340,48 @@ class Node():
                 self.values[0] = temp
                 return
         elif self.children[2] != None:
-            self.children[2].inorderSuccessor(attribute)
+            self.children[2].inorderSuccessor() # wtf
         elif self.values[1] != None:
-            self.children[1].inorderSuccessor(attribute)
+            self.children[1].inorderSuccessor() # wtf
 
-    def retrieve(self, attribute, Searchkey):
+    def retrieve(self, Searchkey):
         '''Search the specific Searchkey in the tree, return True if Searchkey is found, otherwise return False'''
-        if Searchkey == self.values[0] or Searchkey == self.values[1] or Searchkey == self.values[2]:   #Als het gezochte item overeenkomt met 1 van de values uit self ==> Item is gevonden
+        if Searchkey == self._key(self.values[0]) or Searchkey == self._key(self.values[1]) or Searchkey == self._key(self.values[2]):   #Als het gezochte item overeenkomt met 1 van de values uit self ==> Item is gevonden
             print("item found")
             return True
         else:                           #Als het item niet in self gevonden is.
-            if self.isLeaf == True:
+            if self.isLeaf() == True:
                 return False            #Self heeft geen kinderen ==> bijgevolg is het item niet gevonden
             elif self.values[0] != None and self.values[1] != None:     #Als self 2 data items bevat:
-                if Searchkey < self.values[0] and self.values[0] != None:   #Als het gezochte item kleiner is dan 1ste data item van self ==> zoek verder in linkerkind
+                if Searchkey < self._key(self.values[0]) and self.values[0] != None:   #Als het gezochte item kleiner is dan 1ste data item van self ==> zoek verder in linkerkind
                     if self.children[0] != None:
-                        return self.children[0].retrieve(attribute, Searchkey)
+                        return self.children[0].retrieve(Searchkey)
                     else:
                         return False
-                elif Searchkey < self.values[1]:                            #Als het gezochte item kleiner is dan het tweede data item van self ==> zoek in middenste kind
+                elif Searchkey < self._key(self.values[1]):                            #Als het gezochte item kleiner is dan het tweede data item van self ==> zoek in middenste kind
                     if self.children[1] != None:
-                        return self.children[1].retrieve(attribute, Searchkey)
+                        return self.children[1].retrieve(Searchkey)
                     else:
                         return False
                 else:                                                       #ALs het gezochte item groter is dan het tweede data item van self ==> zoek verder in rechterkind
                     if self.children[2] != None:
-                        return self.children[2].retrieve(attribute, Searchkey)
+                        return self.children[2].retrieve(Searchkey)
                     else:
                         return False
             elif self.values[0] != None:                                #Als self 1 data item bevat:
-                if Searchkey < self.values[0]:                              #Als het gezochte item kleiner is dan het data item van self ==> zoek verder in linkerkind
+                if Searchkey < self._key(self.values[0]):                              #Als het gezochte item kleiner is dan het data item van self ==> zoek verder in linkerkind
                     if self.children[0] != None:
-                        return self.children[0].retrieve(attribute, Searchkey)
+                        return self.children[0].retrieve(Searchkey)
                     else:
                         return False
                 else:
                     if self.children[2] != None:                            #Als het gezochte item groter is dan het data item van self ==> zoek verder in rechterkind
-                        return self.children[2].retrieve(attribute, Searchkey)
+                        return self.children[2].retrieve(Searchkey)
                     else:
                         return False
             return False
 
-    def inorderTraversal(self, attribute):
+    def inorderTraversal(self):
         '''Returns the tree in inorderTraversal way'''
         if self.children[0] == None and self.children[1] == None and self.children[2] == None and self.children[3] == None: #Als self een blad is ==> bezoek de items in het blad
             yield self.values[0]
@@ -378,25 +389,25 @@ class Node():
             yield self.values[2]
         elif self.values[0] != None and self.values[1] != None:     #Als self 2 data items bevat ==> bezoek eerst het linkerkind dan het middenste kind en tenslotte het rechterkind
             if self.children[0] != None:
-                yield from self.children[0].inorderTraversal(attribute)
+                yield from self.children[0].inorderTraversal()
             yield self.values[0]
             if self.children[1] != None:
-                yield from self.children[1].inorderTraversal(attribute)
+                yield from self.children[1].inorderTraversal()
             yield self.values[1]
             if self.children[2] != None:
-                yield from self.children[2].inorderTraversal(attribute)
+                yield from self.children[2].inorderTraversal()
         elif self.values[0] != None or self.values[1] != None:      #Als self 1 data item bevat ==> bezoek eerst het linkerkind en dan het rechterkind
             if self.children[0] != None:
-                yield from self.children[0].inorderTraversal(attribute)
+                yield from self.children[0].inorderTraversal()
             yield self.values[0]
             if self.children[2] != None:
-                yield from self.children[2].inorderTraversal(attribute)
+                yield from self.children[2].inorderTraversal()
 
 class TwoThreeTree():
-    def __init__(self, attribute, root=None):
+    def __init__(self, attribute):
         '''Makes an object of the class TwoThreeTree based on the TwoThreeTreeNode (see up)'''
         self._attribute = attribute
-        self.root = Node(attribute, root)
+        self.root = Node(attribute)
 
     def attribute(self):
         '''Returns the attribute of the TwoThreeTree'''
@@ -404,21 +415,24 @@ class TwoThreeTree():
 
     def isEmpty(self):
         '''Method to check if the tree is empty or not.'''
-        if self.root.searchkey() == None:
+        if self.root.values[0] == None:
             return True
         else:
             return False
 
     def insert(self, NewItem):
         '''Inserts a new item in the TwoThreeTree, this operation is implemented in the TwoThreeTreeNode and returns this value'''
-        return self.rootItem.insert(self._attribute, NewItem)
+        return self.root.insert(NewItem)
 
     def inorder(self, visit = None):
         '''This operation is also implemented in the TwoThreeTreeNode and returns the value of this method'''
-        yield from self.root.inorderTraversal(visit)
+        yield from self.root.inorderTraversal()
 
     def sort(self, attr, sortFunc = sortingbubblesort):
         '''Returns a sorted list of the tree. This is done by generators and an inorderTraversal'''
+        
+        # TODO if attr == self._attribute you can yield from self.inorder()
+        
         treeArray = list(self.inorder())
         treeArray = sortFunc(treeArray, attribute)
         for i in treeArray:
@@ -434,13 +448,15 @@ class TwoThreeTree():
         if self.root.searchkey() == None:
             return False
         else:
-            return self.root.delete(searchkey, self)
+            return self.root.delete(searchkey)
 
+"""
 A = Node(1)
-A.insert("values", 5)
+A.insert(5)
 
 #A.retrieve(1,1)
 #print("inorder successor")
 #A.delete(1,7)
 #print(A.children[0].inorderSuccessor(1))
 print(A)
+"""

@@ -152,16 +152,17 @@ def testSortingAlgo(algo):
 # Tests here
 if __name__=='__main__':
     # ------- Data structures
-    testDataStruct("SLinkedChain")
-    testDataStruct("USLinkedChain")
-    testDataStruct("USArray")
-    testDataStruct("Hashmap")
+    #testDataStruct("SLinkedChain")
+    #testDataStruct("USLinkedChain")
+    #testDataStruct("USArray")
+    #testDataStruct("Hashmap")
     # watch out with using a non-chaining method, the hashmap may get filled up
     
-    testDataStruct("BinTree")
-    testDataStruct("RedBlackTree")
-    #testDataStruct("TwoThreeTree")
+    #testDataStruct("BinTree")
+    #testDataStruct("RedBlackTree")
+    testDataStruct("TwoThreeTree")
     
+    """
     # ------- Sorting methods
     totest = []
     for algoname in list(sorting.__dict__.keys()):
@@ -174,6 +175,8 @@ if __name__=='__main__':
     for algoname in sorted(totest):
         print("\ntesting",algoname)
         testSortingAlgo(sorting.__dict__[algoname])
+    
+    # """
     
     print("\n{}{} tests\n{}{} failures\n{}{} successes{}\n".format(rgb(cyan), tests, rgb(red), failures, rgb(green), tests-failures, endc))
     

@@ -7,7 +7,7 @@ from .redblack import RedBlackTree
 from .uslinkedchain import USLinkedChain
 from .slinkedchain import SLinkedChain
 from .hashmap import Hashmap
-#from .twothreetree import TwoThreeTree
+from .twothreetree import TwoThreeTree
 
 # Also, update the names here
-valid_names = ["BinTree", "USArray", "RedBlackTree", "USLinkedChain", "SLinkedChain", "Hashmap"]
+valid_names = ["BinTree", "USArray", "RedBlackTree", "USLinkedChain", "SLinkedChain", "Hashmap", "TwoThreeTree"]
