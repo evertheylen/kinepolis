@@ -6,3 +6,7 @@
 // DateTime TimeStamp
 // int showID
 // int places
+
++createReservation():
+pre-condities: geen
+post-condities: er is een reservatie aangemaakt
