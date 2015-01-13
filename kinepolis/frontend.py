@@ -124,9 +124,8 @@ def start_frontend(data, cin_name=""):  # used when initializing, so the user do
         app.run()
     except:
         log()
-        print("goodbye")
-    
-    print(log_string)
+        print("something went wrong.")
+        print(log_string)
 
 
 # Own widget classes ----------------------------------------------------

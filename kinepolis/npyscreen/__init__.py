@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-print("npyscreen/__init__.py: using modified version by Evert Heylen")
+#print("npyscreen/__init__.py: using modified version by Evert Heylen")
 
 from .globals                    import DEBUG, DISABLE_RESIZE_SYSTEM
 
