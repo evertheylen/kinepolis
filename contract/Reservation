@@ -5,25 +5,4 @@
 // int userID
 // DateTime TimeStamp
 // int showID
-// int seats
-
-+getID(): int
-
-+getUserID(): int
-
-+getTimeStamp(): DateTime
-// DateTime is een datum en een tijd
-
-+getShowID(): int
-
-+getSeats(): int
-
-
-+setUserID(in userID:int)
-
-+setTimeStamp(in timestamp:DateTime
-// DateTime is een datum en een tijd
-
-+setShowID(in showID:int)
-
-+setSeats(in seats:int)
+// int places
