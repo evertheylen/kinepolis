@@ -45,7 +45,12 @@ def start_backend(data, save):
     
     # OMG Tab completion!!!
     readline.set_completer(rlcompleter.Completer(console.locals).complete)
-    readline.parse_and_bind("tab: complete")
+    
+    if 'libedit' in readline.__doc__:
+        readline.parse_and_bind("bind ^I rl_complete")  # Hi, I'm an Apple computer and I'm special.
+    else:
+        readline.parse_and_bind("tab: complete")  # Hi, I'm a Linux computer and things just work for me.
+    
     # OMG own modification to rlcompleter
     #readline.set_completer_delims(' \t\n`~!@#$%^&*()-=+[{]}\\|;:\'",<>/?') # original
     readline.set_completer_delims(' \t\n`~!@#$%^&*()-=+{]}\\|;:,<>/?') # no [,' or "  in here!
