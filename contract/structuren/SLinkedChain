@@ -1,4 +1,4 @@
-Specification contract ADT USLinkedChain (Lijst van elementen van het type ChainItemType):
+Specification contract ADT SLinkedChain (Lijst van elementen van het type ChainItemType):
 
 +attribute(out attribute)
 // Returned de attribute van de boom.
@@ -10,12 +10,12 @@ precondities: geen
 postcondities: geeft true als de lijst leeg is en false als de lijst niet leeg is.
 
 +insert(in searchkey: KeyType, in newItem: ChainItemType, out success: boolean):
-// voegt een nieuw item toe aan het einde van de uslinkedchain 
+// voegt een nieuw item toe op de juiste locatie in de slinkedchain 
 precondities: geen
 postcondities: de lijst is vergroot met 1 en het element is toegevoegd.
 
 +inorder(out generator)
-// De uslinkedchain wordt inorder doorlopen.
+// De slinkedchain wordt inorder doorlopen.
 precondities: geen
 postcondities: geen
 
@@ -30,6 +30,6 @@ precondities: geen
 postcondities: output naar dataItem met daarin het gezochte element.
 
 +sort(in attribute: KeyType, in sortFunc: SortingType, out generator)
-// De functie wordt gesorteerd met sortFunc op attribute
+// De functie wordt gesorteerd met sortFunc op attribute. Deze functie is nodig als men niet wil sorteren op de attribute die is gedefinieerd in de init
 precondities: geen
 postcondities: geen
