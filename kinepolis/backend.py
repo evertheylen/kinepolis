@@ -16,6 +16,7 @@ import readline
 
 import inspect
 
+
 # Backend
 
 def start_backend(data, save):
@@ -36,6 +37,7 @@ def start_backend(data, save):
     backendlocals.update(classes.__dict__)  # add module classes to console
     backendlocals.update(datastruct.__dict__)  # add module datastruct to console
     backendlocals.update(sorting.__dict__)  # add module sorting to console
+    
     backendlocals.update(origlocals)  # reset the stuff that might otherwise be modifed by importing other modules (like __package__ and __name__)
     
     console.locals = backendlocals
@@ -54,6 +56,9 @@ def start_backend(data, save):
     # OMG own modification to rlcompleter
     #readline.set_completer_delims(' \t\n`~!@#$%^&*()-=+[{]}\\|;:\'",<>/?') # original
     readline.set_completer_delims(' \t\n`~!@#$%^&*()-=+{]}\\|;:,<>/?') # no [,' or "  in here!
+    
+    # even more imports
+    console.push("import datetime")
     
     while True:
         # no more color for input, too much bugs
