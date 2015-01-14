@@ -126,7 +126,15 @@ class USLinkedChain:
                 listchain.append(current.item)
                 current = current.next
             sortFunc(listchain, attribute) #Sort the array.
+        
+            # insert in the new order
+            self.head = None
+            self.size = 0
+            for i in listchain:
+                self.insert(i)
+        
         yield from self.inorder()
+        
         
     def __str__(self):
         '''Basic chain representation.'''

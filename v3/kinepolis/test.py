@@ -162,7 +162,7 @@ if __name__=='__main__':
     testDataStruct("RedBlackTree")
     testDataStruct("TwoThreeTree")
     
-    """
+    
     # ------- Sorting methods
     totest = []
     for algoname in list(sorting.__dict__.keys()):
