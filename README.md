@@ -1,8 +1,4 @@
-### Uitdaging: zet u naam in dit bestand!
-
-- Evert Heylen
-- Stijn Janssens
-- Anthony Hermans
+LICENSE: WTFPL (http://www.wtfpl.net/txt/copying/)
 
 ##### Planning
 
